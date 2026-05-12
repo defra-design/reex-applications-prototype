@@ -1,4 +1,13 @@
 .app-page-header {
 	border-bottom: 1px solid govuk-functional-colour('border');
 	@include govuk-responsive-margin(9, "bottom");
+	@include govuk-responsive-padding(8, "bottom");
+
+	h1, dl {
+		margin-bottom: 0;
+	}
+
+	h1 + dl {
+		@include govuk-responsive-margin(5, "top");
+	}
 }
