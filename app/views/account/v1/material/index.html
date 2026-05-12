@@ -1,0 +1,123 @@
+{% extends "layouts/main.html" %}
+{# {% set back = false %} #}
+
+{% set title = ('<span class="govuk-caption-xl">'+ site.name +'<span class="govuk-visually-hidden">:</span></span> ' if data['current-site-type'] == 'reprocessing' and org['reprocessing-sites'] | length > 1)+material.name %}
+
+{% set pErn = 'PRN' if data['current-site-type'] == 'reprocessing' else 'PERN' %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+
+      <div class="app-page-header">
+        <h1 class="govuk-heading-xl">
+          {{ title | safe }}
+        </h1>
+
+        {{ govukSummaryList({
+          classes: 'govuk-summary-list--no-border app-sumarry-list--two-col',
+          rows: [
+            {
+              key: {
+                html: 'Registration'
+              },
+              value: {
+                html: '<strong class="govuk-tag '
+                + ('govuk-tag--blue' if material.registration == 'Created' )
+                + ('govuk-tag--green' if material.registration == 'Approved' )
+                + ('govuk-tag--orange' if material.registration == 'Rejected' )
+                + ('govuk-tag--red' if material.registration == 'Cancelled' )
+                + ('govuk-tag--yellow' if material.registration == 'Suspended' )
+                + ('govuk-tag--grey' if material.registration == 'Archived' )
+                +'">'
+                + material.registration
+                +'</strong>'
+              }
+            },
+            {
+              key: {
+                html: 'Registration number'
+              },
+              value: {
+                html: material['registration-number']
+              }
+            },
+            {
+              key: {
+                html: 'Accreditation'
+              },
+              value: {
+                html: '<strong class="govuk-tag '
+                + ('govuk-tag--blue' if material.accreditation == 'Created' )
+                + ('govuk-tag--green' if material.accreditation == 'Approved' )
+                + ('govuk-tag--orange' if material.accreditation == 'Rejected' )
+                + ('govuk-tag--red' if material.accreditation == 'Cancelled' )
+                + ('govuk-tag--yellow' if material.accreditation == 'Suspended' )
+                + ('govuk-tag--grey' if material.accreditation == 'Archived' )
+                +'">'
+                + material.accreditation
+                +'</strong>'
+              }
+            } if material.accreditation != 'Not accredited',
+            {
+              key: {
+                html: 'Accreditation number'
+              },
+              value: {
+                html: material['accreditation-number']
+              }
+            } if material.accreditation != 'Not accredited'
+          ]
+        }) }}
+      </div>
+
+      {{ govukTaskList({
+        idPrefix: 'tasks',
+        classes: 'app-cards',
+        items: [
+          {
+            title: {
+              html: '<h3 class="govuk-heading-m">Summary log</h3><p>Upload your summary log to record new packaging waste or adjust previously submitted data</p>',
+              classes: 'app-card__header'
+            },
+            hint: {
+              html: '<ul class="govuk-list"><li><a href="#0">Upload your summary log</a></li></ul>'
+            },
+            classes: 'app-card'
+          },
+          {
+            title: {
+              html: '<h3 class="govuk-heading-m">'+pErn+'s</h3><p>Create and manage '+pErn+'s</p>',
+              classes: 'app-card__header'
+            },
+            hint: {
+              html: '<ul class="govuk-list"><li><a href="#0">Create new '+pErn+'</a></li><li><a href="#0">Manage '+pErn+'s</a></li></ul>'
+            },
+            classes: 'app-card'
+          },
+          {
+            title: {
+              html: '<h3 class="govuk-heading-m">Reports</h3><p>Create and manage your reports</p>',
+              classes: 'app-card__header'
+            },
+            hint: {
+              html: '<ul class="govuk-list"><li><a href="#0">Manage reports</a></li></ul>'
+            },
+            classes: 'app-card'
+          },
+          {
+            title: {
+              html: '<h3 class="govuk-heading-m">Registration and accreditation</h3><p>View and manage your applications</p>',
+              classes: 'app-card__header'
+            },
+            hint: {
+              html: '<ul class="govuk-list"><li><a href="#0">View registration</a></li>'+('<li><a href="#0">Apply for accreditation accreditation</a></li>' if material.accreditation == 'Not accredited' else '<li><a href="#0">View accreditation</a></li>')+'</ul>'
+            },
+            classes: 'app-card'
+          }
+        ]
+      }) }}
+
+    </div>
+  </div>
+{% endblock %}

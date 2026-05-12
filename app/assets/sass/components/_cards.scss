@@ -1,0 +1,45 @@
+// Replicate the existing card design from re/ex
+// Uses the gov task list component for html structure
+.app-cards {
+	display: grid;
+	grid-gap: govuk-spacing(4);
+
+	@include govuk-media-query($from: desktop) {
+		grid-template-columns: repeat(2, 1fr);
+		grid-gap: govuk-spacing(6);
+	}
+}
+
+.app-card {
+	border: 1px solid $govuk-border-colour;
+	padding: 0;
+	margin: 0;
+
+	&__header {
+		box-sizing: border-box;
+		@include govuk-responsive-padding(4);
+		background-color: govuk-colour("black", $variant: "tint-95");
+
+		p,ul:last-of-type {
+			margin-bottom: 0;
+		}
+	}
+
+	.govuk-task-list__hint {
+		@include govuk-responsive-margin(1, "top");
+		@include govuk-responsive-padding(4);
+
+		p,ul:last-of-type {
+			margin-bottom: 0;
+		}
+
+		a { @extend .govuk-link--no-visited-state; }
+	}
+
+
+	// Hide the status tag, we won't be using it and it has spacing by default
+	.govuk-task-list__status {
+		display: none;
+	}
+}
+

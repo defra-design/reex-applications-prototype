@@ -1,6 +1,6 @@
 //
 // For guidance on how to create routes see:
-// https://prototype-kit.service.gov.uk/docs/routes
+// https://prototype-kit.prototype.gov.uk/docs/routes
 //
 const govukPrototypeKit = require('govuk-prototype-kit')
 const router = govukPrototypeKit.requests.setupRouter()
@@ -25,20 +25,12 @@ router.use('/', (req, res, next) => {
 
 
 // Import routes from different prototype folders
-//
-// Could probably merge these 3 into one…
-router.use("/:service/:prototype/v:version", (req, res, next) => {
+router.use("/:prototype/v:version", (req, res, next) => {
+	// Save the current prototype path for use later
+	res.locals.currentPrototype = '/'+req.params.prototype+'/v'+req.params.version
+
+	// If there's a routes file import it
 	try {
-		return require(`./views/${req.params.service}/${req.params.prototype}/v${req.params.version}/_routes`)(req, res, next)
-	} catch (e) { next() }
-})
-router.use("/:service/v:version", (req, res, next) => {
-	try {
-		return require(`./views/${req.params.service}/v${req.params.version}/_routes`)(req, res, next)
-	} catch (e) { next() }
-})
-router.use("/v:version", (req, res, next) => {
-	try {
-		return require(`./views/v${req.params.version}/_routes`)(req, res, next)
+		return require(`./views/${req.params.prototype}/v${req.params.version}/_routes`)(req, res, next)
 	} catch (e) { next() }
 })

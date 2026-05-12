@@ -1,0 +1,172 @@
+{% extends "layouts/main.html" %}
+{% set back = false %}
+
+{% set title = '<span class="govuk-caption-xl">Home<span class="govuk-visually-hidden">:</span></span> '+ org.name %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+
+      <div class="app-page-header">
+        <h1 class="govuk-heading-xl">
+          {{ title | safe }}
+        </h1>
+      </div>
+
+      {% set reprocessingSites %}
+        {% if org['reprocessing-sites'] | length > 1 %}
+          <h2 class="govuk-heading-l">
+            Select site and material
+          </h2>
+        {% endif %}
+
+        {% for site in org['reprocessing-sites'] %}
+          <table class="govuk-table">
+            {% if org['reprocessing-sites'] | length > 1 %}
+              <caption class="govuk-table__caption govuk-table__caption--m">
+                {{ site.name }}
+              </caption>
+            {% else %}
+              <caption class="govuk-table__caption govuk-table__caption--l">
+                Select material
+              </h2>
+            {% endif %}
+            <thead class="govuk-table__head">
+              <tr class="govuk-table__row">
+                <th scope="col" class="govuk-table__header">Material</th>
+                <th scope="col" class="govuk-table__header">Registration</th>
+                <th scope="col" class="govuk-table__header">Accreditation</th>
+                <th scope="col" class="govuk-table__header govuk-table__header--numeric">Available waste balance (tonnes)</th>
+                <th scope="col" class="govuk-table__header"><span class="govuk-visually-hidden">Action</span></th>
+              </tr>
+            </thead>
+            <tbody class="govuk-table__body">
+              {% for material in site.materials %}
+                <tr class="govuk-table__row">
+                  <td class="govuk-table__cell">{{ material.name }}</td>
+                  <td class="govuk-table__cell">
+                    <strong class="govuk-tag
+                    {{ 'govuk-tag--blue' if material.registration == 'Created' }}
+                    {{ 'govuk-tag--green' if material.registration == 'Approved' }}
+                    {{ 'govuk-tag--orange' if material.registration == 'Rejected' }}
+                    {{ 'govuk-tag--red' if material.registration == 'Cancelled' }}
+                    {{ 'govuk-tag--yellow' if material.registration == 'Suspended' }}
+                    {{ 'govuk-tag--grey' if material.registration == 'Archived' }}
+                    ">
+                      {{ material.registration }}
+                    </strong>
+                  </td>
+                  <td class="govuk-table__cell">
+                    <strong class="govuk-tag
+                    {{ 'govuk-tag--blue' if material.accreditation == 'Created' }}
+                    {{ 'govuk-tag--green' if material.accreditation == 'Approved' }}
+                    {{ 'govuk-tag--orange' if material.accreditation == 'Rejected' }}
+                    {{ 'govuk-tag--red' if material.accreditation == 'Cancelled' }}
+                    {{ 'govuk-tag--yellow' if material.accreditation == 'Suspended' }}
+                    {{ 'govuk-tag--grey' if material.accreditation == 'Archived' or material.accreditation == 'Not accredited' }}
+                    ">
+                      {{ material.accreditation }}
+                    </strong>
+                  </td>
+                  <td class="govuk-table__cell govuk-table__cell--numeric">{{ material.balance }}</td>
+                  <td class="govuk-table__cell govuk-table__cell--numeric"><a class="govuk-link--no-visited-state" href="material/?current-site-type=reprocessing&current-site={{site.id}}&current-material={{material.id}}">Select<span class="govuk-visually-hidden"> {{ material.name }}</span></a></td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        {% endfor %}
+      {% endset -%}
+
+      {% set exportingSites %}
+        {% if org['exporting-sites'] | length > 1 %}
+          <h2 class="govuk-heading-l">
+            Select site and material
+          </h2>
+        {% endif %}
+
+        {% for site in org['exporting-sites'] %}
+          <table class="govuk-table">
+            {% if org['exporting-sites'] | length > 1 %}
+              <caption class="govuk-table__caption govuk-table__caption--m">
+                {{ site.name }}
+              </caption>
+            {% else %}
+              <caption class="govuk-table__caption govuk-table__caption--l">
+                Select material
+              </h2>
+            {% endif %}
+            <thead class="govuk-table__head">
+              <tr class="govuk-table__row">
+                <th scope="col" class="govuk-table__header">Material</th>
+                <th scope="col" class="govuk-table__header">Registration</th>
+                <th scope="col" class="govuk-table__header">Accreditation</th>
+                <th scope="col" class="govuk-table__header govuk-table__header--numeric">Available waste balance (tonnes)</th>
+                <th scope="col" class="govuk-table__header"><span class="govuk-visually-hidden">Action</span></th>
+              </tr>
+            </thead>
+            <tbody class="govuk-table__body">
+              {% for material in site.materials %}
+                <tr class="govuk-table__row">
+                  <td class="govuk-table__cell">{{ material.name }}</td>
+                  <td class="govuk-table__cell">
+                    <strong class="govuk-tag
+                    {{ 'govuk-tag--blue' if material.registration == 'Created' }}
+                    {{ 'govuk-tag--green' if material.registration == 'Approved' }}
+                    {{ 'govuk-tag--orange' if material.registration == 'Rejected' }}
+                    {{ 'govuk-tag--red' if material.registration == 'Cancelled' }}
+                    {{ 'govuk-tag--yellow' if material.registration == 'Suspended' }}
+                    {{ 'govuk-tag--grey' if material.registration == 'Archived' }}
+                    ">
+                      {{ material.registration }}
+                    </strong>
+                  </td>
+                  <td class="govuk-table__cell">
+                    <strong class="govuk-tag
+                    {{ 'govuk-tag--blue' if material.accreditation == 'Created' }}
+                    {{ 'govuk-tag--green' if material.accreditation == 'Approved' }}
+                    {{ 'govuk-tag--orange' if material.accreditation == 'Rejected' }}
+                    {{ 'govuk-tag--red' if material.accreditation == 'Cancelled' }}
+                    {{ 'govuk-tag--yellow' if material.accreditation == 'Suspended' }}
+                    {{ 'govuk-tag--grey' if material.accreditation == 'Archived' or material.accreditation == 'Not accredited' }}
+                    ">
+                      {{ material.accreditation }}
+                    </strong>
+                  </td>
+                  <td class="govuk-table__cell govuk-table__cell--numeric">{{ material.balance }}</td>
+                  <td class="govuk-table__cell govuk-table__cell--numeric"><a class="govuk-link--no-visited-state" href="material/?current-site-type=exporting&current-site={{site.id}}&current-material={{material.id}}">Select<span class="govuk-visually-hidden"> {{ material.name }}</span></a></td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        {% endfor %}
+      {% endset -%}
+
+      {% if org['reprocessing-sites'] and org['exporting-sites'] %}
+        {{ govukTabs({
+          items: [
+            {
+              label: 'Reprocessing',
+              id: 'reprocessing',
+              panel: {
+                html: reprocessingSites
+              }
+            },
+            {
+              label: 'Exporting',
+              id: 'exporting',
+              panel: {
+                html: exportingSites
+              }
+            }
+          ]
+        }) }}
+      {% elif org['reprocessing-sites'] %}
+        {{ reprocessingSites }}
+      {% elif org['exporting-sites'] %}
+        {{ exportingSites }}
+      {% else %} <p>Error</p> {% endif %}
+
+
+    </div>
+  </div>
+{% endblock %}

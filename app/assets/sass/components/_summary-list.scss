@@ -1,0 +1,7 @@
+.app-sumarry-list--two-col {
+	@include govuk-media-query($from: desktop) {
+		display: grid;
+		grid-template-columns: 1fr 3fr;
+		grid-gap: govuk-spacing(2);
+	}
+}

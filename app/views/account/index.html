@@ -7,20 +7,20 @@
   }) }}
 {% endblock %}
 
-{% set title = 'Example feature' %}
+{% set title = 'Account' %}
 
 {% block content %}
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
 
-      <h1 class="govuk-heading-l">
-        {{ title }}
+      <h1 class="govuk-heading-l govuk-!-margin-bottom-4">
+        {{ title | safe }}
       </h1>
-      <p>Overview of feature.</p>
+      <p class="govuk-body-l">Replicated the account structure and navigation that already exists from re/ex reporting.</p>
 
 
 
-      {% set version = "2" %}
+      {% set version = "1" %}
       <h2 class="govuk-heading-m">
         Version {{version}}
         {{ govukTag({
@@ -29,14 +29,14 @@
         }) }}
       </h2>
 
-      <p class="govuk-!-margin-bottom-2">Changes:</p>
+      {# <p class="govuk-!-margin-bottom-2">Changes:</p>
       <ul class="govuk-list govuk-list--bullet">
         <li>Minor copy tweaks.</li>
-      </ul>
+      </ul> #}
 
       {{ govukButton({
         text: 'View prototype',
-        href: 'v'+version+'/question'
+        href: 'v'+version+'/'
       }) }}
 
 
@@ -44,7 +44,7 @@
 
 
 
-      {% set v1HTML %}
+      {# {% set v1HTML %}
         {% set version = "1" %}
         <p>Information about this version</p>
 
@@ -69,7 +69,7 @@
             }
           }
         ]
-      }) }}
+      }) }} #}
 
     </div>
   </div>

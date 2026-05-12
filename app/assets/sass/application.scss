@@ -4,10 +4,7 @@
 //
 
 @import "components/autocomplete";
+@import "components/cards";
+@import "components/page-header";
+@import "components/summary-list";
 
-code {
-	@include govuk-font($size: 19);
-	color: #d13118;
-	background-color: govuk-colour("light-grey");
-	padding: 0 govuk-spacing(1);
-}

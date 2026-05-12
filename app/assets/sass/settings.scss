@@ -1,13 +1,3 @@
-// Use this file to override the default settings used in Frontend, useful particularly if you want to rebrand the prototype
-
-// Example, rebrand to purple, for more info on options see:
-// https://frontend.design-system.service.gov.uk/sass-api-reference/#govuk-functional-colours
-
-// $govuk-functional-colours: (
-// 	// set the 'brand' colour to the 'primary' variant of 'purple'
-// 	brand: (name: 'purple'),
-// 	// set the 'template-background' colour to the 'tint-95' variant of 'purple'
-// 	template-background: (name: 'purple', variant: 'tint-95'),
-// 	// set the 'text' colour to an arbitrary colour `#221133`
-// 	text: #221133
-// );
+$govuk-suppressed-warnings: (
+	"govuk-text-colour"
+);
