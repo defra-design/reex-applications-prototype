@@ -11,6 +11,8 @@ module.exports = {
         {
           "id": 0,
           "name": "North road",
+          "address": "2 North Road, Addingrove, AA3 1AB",
+          "regulator": "England",
           "materials": [
             {
               "id": 0,
@@ -19,6 +21,7 @@ module.exports = {
               "registration-number": "XMQLCYA22BUO7ZA",
               "accreditation": "Approved",
               "accreditation-number": "JCAJBFB1IMUZG2Z",
+              "accreditation-expiry": "2026-12-1",
               "balance": "23.49"
             }
           ]
@@ -26,6 +29,8 @@ module.exports = {
         {
           "id": 1,
           "name": "South road",
+          "address": "111 South Road, Addingrove, AA3 1AB",
+          "regulator": "England",
           "materials": [
             {
               "id": 0,
@@ -34,6 +39,7 @@ module.exports = {
               "registration-number": "W66HOJ62BADXM04",
               "accreditation": "Approved",
               "accreditation-number": "O82RV7KQQUHKFM9",
+              "accreditation-expiry": "2026-12-1",
               "balance": "23.49"
             }
           ]
@@ -43,6 +49,8 @@ module.exports = {
         {
           "id": 0,
           "name": "North road",
+          "address": "2 North Road, Addingrove, AA3 1AB",
+          "regulator": "England",
           "materials": [
             {
               "id": 0,

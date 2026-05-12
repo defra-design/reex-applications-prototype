@@ -2,7 +2,7 @@ const govukPrototypeKit = require('govuk-prototype-kit')
 const router = govukPrototypeKit.requests.setupRouter()
 
 // Setup the prototype
-router.get('*', function(req, res, next){
+router.get('*', (req, res, next) => {
   // Change the service name for this whole feature
   res.locals['serviceName'] = 'Record reprocessed or exported packaging waste'
 
@@ -37,12 +37,12 @@ router.get('*', function(req, res, next){
   next()
 })
 
-router.get('/', function(req, res, next){
+router.get('/', (req, res, next) => {
   res.locals['serviceNavActive'] = 'Home'
   next()
 })
 
-router.get('/material/*', function(req, res, next){
+router.all('/material/*', (req, res, next) => {
   // If current IDs exists render the data else redirect to home
   if (req.session.data['current-site'] && req.session.data['current-material']) {
     // Find the current site

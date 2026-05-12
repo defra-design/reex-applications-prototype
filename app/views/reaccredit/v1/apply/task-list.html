@@ -1,0 +1,151 @@
+{% extends "layouts/main.html" %}
+
+{% block backLink %}
+  {{ govukBackLink({
+    html: 'Back',
+    href: '../'
+  }) }}
+{% endblock %}
+
+{% set title = ('<span class="govuk-caption-xl">'+site.name+'<span class="govuk-visually-hidden">:</span></span>' if data['current-site-type'] == 'reprocessing' and org['reprocessing-sites'] | length > 1)+'Apply for '+(material.name | lower)+' reaccreditation' %}
+
+{% set pErn = 'PRN' if data['current-site-type'] == 'reprocessing' else 'PERN' %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+
+      <div class="app-page-header">
+        <h1 class="govuk-heading-xl">
+          {{ title | safe }}
+        </h1>
+
+        {{ govukSummaryList({
+          classes: 'govuk-summary-list--no-border govuk-!-width-two-thirds',
+          rows: [
+            {
+              key: {
+                html: 'Site address'
+              },
+              value: {
+                html: site.address
+              }
+            },
+            {
+              key: {
+                html: 'Regulator'
+              },
+              value: {
+                html: site.regulator
+              }
+            }
+          ]
+        }) }}
+      </div>
+
+    </div>
+  </div>
+
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds-from-desktop">
+
+      <h2 class="govuk-heading-l">
+        Prepare application
+      </h2>
+
+      {% set tasks = [] %}
+      {% for question in material.application %}
+        {% set tasks = tasks | push ({
+          title: {
+            html: question.name
+          },
+          href: question.link,
+          status: {
+            html: question.status  if question.status != 'Incomplete',
+            tag: {
+              html: question.status
+            } if question.status == 'Incomplete'
+          }
+        }) %}
+      {% endfor %}
+
+      {{ govukTaskList({
+        items: tasks
+      }) }}
+
+      <h2 class="govuk-heading-l">
+        Submit application
+      </h2>
+
+      {% if data['submitter'] == 'true' %}
+        {{ govukTaskList({
+          items: [
+            {
+              title: {
+                text: 'Make a determination'
+              },
+              status: {
+                text: 'Cannot complete yet',
+                classes: 'govuk-task-list__status--cannot-start-yet'
+              },
+              classes: 'js-no-determination'
+            },
+            {
+              title: {
+                text: 'Make a determination'
+              },
+              href: 'tasks/determination',
+              status: {
+                tag: {
+                  html: 'Ready',
+                  classes: 'govuk-tag--green'
+                }
+              },
+              classes: 'js-determination govuk-!-display-none'
+            }
+          ]
+        }) }}
+
+      {% else %}
+        <p>You can complete the application, but your account settings do not allow you to submit it.</p>
+
+        {% set adminList %}
+          <ul class="govuk-list govuk-list--bullet">
+            <li>Person A</li>
+            <li>Person B</li>
+            <li>Person C</li>
+          </ul>
+        {% endset -%}
+        {{ govukDetails({
+          summaryHtml: 'People who can submit accreditation applications',
+          html: adminList
+        }) }}
+
+      {% endif %}
+
+    </div>
+  </div>
+{% endblock %}
+
+{% block containerEnd %}
+  {% set prototypeOptions %}
+    <ul class="govuk-list">
+      <li>
+        {% if data['submitter'] == 'true' %}
+          <a href="?submitter=false">Swap to someone who cannot submit application</a>
+        {% else %}
+          <a href="?submitter=true">Swap to someone who can submit application</a>
+        {% endif %}
+      </li>
+    </ul>
+  {% endset -%}
+  {{ govukNotificationBanner({
+    attributes: {
+      'id': 'js-dismissible'
+    },
+    titleHtml: 'Prototype options <a href="#0" id="js-dismiss">Hide</a>',
+    html: prototypeOptions,
+    classes: 'app-notification-banner--prototype-options'
+  }) }}
+{% endblock %}

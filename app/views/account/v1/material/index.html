@@ -1,5 +1,11 @@
 {% extends "layouts/main.html" %}
-{# {% set back = false %} #}
+
+{% block backLink %}
+  {{ govukBackLink({
+    html: 'Back',
+    href: '../'
+  }) }}
+{% endblock %}
 
 {% set title = ('<span class="govuk-caption-xl">'+ site.name +'<span class="govuk-visually-hidden">:</span></span> ' if data['current-site-type'] == 'reprocessing' and org['reprocessing-sites'] | length > 1)+material.name %}
 
@@ -71,6 +77,10 @@
         }) }}
       </div>
 
+
+      <h2 class="govuk-heading-l">
+        Choose a task
+      </h2>
       {{ govukTaskList({
         idPrefix: 'tasks',
         classes: 'app-cards',
@@ -111,7 +121,7 @@
               classes: 'app-card__header'
             },
             hint: {
-              html: '<ul class="govuk-list"><li><a href="#0">View registration</a></li>'+('<li><a href="#0">Apply for accreditation accreditation</a></li>' if material.accreditation == 'Not accredited' else '<li><a href="#0">View accreditation</a></li>')+'</ul>'
+              html: '<ul class="govuk-list"><li><a href="#0">View registration</a></li>'+('<li><a href="#0">Apply for accreditation accreditation</a></li>' if material.accreditation == 'Not accredited' else '<li><a href="'+(data['account-accreditation-next'] or '/reaccredit/v1/')+'">View accreditation</a></li>')+'</ul>'
             },
             classes: 'app-card'
           }

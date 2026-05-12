@@ -1,0 +1,80 @@
+{% extends "layouts/main.html" %}
+{% block backLink %}
+  {{ govukBackLink({
+    html: 'Back',
+    href: accountVersion+'material/?current-site-type='+(data['current-site-type'] or 'reprocessing')+'&current-site='+site.id+'&current-material='+material.id
+  }) }}
+{% endblock %}
+
+{% set title = ('<span class="govuk-caption-xl">'+site.name+'<span class="govuk-visually-hidden">:</span></span>' if data['current-site-type'] == 'reprocessing' and org['reprocessing-sites'] | length > 1)+material.name+' accreditation' %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+
+      <div class="app-page-header">
+        <h1 class="govuk-heading-xl">
+          {{ title | safe }}
+        </h1>
+
+        {{ govukInsetText({
+          html: '<p>You can now <a href="apply">apply for reaccreditation of this material</a>.</p><p>This application need to be completes before 30 September 2026 or the accreditation will lapse.</p>'
+        }) }}
+      </div>
+
+    </div>
+  </div>
+
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds-from-desktop">
+
+      {{ govukSummaryList({
+        rows: [
+          {
+            key: {
+              html: 'Accreditation number'
+            },
+            value: {
+              html: material['accreditation-number']
+            }
+          },
+          {
+            key: {
+              html: 'Status'
+            },
+            value: {
+              html: material['accreditation']
+            }
+          },
+          {
+            key: {
+              html: 'Expiry date'
+            },
+            value: {
+              html: material['accreditation-expiry'] | formatDate
+            }
+          },
+          {
+            key: {
+              html: 'Site address'
+            },
+            value: {
+              html: site.address
+            }
+          },
+          {
+            key: {
+              html: 'Regulator'
+            },
+            value: {
+              html: site.regulator
+            }
+          }
+        ]
+      }) }}
+
+
+    </div>
+  </div>
+{% endblock %}

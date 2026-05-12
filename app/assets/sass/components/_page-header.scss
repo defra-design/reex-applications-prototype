@@ -3,11 +3,12 @@
 	@include govuk-responsive-margin(9, "bottom");
 	@include govuk-responsive-padding(8, "bottom");
 
-	h1, dl {
+	h1, dl, .govuk-inset-text {
 		margin-bottom: 0;
 	}
 
-	h1 + dl {
+	h1 + dl,
+	h1 + .govuk-inset-text {
 		@include govuk-responsive-margin(5, "top");
 	}
 }

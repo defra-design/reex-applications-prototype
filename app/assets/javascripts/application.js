@@ -17,4 +17,13 @@ window.GOVUKPrototypeKit.documentReady(() => {
   })
 
 
+  // Hide dismissible element on dismiss link click
+  let dismiss = document.getElementById('js-dismiss')
+  let dismissible = document.getElementById('js-dismissible')
+
+  dismiss.onclick = () => {
+    dismissible.style.display = 'none';
+  }
+
+
 })
