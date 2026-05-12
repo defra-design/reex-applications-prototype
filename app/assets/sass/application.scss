@@ -8,3 +8,9 @@
 @import "components/page-header";
 @import "components/summary-list";
 
+.app-\!-display-from-desktop {
+	display: none;
+	@include govuk-media-query($from: desktop) {
+		display: block;
+	}
+}
