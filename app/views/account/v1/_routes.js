@@ -6,7 +6,24 @@ router.get('*', function(req, res, next){
   // Change the service name for this whole feature
   res.locals['serviceName'] = 'Record reprocessed or exported packaging waste'
 
-  res.locals.currentPage = res.locals.currentPrototype+req.path
+  // Save the current page as a local var
+  res.locals['currentPage'] = res.locals.currentPrototype+req.path
+
+  // Add main nav items
+  res.locals['serviceNav'] = [
+    {
+      name: 'Home',
+      link: res.locals.currentPrototype+'/'
+    },
+    {
+      name: 'Manage account',
+      link: '#0'
+    },
+    {
+      name: 'Sign out',
+      link: '#0'
+    }
+  ]
 
   // Find the current org
   let orgToFind = req.session.data['current-org'] || 0
@@ -20,6 +37,10 @@ router.get('*', function(req, res, next){
   next()
 })
 
+router.get('/', function(req, res, next){
+  res.locals['serviceNavActive'] = 'Home'
+  next()
+})
 
 router.get('/material/*', function(req, res, next){
   // If current IDs exists render the data else redirect to home

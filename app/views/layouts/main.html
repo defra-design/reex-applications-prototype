@@ -11,6 +11,27 @@ https://prototype-kit.service.gov.uk/docs/how-to-use-layouts
 	{{ (title+' –' if title) | striptags | safe }} {{ (serviceName+' –' if serviceName) | striptags | safe}} GOV.UK
 {% endblock %}
 
+{% block header %}
+	{{ govukHeader({
+		homepageUrl: '/'
+	}) }}
+
+	{# Pull in the navigation menu set in routes #}
+	{% set menuItems = [] %}
+	{% for i in serviceNav %}
+		{% set menuItems = menuItems | push ({
+			text: i.name,
+			href: i.link,
+			active: true if serviceNavActive == i.name
+		}) %}
+	{% endfor %}
+
+	{{ govukServiceNavigation({
+		serviceName: serviceName,
+		serviceUrl: currentPrototype+'/',
+		navigation: menuItems if serviceNav
+	}) }}
+{% endblock %}
 
 {# Add the phase banner and back link to each page #}
 {% block beforeContent %}
