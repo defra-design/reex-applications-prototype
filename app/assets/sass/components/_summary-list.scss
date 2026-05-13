@@ -5,3 +5,9 @@
 		grid-gap: govuk-spacing(2);
 	}
 }
+
+.govuk-summary-list--no-border {
+	dt, dd {
+		padding-top: 0;
+	}
+}

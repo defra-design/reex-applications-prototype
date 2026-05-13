@@ -1,0 +1,51 @@
+{% extends "layouts/main.html" %}
+
+{% set title = 'Upload accreditation sampling and inspection plan' %}
+
+{% block questions %}
+  {% if answer %}
+    <h1 class="govuk-heading-l">
+      {{ title | safe }}
+    </h1>
+
+
+
+    {{ govukSummaryList({
+      rows: [
+        {
+          key: {
+            html: 'Uploaded file'
+          },
+          value: {
+            html: '<a href="#0">'+answer+'</a>'
+          },
+          actions: {
+            items: [
+              {
+                href: 'si-plan/delete-upload',
+                text: 'Delete',
+                classes: 'app-link-destructive',
+                visuallyHiddenText: ' uploaded file'
+              }
+            ]
+          }
+        }
+      ]
+    }) }}
+  {% else %}
+    {{ govukFileUpload({
+      id: 'si-plan',
+      name: 'si-plan',
+      value: data['si-plan'],
+      label: {
+        html: title,
+        classes: 'govuk-label--l',
+        isPageHeading: true
+      },
+      hint: {
+        text: 'The files must be a PDF, DOC, DOCX, XLS, CSV, PNG, TIF, JPG or MSG and be smaller than 20MB'
+      },
+      javascript: true
+    }) }}
+  {% endif %}
+{% endblock %}

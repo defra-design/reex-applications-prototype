@@ -1,0 +1,103 @@
+{% extends "layouts/main.html" %}
+
+{% set title = 'Business plan' %}
+
+{% block questions %}
+  {% set testcontent %}
+    {{ govukInput({
+      id: 'test2',
+      name: 'test2',
+      value: data['test2'],
+      classes: 'govuk-input--width- govuk-!-width-',
+      label: {
+        html: 'copy'
+      }
+    }) }}
+  {% endset -%}
+  {{ govukRadios({
+    idPrefix: 'test',
+    name: 'test',
+    classes: '',
+    fieldset: {
+      legend: {
+        html: 'test',
+        classes: 'govuk-fieldset__legend--l',
+        isPageHeading: true
+      }
+    },
+    hint: {
+      html: 'test'
+    },
+    items: [
+      {
+        html: 'test',
+        value: 'test',
+        checked: checked('test','test'),
+        conditional: {
+          html: testcontent
+        }
+      }
+    ]
+  }) }}
+
+  <h1 class="govuk-heading-l">
+    {{ title | safe }}
+  </h1>
+
+  {# Eviden
+  Enter the percentage of steel PRN income you'll spend on each item.
+  The regulator will expect you to follow this plan. If you later need to change how you spend the income you must explain this in your annual report. #}
+
+  {# Forms
+  Enter the percentage of PRN income that you'll spend on each area and activity, Only count income from PRNs that belong to the category of packaging waste you're currently applying for.
+  Your total PRN income must equal 100%.
+  You must enter a whole percentage for each category, for example 20% not 20.5%.
+  If a category is not applicable, enter 0% and 'not applicable' in the more details box.
+  The regulator will expect you to follow this plan. If you later need to change how you spend the income you must explain this in your annual report. #}
+
+  <p>You need to provide the percentage of PRN income that you&rsquo;ll spend on each area and activity, as well as a short explanation of what you propose to do with the income, this will allow the regulator to better understand your plans.</p>
+
+  <p>Your total PRN income must equal 100%.</p>
+
+  <p>The regulator will expect you to follow this plan. If you later need to change how you spend the income you must explain this in your annual report.</p>
+
+  {# Create list of questions #}
+  {% set questions = {
+    'newInfrastructre': 'New reprocessing infrastructure and maintaining existing infrastructure',
+    'priceSupport': 'Price support for buying packaging waste or selling recycled packaging waste',
+    'buildingConversion': 'Building converted into accommodation',
+    'priceSupport': 'Price support for buying packaging waste or selling recycled packaging waste',
+    'businessCollection': 'Support for business collections',
+    'commsCampaigns': 'Communications, including information campaigns',
+    'newMarkets': 'Developing new markets for products made from recycled packaging waste',
+    'newUses': 'Developing new uses for recycled waste',
+    'other': 'Activities or investment not covered by the other categories'
+  } %}
+
+  {% call govukFieldset({
+    legend: {
+    html: 'How much PRN income will you spend on each category?',
+    classes: 'govuk-fieldset__legend--m'
+    }
+  }) %}
+
+    {# Loop through questions and create inputs #}
+    {% for value, copy in questions %}
+      {{ govukInput({
+        id: value,
+        name: value,
+        value: data[value],
+        classes: 'govuk-input--width-3',
+        label: {
+          html: copy,
+          classes: 'govuk-label--'
+        },
+        suffix: {
+          text: '%'
+        },
+        inputmode: 'numeric',
+        spellcheck: false
+      }) }}
+    {% endfor %}
+  {% endcall %}
+{% endblock %}

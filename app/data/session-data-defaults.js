@@ -7,6 +7,17 @@ module.exports = {
     {
       "id": 0,
       "name": "Gaskells Waste Services",
+      "users": [
+        {
+          "name": "Jim Armstrong",
+          "email": "jim@gws.com",
+          "active": true
+        },
+        {
+          "name": "Willow Armstrong",
+          "email": "willow@gws.com"
+        }
+      ],
       "reprocessing-sites": [
         {
           "id": 0,

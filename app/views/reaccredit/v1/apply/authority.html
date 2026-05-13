@@ -1,0 +1,59 @@
+{% extends "layouts/main.html" %}
+
+{% set pErn = 'PRN' if data['current-site-type'] == 'reprocessing' else 'PERN' %}
+{% set title = 'Who should have authority to issue '+pErn+'s at this site?' %}
+
+{% block questions %}
+  {# Create empty object for radios #}
+  {% set users = [] %}
+
+  {# Loop through users and add active user into the object first #}
+  {% for user in org.users %}
+    {% if user.active %}
+      {% set users = users | push (
+        {
+          html: 'You ('+user.email+')',
+          value: 'You',
+          checked: true if answer and answer.includes('You')
+        }
+      ) %}
+      {% set users = users | push (
+        {
+          divider: ' '
+        }
+      ) %}
+    {% endif %}
+  {% endfor %}
+
+  {# Loop through the rest of the users and add into the object #}
+  {% for user in org.users | sort(attribute='name') %}
+    {% if not user.active %}
+      {% set users = users | push (
+        {
+          html: user.name+' ('+user.email+')',
+          value: user.name,
+          checked: true if answer and answer.includes(user.name)
+        }
+      ) %}
+    {% endif %}
+  {% endfor %}
+
+  {# Setup the radio macro and pull in types object #}
+  {{ govukCheckboxes({
+    idPrefix: 'authority',
+    name: 'authority',
+    classes: 'govuk-checkboxes--small app-checkboxes--divider',
+    value: answer,
+    hint: {
+      html: 'Select all that apply'
+    },
+    fieldset: {
+      legend: {
+        html: title,
+        classes: 'govuk-fieldset__legend--l',
+        isPageHeading: true
+      }
+    },
+    items: users
+  }) }}
+{% endblock %}

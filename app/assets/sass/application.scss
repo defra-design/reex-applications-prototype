@@ -19,6 +19,24 @@
 	@include govuk-responsive-margin(9, "top");
 }
 
+.app-checkboxes--divider .govuk-checkboxes__divider {
+	width: 100%;
+	border-bottom: 1px solid govuk-functional-colour('border');
+	@include govuk-responsive-margin(2, "top");
+	@include govuk-responsive-margin(2, "bottom");
+}
+
+.app-link-destructive {
+	&:link,
+	&:visited {
+		color: govuk-functional-colour('error');
+	}
+
+	&:hover {
+		color: govuk-colour("red", $variant: "shade-25");
+	}
+}
+
 .app-notification-banner--prototype-options {
 	background-color: govuk-colour("purple");
 	border: 5px solid govuk-colour("purple");

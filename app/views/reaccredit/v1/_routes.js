@@ -68,6 +68,7 @@ router.all('*', (req, res, next) => {
 })
 
 router.get('/apply', (req, res) => {
+  // Setup a new application
   if (!req.material[0].application) {
     req.material[0].application = []
 
@@ -104,6 +105,52 @@ router.get('/apply', (req, res) => {
   }
 
   res.redirect('apply/task-list')
+})
+
+// Get the current question and store
+router.all('/apply/:question*', (req, res, next) => {
+  // Find the current question
+  let questionToFind = req.params.question
+  let application = req.material[0].application
+  let currentQuestion = application.filter(question => question.link === questionToFind)
+  // Store current question for use in later routes
+  req.currentQuestion = currentQuestion
+
+  // If an answer exists pass it through to each page as local data for editing
+  res.locals.answer = currentQuestion[0]?.answer
+
+  next()
+})
+
+router.get('/apply/:question/delete-upload', (req, res) => {
+  delete req.currentQuestion[0].answer
+  res.redirect(`../${req.params.question}`);
+})
+
+// Update status to complete for all questions all submit
+router.post('/apply/:question', (req, res, next) => {
+  // Update the status
+  req.currentQuestion[0].status = 'Completed'
+  // Save the answer
+  req.currentQuestion[0].answer = req.session.data[`${req.params.question}`]
+
+  next()
+})
+
+router.post('/apply/tonnage', (req, res) => {
+  res.redirect('authority');
+})
+
+router.post('/apply/authority', (req, res) => {
+  res.redirect('business-plan');
+})
+
+router.post('/apply/business-plan', (req, res) => {
+  res.redirect('si-plan');
+})
+
+router.post('/apply/si-plan', (req, res) => {
+  res.redirect('task-list');
 })
 
 
