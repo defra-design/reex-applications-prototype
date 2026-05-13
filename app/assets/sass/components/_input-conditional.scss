@@ -1,0 +1,9 @@
+.app-input-conditional__item {
+	@extend .govuk-radios__conditional;
+	margin-top: -10px;
+	margin-left: 0;
+
+	&--hidden {
+		display: none;
+	}
+}

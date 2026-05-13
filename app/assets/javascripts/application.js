@@ -20,10 +20,44 @@ window.GOVUKPrototypeKit.documentReady(() => {
   // Hide dismissible element on dismiss link click
   let dismiss = document.getElementById('js-dismiss')
   let dismissible = document.getElementById('js-dismissible')
-
-  dismiss.onclick = () => {
-    dismissible.style.display = 'none';
+  try {
+    dismiss.onclick = () => {
+      dismissible.style.display = 'none';
+    }
+  } catch (error) {
+    console.error(error);
   }
+
+
+
+  const conditionals = document.querySelectorAll('.js-input-conditional');
+  conditionals.forEach(conditional => {
+    const input = conditional.querySelector('.govuk-input');
+    const hidden = conditional.nextElementSibling;
+
+    if (input.value == "") {
+      hidden.classList.add('app-input-conditional__item--hidden');
+    } else {
+      hidden.classList.remove('app-input-conditional__item--hidden');
+    }
+
+    input.addEventListener('input', function () {
+      if (input.value == "") {
+        hidden.classList.add('app-input-conditional__item--hidden');
+      } else {
+        hidden.classList.remove('app-input-conditional__item--hidden');
+      }
+    });
+  });
+
+  // div.classList.remove("foo");
+
+
+  // message.addEventListener('input', function () {
+  //   const message = document.querySelector('#message');
+  //   result.textContent = this.value;
+  // });
+  // nextElementSibling
 
 
 })

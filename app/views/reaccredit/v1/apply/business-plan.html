@@ -3,43 +3,6 @@
 {% set title = 'Business plan' %}
 
 {% block questions %}
-  {% set testcontent %}
-    {{ govukInput({
-      id: 'test2',
-      name: 'test2',
-      value: data['test2'],
-      classes: 'govuk-input--width- govuk-!-width-',
-      label: {
-        html: 'copy'
-      }
-    }) }}
-  {% endset -%}
-  {{ govukRadios({
-    idPrefix: 'test',
-    name: 'test',
-    classes: '',
-    fieldset: {
-      legend: {
-        html: 'test',
-        classes: 'govuk-fieldset__legend--l',
-        isPageHeading: true
-      }
-    },
-    hint: {
-      html: 'test'
-    },
-    items: [
-      {
-        html: 'test',
-        value: 'test',
-        checked: checked('test','test'),
-        conditional: {
-          html: testcontent
-        }
-      }
-    ]
-  }) }}
-
   <h1 class="govuk-heading-l">
     {{ title | safe }}
   </h1>
@@ -55,9 +18,7 @@
   If a category is not applicable, enter 0% and 'not applicable' in the more details box.
   The regulator will expect you to follow this plan. If you later need to change how you spend the income you must explain this in your annual report. #}
 
-  <p>You need to provide the percentage of PRN income that you&rsquo;ll spend on each area and activity, as well as a short explanation of what you propose to do with the income, this will allow the regulator to better understand your plans.</p>
-
-  <p>Your total PRN income must equal 100%.</p>
+  <p>You need to provide the percentage of PRN income that you&rsquo;ll spend on each area and activity as well as a short explanation of what you propose to do with the income, this will allow the regulator to better understand your plans.</p>
 
   <p>The regulator will expect you to follow this plan. If you later need to change how you spend the income you must explain this in your annual report.</p>
 
@@ -76,10 +37,12 @@
 
   {% call govukFieldset({
     legend: {
-    html: 'How much PRN income will you spend on each category?',
-    classes: 'govuk-fieldset__legend--m'
+      html: 'How much PRN income will you spend on each category?',
+      classes: 'govuk-fieldset__legend--m'
     }
   }) %}
+
+    <p class="govuk-hint">Your total PRN income must equal 100%</p>
 
     {# Loop through questions and create inputs #}
     {% for value, copy in questions %}
@@ -88,15 +51,30 @@
         name: value,
         value: data[value],
         classes: 'govuk-input--width-3',
+        formGroup: {
+          classes: 'js-input-conditional'
+        },
         label: {
-          html: copy,
-          classes: 'govuk-label--'
+          html: copy
         },
         suffix: {
           text: '%'
         },
         inputmode: 'numeric',
         spellcheck: false
+      }) }}
+
+      {{ govukTextarea({
+        name: value+'Details',
+        id: value+'Details',
+        value: data[value+'Details'],
+        formGroup: {
+          classes: 'app-input-conditional__item'
+        },
+        rows: '2',
+        label: {
+          html: 'Details of how you&rsquo;ll spend the income<span class="govuk-visually-hidden"> for '+copy+'</span>'
+        }
       }) }}
     {% endfor %}
   {% endcall %}
