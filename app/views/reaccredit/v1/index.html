@@ -1,7 +1,7 @@
 {% extends "layouts/main.html" %}
 {% block backLink %}
   {{ govukBackLink({
-    html: 'Back',
+    html: 'Back to site details',
     href: accountVersion+'material/?current-site-type='+(data['current-site-type'] or 'reprocessing')+'&current-site='+site.id+'&current-material='+material.id
   }) }}
 {% endblock %}
@@ -19,7 +19,7 @@
 
         {{ govukInsetText({
           html: '<p>You can now <a href="apply">apply for reaccreditation of this material</a>.</p><p>This application need to be completes before 30 September 2026 or the accreditation will lapse.</p>'
-        }) }}
+        }) if not material.application }}
       </div>
 
     </div>
@@ -29,6 +29,48 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds-from-desktop">
 
+      {% if material.application %}
+      {{ govukTable({
+        caption: 'Application details',
+        captionClasses: 'govuk-table__caption--l',
+        head: [
+          {
+            html: 'Period'
+          },
+          {
+            html: 'Due date'
+          },
+          {
+            html: 'Status'
+          },
+          {
+            html: '<span class="govuk-visually-hidden">Action</span>',
+            format: 'numeric'
+          }
+        ],
+        rows: [
+          [
+            {
+              html: '2027'
+            },
+            {
+              html: '30 September 2026'
+            },
+            {
+              html: '<strong class="govuk-tag '+('govuk-tag--orange' if material.application.status == 'Submitted')+'">'+material.application.status+'</strong>'
+            },
+            {
+              html: '<a href="apply/task-list">Continue</a>' if material.application.status == 'In progress' else '<a href="apply/payment">Pay</a>',
+              format: 'numeric'
+            }
+          ]
+        ]
+      }) }}
+
+      <h2 class="govuk-heading-l">
+        Current accreditation details
+      </h2>
+      {% endif %}
       {{ govukSummaryList({
         rows: [
           {
@@ -69,6 +111,22 @@
             },
             value: {
               html: site.regulator
+            }
+          },
+          {
+            key: {
+              html: 'Tonnage'
+            },
+            value: {
+              html: material.tonnage
+            }
+          },
+          {
+            key: {
+              html: 'Athorised users'
+            },
+            value: {
+              html: material.authorised | arrayToGovukList()
             }
           }
         ]

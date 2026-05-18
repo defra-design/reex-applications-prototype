@@ -26,7 +26,7 @@ router.get('*', (req, res, next) => {
   ]
 
   // Find the current org
-  let orgToFind = req.session.data['current-org'] || 0
+  let orgToFind = req.session.data['current-org'] || '123456'
   let orgs = req.session.data['orgs']
   let current = orgs.filter(org => org.id === orgToFind)
   // Pass it through to each page as local data

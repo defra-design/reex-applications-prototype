@@ -1,0 +1,94 @@
+{% extends "layouts/main.html" %}
+
+{% set pErn = 'PRN' if data['current-site-type'] == 'reprocessing' else 'PERN' %}
+{% set title = 'Check your answers before sending your application' %}
+
+{% block questions %}
+  <h1 class="govuk-heading-l">
+    {{ title | safe }}
+  </h1>
+
+  {% set answers = [] %}
+  {% for question in application.questions %}{% if question.name != 'Business plan' %}
+
+    {% set answers = answers | push ({
+      key: {
+        html: question.name
+      },
+      value: {
+        html: ('<a href="#0">'+(question.answer or 'example.pdf')+'</a>') if question.link == 'si-plan' else (question.answer | arrayToGovukList() if question.answer | isArray else question.answer)
+      },
+      actions: {
+        items: [
+          {
+            href: question.link+'?change=true',
+            text: 'Change',
+            visuallyHiddenText: ' '+question.name | lower
+          }
+        ]
+      }
+    }) %}
+
+  {% endif %}{% endfor %}
+
+  {{ govukSummaryList({
+    card: {
+      title: {
+        text: 'Application details'
+      }
+    },
+    rows: answers
+  }) }}
+
+
+
+  {% set answers = [] %}
+  {% for question in application.questions %}{% if question.name == 'Business plan' %}
+    {% for item in question.answer %}{% if item.percentage != '' and item.percentage != '0' %}
+      {% set answers = answers | push ({
+        key: {
+          html: item.copy
+        },
+        value: {
+          html: item.percentage+'% of '+pErn+' income <br>'+item.details
+        }
+      }) %}
+    {% endif %}{% endfor %}
+  {% endif %}{% endfor %}
+
+  {{ govukSummaryList({
+    card: {
+      title: {
+        text: 'Business plan'
+      },
+      actions: {
+        items: [
+          {
+            href: 'business-plan?change=true',
+            text: 'Change',
+            visuallyHiddenText: ' business plan'
+          }
+        ]
+      }
+    },
+    rows: answers
+  }) }}
+
+  {{ govukInsetText({
+    html: 'There is a fee of '+(application.fee | currency)+' for this application. You will be given payment details after sending the application to the regulator.'
+  }) }}
+
+
+
+  <h2 class="govuk-heading-m govuk-!-margin-top-9">
+    Now send your application
+  </h2>
+
+  <p>By submitting this application you are confirming that, to the best of your knowledge, the details you are providing are correct.</p>
+{% endblock %}
+
+{% block buttons %}
+  {{ govukButton({
+    html: 'Accpet and send'
+  }) }}
+{% endblock %}

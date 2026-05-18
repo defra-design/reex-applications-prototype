@@ -2,7 +2,7 @@
 
 {% block backLink %}
   {{ govukBackLink({
-    html: 'Back',
+    html: 'Back to accredditation details',
     href: '../'
   }) }}
 {% endblock %}
@@ -10,6 +10,9 @@
 {% set title = ('<span class="govuk-caption-xl">'+site.name+'<span class="govuk-visually-hidden">:</span></span>' if data['current-site-type'] == 'reprocessing' and org['reprocessing-sites'] | length > 1)+'Apply for '+(material.name | lower)+' reaccreditation' %}
 
 {% set pErn = 'PRN' if data['current-site-type'] == 'reprocessing' else 'PERN' %}
+
+{% set tasks = [] %}
+{% set tasksCompleted = 0 %}
 
 {% block content %}
   <div class="govuk-grid-row">
@@ -54,8 +57,13 @@
         Prepare application
       </h2>
 
-      {% set tasks = [] %}
-      {% for question in material.application %}
+      <p>The details from your current accreditation have been carried over automatically, update them if the details have changed.</p>
+
+      {% for question in application.questions %}
+        {# Increase the count of completed questions if completed #}
+        {% set tasksCompleted = tasksCompleted+1 if question.status == 'Completed' else tasksCompleted %}
+
+        {# Setup each task list item per question #}
         {% set tasks = tasks | push ({
           title: {
             html: question.name
@@ -86,27 +94,25 @@
           items: [
             {
               title: {
-                text: 'Make a determination'
+                text: 'Review and submit'
               },
               status: {
                 text: 'Cannot complete yet',
                 classes: 'govuk-task-list__status--cannot-start-yet'
-              },
-              classes: 'js-no-determination'
-            },
+              }
+            } if tasks | length > tasksCompleted,
             {
               title: {
-                text: 'Make a determination'
+                text: 'Review and submit'
               },
-              href: 'tasks/determination',
+              href: 'check-answers',
               status: {
                 tag: {
                   html: 'Ready',
                   classes: 'govuk-tag--green'
                 }
-              },
-              classes: 'js-determination govuk-!-display-none'
-            }
+              }
+            } if tasks | length == tasksCompleted
           ]
         }) }}
 
@@ -141,6 +147,11 @@
           <a href="?submitter=true">Swap to someone who can submit application</a>
         {% endif %}
       </li>
+      {% if tasks | length > tasksCompleted %}
+        <li>
+          <a href="?complete-all=true">Complete all tasks</a>
+        </li>
+      {% endif %}
     </ul>
   {% endset -%}
   {{ govukNotificationBanner({

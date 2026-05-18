@@ -1,0 +1,148 @@
+{% extends "layouts/main.html" %}
+
+{% block backLink %}
+  {{ govukBackLink({
+    html: 'Back to accredditation details',
+    href: '../'
+  }) }}
+{% endblock %}
+
+{% set title = ('<span class="govuk-caption-xl">'+site.name+'<span class="govuk-visually-hidden">:</span></span>' if data['current-site-type'] == 'reprocessing' and org['reprocessing-sites'] | length > 1)+'Payment for '+(material.name | lower)+' reaccreditation' %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    {% if data['application-submitted'] %}
+      <div class="govuk-grid-column-two-thirds-from-desktop">
+        {% set html %}
+          <h3 class="govuk-notification-banner__heading">
+            Application sent to {{ site.regulator }}
+          </h3>
+          <p>We have sent you a confirmation email.</p>
+        {% endset %}
+
+        {{ govukNotificationBanner({
+          html: html,
+          type: "success"
+        }) }}
+      </div>
+    {% endif %}
+
+    <div class="govuk-grid-column-full">
+      <div class="app-page-header">
+        <h1 class="govuk-heading-xl">
+          {{ title | safe }}
+        </h1>
+
+        <p>The regulator will only review your application after you&rsquo;ve paid. Once payment has been received and the application is in review you&rsquo;ll receive a notification.</p>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <h2 class="govuk-heading-l">
+        Pay by bank transfer
+      </h2>
+      <p>You need to visit your bank&rsquo;s website, app or branch and use the regulator&rsquo;s banking details to pay by bank transfer.</p>
+
+      {% set summaryText %}
+        <p>Faster Payments will usually reach the regulator the same or next day, including weekends and bank holidays.</p>
+        <p>CHAPS payments usually reach the regulator the same working day if you pay within your bank&rsquo;s processing times.</p>
+        <p>Bacs payments usually take 3 working days.</p>
+        <p>It takes up to 5 working days for your payment to show in your the regulator&rsquo;s online account.</p>
+      {% endset -%}
+      {{ govukDetails({
+        summaryHtml: 'How long it takes',
+        html: summaryText
+      }) }}
+
+
+
+      <h3 class="govuk-heading-m">
+        Bank details for the regulator
+      </h3>
+      {{ govukSummaryList({
+        rows: [
+          {
+            key: {
+              html: 'Sort code'
+            },
+            value: {
+              html: '30 94 30'
+            }
+          },
+          {
+            key: {
+              html: 'Account number'
+            },
+            value: {
+              html: '00733445'
+            }
+          },
+          {
+            key: {
+              html: 'Account name'
+            },
+            value: {
+              html: site.regulator
+            }
+          },
+          {
+            key: {
+              html: 'Payment reference'
+            },
+            value: {
+              html: material['accreditation-number'] | replace('26', '27')
+            }
+          }
+        ]
+      }) }}
+
+      {% set summaryText %}
+        <p>For overseas payments you need to use:</p>
+        {{ govukSummaryList({
+          rows: [
+            {
+              key: {
+                html: 'Bank identifier code (BIC)'
+              },
+              value: {
+                html: 'BARCGB22XXX'
+              }
+            },
+            {
+              key: {
+                html: 'Account number (IBAN)'
+              },
+              value: {
+                html: 'GB33BUKB 20201555555555'
+              }
+            },
+            {
+              key: {
+                html: 'Account name'
+              },
+              value: {
+                html: site.regulator
+              }
+            },
+            {
+              key: {
+                html: 'Payment reference'
+              },
+              value: {
+                html: material['accreditation-number']
+              }
+            }
+          ]
+        }) }}
+      {% endset -%}
+      {{ govukDetails({
+        summaryHtml: 'Overseas payments',
+        html: summaryText
+      }) }}
+
+    </div>
+  </div>
+{% endblock %}

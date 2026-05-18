@@ -38,36 +38,36 @@ router.get('*', (req, res, next) => {
 // Search for and render the current org/site/material
 router.all('*', (req, res, next) => {
   // Find the current org
-  let orgToFind = req.session.data['current-org'] || 0
+  let orgToFind = req.session.data['current-org'] || '123456'
   let orgs = req.session.data['orgs']
   let currentOrg = orgs.filter(org => org.id === orgToFind)
-  // Pass it through to each page as local data
-  res.locals.org = currentOrg[0]
-  // Store it for use in later routes
-  req.org = currentOrg
+    // Pass it through to each page as local data
+    res.locals.org = currentOrg[0]
+    // Store it for use in later routes
+    req.org = currentOrg
 
   // Find the current site
   let siteToFind = parseInt(req.session.data['current-site'] || '0')
   let sites = currentOrg[0][`${req.session.data['current-site-type']}-sites`]
   let currentSite = sites.filter(site => site.id === siteToFind)
-  // Pass it through to each page as local data
-  res.locals.site = currentSite[0]
-  // Store it for use in later routes
-  req.site = currentSite
+    // Pass it through to each page as local data
+    res.locals.site = currentSite[0]
+    // Store it for use in later routes
+    req.site = currentSite
 
   // Find the current material
   let materialToFind = parseInt(req.session.data['current-material'] || '0')
   let materials = currentSite[0].materials
   let currentMaterial = materials.filter(material => material.id === materialToFind)
-  // Pass it through to each page as local data
-  res.locals.material = currentMaterial[0]
-  // Store it for use in later routes
-  req.material = currentMaterial
+    // Pass it through to each page as local data
+    res.locals.material = currentMaterial[0]
+    // Store it for use in later routes
+    req.material = currentMaterial
 
   next()
 })
 
-router.get('/apply', (req, res) => {
+router.get('/apply', (req, res, next) => {
   // Setup a new application
   if (!req.material[0].application) {
     req.material[0].application = []
@@ -78,28 +78,47 @@ router.get('/apply', (req, res) => {
       pErn = 'PERN'
     }
 
-    let setupApplication = [
-      {
-        name: pErn+' tonnage',
-        link: 'tonnage',
-        status: 'Incomplete'
-      },
-      {
-        name: 'Authority to issue '+pErn+'s',
-        link: 'authority',
-        status: 'Incomplete'
-      },
-      {
-        name: 'Business plan',
-        link: 'business-plan',
-        status: 'Incomplete'
-      },
-      {
-        name: 'Sampling and inspection plan',
-        link: 'si-plan',
-        status: 'Incomplete'
-      }
-    ]
+    let tonnage = req.material[0].tonnage
+
+    if (tonnage == 'Up to 500 tonnes') {
+      newFee = '546'
+    } else if (tonnage == 'Up to 5,000 tonnes') {
+      newFee = '2184'
+    } else if (tonnage == 'Up to 10,000 tonnes') {
+      newFee = '3276'
+    } else if (tonnage == 'Over 10,000 tonnes') {
+      newFee = '3965'
+    }
+
+    let setupApplication = {
+      status: 'In progress',
+      fee: newFee,
+      questions: [
+        {
+          name: pErn+' tonnage',
+          link: 'tonnage',
+          status: 'Completed',
+          answer: tonnage
+        },
+        {
+          name: 'Authority to issue '+pErn+'s',
+          link: 'authority',
+          status: 'Completed',
+          answer: req.material[0].authorised
+        },
+        {
+          name: 'Business plan',
+          link: 'business-plan',
+          status: 'Completed',
+          answer: req.material[0]['business-plan']
+        },
+        {
+          name: 'Sampling and inspection plan',
+          link: 'si-plan',
+          status: 'Incomplete'
+        }
+      ]
+    }
 
     req.material[0].application = setupApplication
   }
@@ -107,50 +126,114 @@ router.get('/apply', (req, res) => {
   res.redirect('apply/task-list')
 })
 
+router.get('/apply/task-list', (req, res, next) => {
+  // Delete the change flag
+  delete req.session.data['change']
+
+  // Prototype option to set all answers to completed
+  if (req.session.data['complete-all']) {
+    let questions = req.material[0].application.questions
+    for (let q = 0; q < questions.length; q++) {
+      questions[q].status = 'Completed'
+    }
+    delete req.session.data['complete-all']
+    res.redirect('task-list');
+  } else { next() }
+})
+
 // Get the current question and store
 router.all('/apply/:question*', (req, res, next) => {
+  // Find the current application
+  let application = req.material[0].application
+    // Pass it through to each page as local data
+    res.locals.application = application
+    // Store it for use in later routes
+    req.application = application
+
   // Find the current question
   let questionToFind = req.params.question
-  let application = req.material[0].application
-  let currentQuestion = application.filter(question => question.link === questionToFind)
-  // Store current question for use in later routes
-  req.currentQuestion = currentQuestion
-
-  // If an answer exists pass it through to each page as local data for editing
-  res.locals.answer = currentQuestion[0]?.answer
+  let questions = application.questions
+  let currentQuestion = questions.filter(question => question.link === questionToFind)
+    // If an answer exists, pass it through to each page as local data
+    res.locals.answer = currentQuestion[0]?.answer
+    // Store it for use in later routes
+    req.currentQuestion = currentQuestion
 
   next()
 })
 
 router.get('/apply/:question/delete-upload', (req, res) => {
   delete req.currentQuestion[0].answer
-  res.redirect(`../${req.params.question}`);
+  res.redirect(`../${req.params.question}`)
+})
+
+router.post('/apply/check-answers', (req, res) => {
+  req.session.data['application-submitted'] = true
+  req.application.status = 'Submitted'
+  res.redirect('payment')
 })
 
 // Update status to complete for all questions all submit
 router.post('/apply/:question', (req, res, next) => {
+  let question = req.currentQuestion[0]
   // Update the status
-  req.currentQuestion[0].status = 'Completed'
+  question.status = 'Completed'
   // Save the answer
-  req.currentQuestion[0].answer = req.session.data[`${req.params.question}`]
+  question.answer = req.session.data[`${req.params.question}`]
+
+  // If updating the tonnage recalculate fee
+  if (req.params.question == 'tonnage') {
+    let answer = question.answer
+
+    if (answer == 'Up to 500 tonnes') {
+      req.material[0].application.fee = '546'
+    } else if (answer == 'Up to 5,000 tonnes') {
+      req.material[0].application.fee = '2184'
+    } else if (answer == 'Up to 10,000 tonnes') {
+      req.material[0].application.fee = '3276'
+    } else if (answer == 'Over 10,000 tonnes') {
+      req.material[0].application.fee = '3965'
+    }
+  }
 
   next()
 })
 
 router.post('/apply/tonnage', (req, res) => {
-  res.redirect('authority');
+  if (req.session.data['change']) {
+    res.redirect('check-answers')
+  } else {
+    res.redirect('authority')
+  }
 })
 
 router.post('/apply/authority', (req, res) => {
-  res.redirect('business-plan');
+  if (req.session.data['change']) {
+    res.redirect('check-answers')
+  } else {
+    res.redirect('business-plan')
+  }
 })
 
 router.post('/apply/business-plan', (req, res) => {
-  res.redirect('si-plan');
+  if (req.session.data['change']) {
+    res.redirect('check-answers')
+  } else {
+    res.redirect('si-plan')
+  }
 })
 
 router.post('/apply/si-plan', (req, res) => {
-  res.redirect('task-list');
+  if (req.session.data['change']) {
+    res.redirect('check-answers')
+  } else {
+    res.redirect('task-list')
+  }
+})
+
+router.get('/apply/payment', (req, res, next) => {
+  delete req.session.data['application-submitted']
+  next()
 })
 
 

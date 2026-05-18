@@ -24,15 +24,15 @@
 
   {# Create list of questions #}
   {% set questions = {
-    'newInfrastructre': 'New reprocessing infrastructure and maintaining existing infrastructure',
-    'priceSupport': 'Price support for buying packaging waste or selling recycled packaging waste',
-    'buildingConversion': 'Building converted into accommodation',
-    'priceSupport': 'Price support for buying packaging waste or selling recycled packaging waste',
-    'businessCollection': 'Support for business collections',
-    'commsCampaigns': 'Communications, including information campaigns',
-    'newMarkets': 'Developing new markets for products made from recycled packaging waste',
-    'newUses': 'Developing new uses for recycled waste',
-    'other': 'Activities or investment not covered by the other categories'
+    '0': 'New reprocessing infrastructure and maintaining existing infrastructure',
+    '1': 'Price support for buying packaging waste or selling recycled packaging waste',
+    '2': 'Building converted into accommodation',
+    '3': 'Price support for buying packaging waste or selling recycled packaging waste',
+    '4': 'Support for business collections',
+    '5': 'Communications, including information campaigns',
+    '6': 'Developing new markets for products made from recycled packaging waste',
+    '7': 'Developing new uses for recycled waste',
+    '8': 'Activities or investment not covered by the other categories'
   } %}
 
   {% call govukFieldset({
@@ -45,17 +45,18 @@
     <p class="govuk-hint">Your total PRN income must equal 100%</p>
 
     {# Loop through questions and create inputs #}
-    {% for value, copy in questions %}
+    {% for value, question in questions %}
+      <input type="hidden" name="business-plan[{{value}}][copy]" value="{{question}}">
       {{ govukInput({
-        id: value,
-        name: value,
-        value: data[value],
+        id: 'business-plan['+value+'][percentage]',
+        name: 'business-plan['+value+'][percentage]',
+        value: answer[value]['percentage'],
         classes: 'govuk-input--width-3',
         formGroup: {
           classes: 'js-input-conditional'
         },
         label: {
-          html: copy
+          html: question
         },
         suffix: {
           text: '%'
@@ -65,15 +66,15 @@
       }) }}
 
       {{ govukTextarea({
-        name: value+'Details',
-        id: value+'Details',
-        value: data[value+'Details'],
+        name: 'business-plan['+value+'][details]',
+        id: 'business-plan['+value+'][details]',
+        value: answer[value]['details'],
         formGroup: {
           classes: 'app-input-conditional__item'
         },
         rows: '2',
         label: {
-          html: 'Details of how you&rsquo;ll spend the income<span class="govuk-visually-hidden"> for '+copy+'</span>'
+          html: 'Details of how you&rsquo;ll spend the income<span class="govuk-visually-hidden"> for '+question+'</span>'
         }
       }) }}
     {% endfor %}

@@ -16,9 +16,9 @@
 	}
 }
 
-.govuk-task-list + [class^="govuk-heading-"] {
-	@include govuk-responsive-margin(9, "top");
-}
+// .govuk-task-list + [class^="govuk-heading-"] {
+// 	@include govuk-responsive-margin(9, "top");
+// }
 
 .app-checkboxes--divider .govuk-checkboxes__divider {
 	width: 100%;

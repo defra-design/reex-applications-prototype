@@ -15,3 +15,25 @@ addFilter('cleanArray', (array) => {
 		return (item && (item !==""))
 	})
 })
+
+addFilter('currency', (num) => {
+	return new Intl.NumberFormat("en-GB", { style: "currency", currency: "GBP" }).format(num).replace(/\.00$/, '')
+})
+
+addFilter('isArray', (value) => {
+	return Array.isArray(value)
+})
+
+addFilter('isObject', (value) => {
+	return value instanceof Object
+})
+
+addFilter('arrayToGovukList', (array, type) => {
+	let items = new Array()
+
+	array.forEach((item) => {
+		items.push('<li>'+item+'</li>')
+	})
+
+	return '<ul class="govuk-list '+type+'">'+items.join('')+'</ul>'
+})

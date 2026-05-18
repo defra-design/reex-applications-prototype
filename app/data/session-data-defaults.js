@@ -5,13 +5,17 @@ module.exports = {
 
   "orgs": [
     {
-      "id": 0,
+      "id": "123456",
       "name": "Gaskells Waste Services",
       "users": [
         {
-          "name": "Jim Armstrong",
-          "email": "jim@gws.com",
+          "name": "Chris Armstrong",
+          "email": "chris@gws.com",
           "active": true
+        },
+        {
+          "name": "Jim Armstrong",
+          "email": "jim@gws.com"
         },
         {
           "name": "Willow Armstrong",
@@ -23,17 +27,20 @@ module.exports = {
           "id": 0,
           "name": "North road",
           "address": "2 North Road, Addingrove, AA3 1AB",
-          "regulator": "England",
+          "regulator": "Environment Agency",
           "materials": [
             {
               "id": 0,
               "name": "Paper and board",
               "registration": "Approved",
-              "registration-number": "XMQLCYA22BUO7ZA",
+              "registration-number": "R26ER1234560001PA",
               "accreditation": "Approved",
-              "accreditation-number": "JCAJBFB1IMUZG2Z",
-              "accreditation-expiry": "2026-12-1",
-              "balance": "23.49"
+              "accreditation-number": "A26ER1234560001PA",
+              "accreditation-expiry": "2026-12-31",
+              "balance": "23.49",
+              "tonnage": "Up to 500 tonnes",
+              "authorised": ['You', 'Jim Armstrong'],
+              "business-plan": [{"copy":"New reprocessing infrastructure and maintaining existing infrastructure","percentage":"80","details":"Details of how I’ll spend the income"},{"copy":"Price support for buying packaging waste or selling recycled packaging waste","percentage":"","details":""},{"copy":"Building converted into accommodation","percentage":"20","details":"Details of how I’ll spend the income"},{"copy":"Price support for buying packaging waste or selling recycled packaging waste","percentage":"","details":""},{"copy":"Support for business collections","percentage":"","details":""},{"copy":"Communications, including information campaigns","percentage":"","details":""},{"copy":"Developing new markets for products made from recycled packaging waste","percentage":"","details":""},{"copy":"Developing new uses for recycled waste","percentage":"","details":""},{"copy":"Activities or investment not covered by the other categories","percentage":"","details":""}]
             }
           ]
         },
@@ -41,17 +48,20 @@ module.exports = {
           "id": 1,
           "name": "South road",
           "address": "111 South Road, Addingrove, AA3 1AB",
-          "regulator": "England",
+          "regulator": "Environment Agency",
           "materials": [
             {
               "id": 0,
               "name": "Paper and board",
               "registration": "Approved",
-              "registration-number": "W66HOJ62BADXM04",
+              "registration-number": "R26ER1234560002PA",
               "accreditation": "Approved",
-              "accreditation-number": "O82RV7KQQUHKFM9",
-              "accreditation-expiry": "2026-12-1",
-              "balance": "23.49"
+              "accreditation-number": "A26ER1234560002PA",
+              "accreditation-expiry": "2026-12-31",
+              "balance": "23.49",
+              "tonnage": "Up to 5,000 tonnes",
+              "authorised": ['You', 'Jim Armstrong'],
+              "business-plan": [{"copy":"New reprocessing infrastructure and maintaining existing infrastructure","percentage":"80","details":"Details of how I’ll spend the income"},{"copy":"Price support for buying packaging waste or selling recycled packaging waste","percentage":"","details":""},{"copy":"Building converted into accommodation","percentage":"20","details":"Details of how I’ll spend the income"},{"copy":"Price support for buying packaging waste or selling recycled packaging waste","percentage":"","details":""},{"copy":"Support for business collections","percentage":"","details":""},{"copy":"Communications, including information campaigns","percentage":"","details":""},{"copy":"Developing new markets for products made from recycled packaging waste","percentage":"","details":""},{"copy":"Developing new uses for recycled waste","percentage":"","details":""},{"copy":"Activities or investment not covered by the other categories","percentage":"","details":""}]
             }
           ]
         }
@@ -61,15 +71,18 @@ module.exports = {
           "id": 0,
           "name": "North road",
           "address": "2 North Road, Addingrove, AA3 1AB",
-          "regulator": "England",
+          "regulator": "Environment Agency",
           "materials": [
             {
               "id": 0,
               "name": "Paper and board",
               "registration": "Approved",
-              "registration-number": "311W5LFGOKTM2EE",
+              "registration-number": "R26EE1234560001PA",
               "accreditation": "Not accredited",
-              "balance": "23.49"
+              "balance": "23.49",
+              "tonnage": "Up to 500 tonnes",
+              "authorised": ['You', 'Jim Armstrong'],
+              "business-plan": [{"copy":"New reprocessing infrastructure and maintaining existing infrastructure","percentage":"80","details":"Details of how I’ll spend the income"},{"copy":"Price support for buying packaging waste or selling recycled packaging waste","percentage":"","details":""},{"copy":"Building converted into accommodation","percentage":"20","details":"Details of how I’ll spend the income"},{"copy":"Price support for buying packaging waste or selling recycled packaging waste","percentage":"","details":""},{"copy":"Support for business collections","percentage":"","details":""},{"copy":"Communications, including information campaigns","percentage":"","details":""},{"copy":"Developing new markets for products made from recycled packaging waste","percentage":"","details":""},{"copy":"Developing new uses for recycled waste","percentage":"","details":""},{"copy":"Activities or investment not covered by the other categories","percentage":"","details":""}]
             }
           ]
         }
