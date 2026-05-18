@@ -7,7 +7,7 @@
   }) }}
 {% endblock %}
 
-{% set title = ('<span class="govuk-caption-xl">'+site.name+'<span class="govuk-visually-hidden">:</span></span>' if data['current-site-type'] == 'reprocessing' and org['reprocessing-sites'] | length > 1)+'Apply for '+(material.name | lower)+' reaccreditation' %}
+{% set title = ('<span class="govuk-caption-xl">'+site.name+'<span class="govuk-visually-hidden">:</span></span> ' if data['current-site-type'] == 'reprocessing' and org['reprocessing-sites'] | length > 1)+'Apply for '+(material.name | lower)+' reaccreditation' %}
 
 {% set pErn = 'PRN' if data['current-site-type'] == 'reprocessing' else 'PERN' %}
 

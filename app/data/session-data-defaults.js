@@ -1,7 +1,7 @@
 module.exports = {
 
   "repository-url": "https://github.com/defra-design/reex-applications-prototype",
-  "prototype-url": "Needs creating",
+  "prototype-url": "https://reex-applications-prototype-5c478b674681.herokuapp.com/",
 
   "orgs": [
     {

@@ -6,7 +6,7 @@
   }) }}
 {% endblock %}
 
-{% set title = ('<span class="govuk-caption-xl">'+site.name+'<span class="govuk-visually-hidden">:</span></span>' if data['current-site-type'] == 'reprocessing' and org['reprocessing-sites'] | length > 1)+material.name+' accreditation' %}
+{% set title = ('<span class="govuk-caption-xl">'+site.name+'<span class="govuk-visually-hidden">:</span></span> ' if data['current-site-type'] == 'reprocessing' and org['reprocessing-sites'] | length > 1)+material.name+' accreditation' %}
 
 {% block content %}
   <div class="govuk-grid-row">
