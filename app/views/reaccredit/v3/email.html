@@ -1,0 +1,14 @@
+{% extends "layouts/email.html" %}
+
+{% set title = '<span class="govuk-caption-l">Notification</span> Request for resubmission' %}
+{% set fromAddress = 'Record reprocessed or exported packaging waste' %}
+{% set toAddress = 'you@email.com' %}
+{% set subject = 'The regulator has requested you resubmit part of your accreditation application' %}
+
+{% block emailBody %}
+  <p>The regulator has flagged part of your paper and board accreditation application at   2 North Road, Addingrove, AA3 1AB as needing resubmission.</p>
+
+  <p>Use this to sign in and see the request:</p>
+
+  <p><a href="./">https://www.record-reprocess-or-exported-packaging-waste.service.gov.uk/invitation/Ijk5ZjMxZjJjLTFmMGQtNDBjMi1iNWY2LTI5ODNiNjMxNWM0MSI%2EaR7pAg%2E-9iwtNbGlR86jLS0Mv_P3W-asJI</a></p>
+{% endblock %}
