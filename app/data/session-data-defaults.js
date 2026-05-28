@@ -87,6 +87,48 @@ module.exports = {
           ]
         }
       ]
+    },
+    {
+      "id": "2",
+      "name": "GreenLoop Recovery",
+      "users": [
+        {
+          "name": "Chris Armstrong",
+          "email": "chris@gws.com",
+          "active": true
+        },
+        {
+          "name": "Jim Armstrong",
+          "email": "jim@gws.com"
+        },
+        {
+          "name": "Willow Armstrong",
+          "email": "willow@gws.com"
+        }
+      ],
+      "reprocessing-sites": [
+        {
+          "id": 0,
+          "name": "North road",
+          "address": "2 North Road, Addingrove, AA3 1AB",
+          "regulator": "Environment Agency",
+          "materials": [
+            {
+              "id": 0,
+              "name": "Paper and board",
+              "registration": "Approved",
+              "registration-number": "R26ER1234560001PA",
+              "accreditation": "Approved",
+              "accreditation-number": "A26ER1234560001PA",
+              "accreditation-expiry": "2026-12-31",
+              "balance": "23.49",
+              "tonnage": "Up to 500 tonnes",
+              "authorised": ['You', 'Jim Armstrong'],
+              "application":{"status":"Requires resubmission","fee":"546","questions":[{"name":"PRN tonnage","link":"tonnage","status":"Completed","answer":"Up to 500 tonnes"},{"name":"Authority to issue PRNs","link":"authority","status":"Completed","answer":["You","Jim Armstrong"]},{"name":"Business plan","link":"business-plan","status":"Completed","answer":[{"copy":"New reprocessing infrastructure and maintaining existing infrastructure","percentage":"80","details":"Details of how I’ll spend the income"},{"copy":"Price support for buying packaging waste or selling recycled packaging waste","percentage":"","details":""},{"copy":"Building converted into accommodation","percentage":"20","details":"Details of how I’ll spend the income"},{"copy":"Price support for buying packaging waste or selling recycled packaging waste","percentage":"","details":""},{"copy":"Support for business collections","percentage":"","details":""},{"copy":"Communications, including information campaigns","percentage":"","details":""},{"copy":"Developing new markets for products made from recycled packaging waste","percentage":"","details":""},{"copy":"Developing new uses for recycled waste","percentage":"","details":""},{"copy":"Activities or investment not covered by the other categories","percentage":"","details":""}]},{"name":"Sampling and inspection plan","link":"si-plan","status":"Queried","answer":"example.png"}]}
+            }
+          ]
+        }
+      ]
     }
   ]
 

@@ -19,13 +19,28 @@
       <p class="govuk-body-l">Allow accredited operators to reapply for accreditation.</p>
 
 
-
-      {% set version = "2" %}
+      {% set version = "3" %}
       <h2 class="govuk-heading-m">
         Version {{version}}
         {{ govukTag({
           classes: 'govuk-tag--yellow govuk-!-margin-left-2',
           text: 'In progress'
+        }) }}
+      </h2>
+
+      <p>Allows the operator to change and answer based on a query from the regulator.</p>
+
+      {{ govukButton({
+        text: 'View prototype',
+        href: 'v'+version+'/?account-accreditation-next=/reaccredit/v'+version+'/&current-site-type=reprocessing&current-site=0&current-material=0'
+      }) }}
+
+      {% set version = "2" %}
+      <h2 class="govuk-heading-m">
+        Version {{version}}
+        {{ govukTag({
+          classes: 'govuk-tag--blue govuk-!-margin-left-2',
+          text: 'Done'
         }) }}
       </h2>
 
@@ -40,8 +55,8 @@
       <h2 class="govuk-heading-m">
         Version {{version}}
         {{ govukTag({
-          classes: 'govuk-tag--yellow govuk-!-margin-left-2',
-          text: 'In progress'
+          classes: 'govuk-tag--blue govuk-!-margin-left-2',
+          text: 'Done'
         }) }}
       </h2>
 
