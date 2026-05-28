@@ -161,9 +161,9 @@
           ]
         }) }}
       {% elif org['reprocessing-sites'] %}
-        {{ reprocessingSites }}
+        {{ reprocessingSites | safe }}
       {% elif org['exporting-sites'] %}
-        {{ exportingSites }}
+        {{ exportingSites | safe }}
       {% else %} <p>Error</p> {% endif %}
 
 
