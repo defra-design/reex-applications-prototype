@@ -28,7 +28,7 @@
         }) }}
       </h2>
 
-      <p>Allows the operator to change and answer based on a query from the regulator.</p>
+      <p>Allows the operator to change and resubmit their application based on a query from the regulator.</p>
 
       {{ govukButton({
         text: 'View prototype',
@@ -51,36 +51,18 @@
         href: 'v'+version+'/?account-accreditation-next=/reaccredit/v'+version+'/&current-site-type=reprocessing&current-site=0&current-material=0'
       }) }}
 
-      {% set version = "1" %}
-      <h2 class="govuk-heading-m">
-        Version {{version}}
-        {{ govukTag({
-          classes: 'govuk-tag--blue govuk-!-margin-left-2',
-          text: 'Done'
-        }) }}
-      </h2>
-
-      <p>An updated flow based on the initial <a href="https://app.mural.co/t/coredefra2548/m/coredefra2548/1732027194584/18220cfc3c599d2780f60ad541bfebd51c00a8e1" class="govuk-link" rel="noreferrer noopener" target="_blank">Eviden designs (opens in new tab)</a> for initial accreditation.</p>
-
-      {{ govukButton({
-        text: 'View prototype',
-        href: 'v'+version+'/?account-accreditation-next=/reaccredit/v'+version+'/&current-site-type=reprocessing&current-site=0&current-material=0'
-      }) }}
 
 
 
 
 
-
-      {# {% set v1HTML %}
+      {% set v1HTML %}
         {% set version = "1" %}
-        <p>Information about this version</p>
-
-        <p><a href="#0">View the research outputs on Miro</a>.</p>
+        <p>An updated flow based on the initial <a href="https://app.mural.co/t/coredefra2548/m/coredefra2548/1732027194584/18220cfc3c599d2780f60ad541bfebd51c00a8e1" class="govuk-link" rel="noreferrer noopener" target="_blank">Eviden designs (opens in new tab)</a> for initial accreditation.</p>
 
         {{ govukButton({
           text: 'View prototype',
-          href: '#0'
+          href: 'v'+version+'/?account-accreditation-next=/reaccredit/v'+version+'/&current-site-type=reprocessing&current-site=0&current-material=0'
         }) }}
       {% endset %}
 
@@ -90,14 +72,14 @@
         items: [
           {
             heading: {
-              html: 'Version 1 <strong class="govuk-tag govuk-tag--green govuk-!-margin-left-2">Researched</strong>'
+              html: 'Version 1 <strong class="govuk-tag govuk-tag--blue govuk-!-margin-left-2">Done</strong>'
             },
             content: {
               html: v1HTML
             }
           }
         ]
-      }) }} #}
+      }) }}
 
     </div>
   </div>
