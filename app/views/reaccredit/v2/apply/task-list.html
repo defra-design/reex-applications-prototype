@@ -168,9 +168,11 @@
 
         {% set adminList %}
           <ul class="govuk-list govuk-list--bullet">
-            <li>Person A</li>
-            <li>Person B</li>
-            <li>Person C</li>
+            {% for user in org.users %}
+              {% if not user.active %}
+                <li>{{ user.name }}</li>
+              {% endif %}
+            {% endfor %}
           </ul>
         {% endset -%}
         {{ govukDetails({
