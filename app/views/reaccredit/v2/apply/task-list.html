@@ -54,10 +54,10 @@
     <div class="govuk-grid-column-three-quarters-from-desktop">
 
       <h2 class="govuk-heading-l">
-        Prepare application
+        Prepare your application
       </h2>
 
-      <p>The details from your current accreditation have been carried over automatically, update them if the details have changed.</p>
+      <p>The details from your current accreditation have been carried over automatically. Change any that are no longer correct.</p>
 
       {% set answers = [] %}
       {% for question in application.questions %}{% if question.name != 'Business plan' %}
@@ -147,7 +147,7 @@
 
 
       <h2 class="govuk-heading-l">
-        Submit application
+        Submit your application
       </h2>
 
       {% if data['submitter'] == 'true' %}

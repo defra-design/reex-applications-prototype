@@ -18,7 +18,7 @@
         </h1>
 
         {{ govukInsetText({
-          html: '<p>You can now <a href="apply/task-list">apply for reaccreditation of this material</a>.</p><p>This application need to be completes before 30 September 2026 or the accreditation will lapse.</p>'
+          html: '<p>You can now <a href="apply/task-list">apply for reaccreditation of this material</a>.</p><p>This application needs to be completed before 30 September 2026 or the accreditation will lapse.</p>'
         }) if not material.application }}
       </div>
 
@@ -123,7 +123,7 @@
           },
           {
             key: {
-              html: 'Athorised users'
+              html: 'Authorised users'
             },
             value: {
               html: material.authorised | arrayToGovukList()

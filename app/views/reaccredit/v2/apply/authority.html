@@ -1,7 +1,7 @@
 {% extends "layouts/main.html" %}
 
 {% set pErn = 'PRN' if data['current-site-type'] == 'reprocessing' else 'PERN' %}
-{% set title = 'Who should have authority to issue '+pErn+'s at this site?' %}
+{% set title = 'Who needs authority to issue '+pErn+'s at this site?' %}
 
 {% block questions %}
   {# Create empty object for radios #}
