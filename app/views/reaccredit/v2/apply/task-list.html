@@ -54,7 +54,7 @@
     <div class="govuk-grid-column-three-quarters-from-desktop">
 
       <h2 class="govuk-heading-l">
-        Prepare your application
+        Prepare the application
       </h2>
 
       <p>The details from your current accreditation have been carried over automatically. Change any that are no longer correct.</p>
@@ -141,14 +141,14 @@
       }) }}
 
       {{ govukInsetText({
-        html: 'There is a fee of '+(application.fee | currency)+' for this application. You will be given payment details after sending the application to the regulator.'
+        html: 'There&rsquo;s a fee of '+(application.fee | currency)+' for this application. Payment details will be given after the application is submitted to the regulator.'
       }) }}
 
 
 
 
       <h2 class="govuk-heading-l">
-        Submit your application
+        Submit the application
       </h2>
 
       {% if data['submitter'] == 'true' %}
@@ -159,12 +159,12 @@
 
           <form method="post" novalidate>
             {{ govukButton({
-              text: 'Accpet and send'
+              text: 'Accept and submit'
             }) }}
           </form>
         {% endif %}
       {% else %}
-        <p>You can prepare the application, but your account settings do not allow you to submit it.</p>
+        <p>Your account settings do not allow you to submit the application.</p>
 
         {% set adminList %}
           <ul class="govuk-list govuk-list--bullet">

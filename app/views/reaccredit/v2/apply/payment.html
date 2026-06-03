@@ -15,9 +15,9 @@
       <div class="govuk-grid-column-two-thirds-from-desktop">
         {% set html %}
           <h3 class="govuk-notification-banner__heading">
-            Application sent to {{ site.regulator }}
+            Application sent to the {{ site.regulator }}
           </h3>
-          <p>We have sent you a confirmation email.</p>
+          <p>We&rsquo;ve sent a confirmation email to Rosina Campbell (rosina@gws.com).</p>
         {% endset %}
 
         {{ govukNotificationBanner({
@@ -33,7 +33,8 @@
           {{ title | safe }}
         </h1>
 
-        <p>The regulator will only review your application after you&rsquo;ve paid. Once payment has been received and the application is in review you&rsquo;ll receive a notification.</p>
+        <p>The regulator will only review the application after payment has been made.</p> 
+        <p>You&rsquo;ll receive a notification once payment has been received and the application is in review.</p>
       </div>
     </div>
   </div>
@@ -50,10 +51,10 @@
         <p>Faster Payments will usually reach the regulator the same or next day, including weekends and bank holidays.</p>
         <p>CHAPS payments usually reach the regulator the same working day if you pay within your bank&rsquo;s processing times.</p>
         <p>Bacs payments usually take 3 working days.</p>
-        <p>It takes up to 5 working days for your payment to show in your the regulator&rsquo;s online account.</p>
+        <p>It takes up to 5 working days for your payment to show in the regulator&rsquo;s online account.</p>
       {% endset -%}
       {{ govukDetails({
-        summaryHtml: 'How long it takes',
+        summaryHtml: 'How long do payments take?',
         html: summaryText
       }) }}
 
