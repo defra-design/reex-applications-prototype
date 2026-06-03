@@ -57,14 +57,14 @@
         Regulator query
       </h2>
 
-      <p>The regulator has flagged your sampling and inspection plan as having an issue. </p>
+      <p>The regulator has identified an issue with your sampling and inspection plan. </p>
 
       {{ govukInsetText({
-        html: 'It looks like you have uploaded the wrong document. Please reupload and submit your sampling and inspection plan.'
+        html: 'It looks like you&rsquo;ve uploaded the wrong document. Please upload and submit your sampling and inspection plan again.'
       }) }}
 
       <h2 class="govuk-heading-l">
-        Update application
+        Update the application
       </h2>
 
       {% set answers = [] %}
@@ -106,23 +106,23 @@
 
 
       <h2 class="govuk-heading-l">
-        Submit application
+        Submit the application
       </h2>
 
       {% if data['submitter'] == 'true' %}
         {% if questionCount > questionsCompleted %}
-          <p>You must complete each section of the application before you can submit it.</p>
+          <p>You must complete each section of the application before it can be submitted.</p>
         {% else %}
           <p>By submitting this application you are confirming that, to the best of your knowledge, the details you are providing are correct.</p>
 
           <form method="post" novalidate>
             {{ govukButton({
-              text: 'Accpet and send'
+              text: 'Accept and submit'
             }) }}
           </form>
         {% endif %}
       {% else %}
-        <p>You can prepare the application, but your account settings do not allow you to submit it.</p>
+        <p>Your account settings do not allow you to submit the application.</p>
 
         {% set adminList %}
           <ul class="govuk-list govuk-list--bullet">
