@@ -83,7 +83,7 @@
             html: ('<a href="#0">'+(question.answer or 'example.pdf')+'</a>') if question.link == 'si-plan' else (question.answer | arrayToGovukList() if question.answer | isArray else question.answer)
           } if question.answer else
           {
-            html: '<a href="'+question.link+'">Enter '+(question.name | lower)+'</a>'
+            html: '<a href="'+question.link+'">'+('Upload ' if question.name == 'Sampling and inspection plan' else 'Enter ')+(question.name | lower)+'</a>'
           },
           actions: {
             items: [

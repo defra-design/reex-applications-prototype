@@ -226,6 +226,11 @@ router.post('/apply/business-plan', (req, res) => {
 })
 
 router.post('/apply/si-plan', (req, res) => {
+  if (!req.session.data['si-plan']) {
+    let question = req.currentQuestion[0]
+    question.answer = 'si-plan.pdf'
+  }
+
   if (req.session.data['change']) {
     res.redirect('task-list')
   } else {

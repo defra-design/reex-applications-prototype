@@ -12,9 +12,9 @@
     {% if user.active %}
       {% set users = users | push (
         {
-          html: 'You ('+user.email+')',
-          value: 'You',
-          checked: true if answer and answer.includes('You')
+          html: user.name+' ('+user.email+')',
+          value: user.name,
+          checked: true if answer and answer.includes(user.name)
         }
       ) %}
       {% set users = users | push (

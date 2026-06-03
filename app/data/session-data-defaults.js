@@ -9,17 +9,21 @@ module.exports = {
       "name": "Gaskells Waste Services",
       "users": [
         {
-          "name": "Chris Armstrong",
-          "email": "chris@gws.com",
+          "name": "Rosina Campbell",
+          "email": "rosina@gws.com",
           "active": true
         },
         {
-          "name": "Jim Armstrong",
-          "email": "jim@gws.com"
+          "name": "Harry Edge",
+          "email": "harry@gws.com"
         },
         {
-          "name": "Willow Armstrong",
-          "email": "willow@gws.com"
+          "name": "Cathryn Mansfield",
+          "email": "cathryn@gws.com"
+        },
+        {
+          "name": "Ghulam Patel",
+          "email": "ghulam@gws.com"
         }
       ],
       "reprocessing-sites": [
@@ -39,8 +43,8 @@ module.exports = {
               "accreditation-expiry": "2026-12-31",
               "balance": "23.49",
               "tonnage": "Up to 500 tonnes",
-              "authorised": ['You', 'Jim Armstrong'],
-              "business-plan": [{"copy":"New reprocessing infrastructure and maintaining existing infrastructure","percentage":"80","details":"Details of how I’ll spend the income"},{"copy":"Price support for buying packaging waste or selling recycled packaging waste","percentage":"","details":""},{"copy":"Building converted into accommodation","percentage":"20","details":"Details of how I’ll spend the income"},{"copy":"Price support for buying packaging waste or selling recycled packaging waste","percentage":"","details":""},{"copy":"Support for business collections","percentage":"","details":""},{"copy":"Communications, including information campaigns","percentage":"","details":""},{"copy":"Developing new markets for products made from recycled packaging waste","percentage":"","details":""},{"copy":"Developing new uses for recycled waste","percentage":"","details":""},{"copy":"Activities or investment not covered by the other categories","percentage":"","details":""}]
+              "authorised": ['Rosina Campbell', 'Harry Edge'],
+              "business-plan": [{"copy":"New reprocessing infrastructure and maintaining existing infrastructure","percentage":"80","details":"I’ll spend the income to…"},{"copy":"Price support for buying packaging waste or selling recycled packaging waste","percentage":"","details":""},{"copy":"Building converted into accommodation","percentage":"20","details":"I’ll spend the income to…"},{"copy":"Price support for buying packaging waste or selling recycled packaging waste","percentage":"","details":""},{"copy":"Support for business collections","percentage":"","details":""},{"copy":"Communications, including information campaigns","percentage":"","details":""},{"copy":"Developing new markets for products made from recycled packaging waste","percentage":"","details":""},{"copy":"Developing new uses for recycled waste","percentage":"","details":""},{"copy":"Activities or investment not covered by the other categories","percentage":"","details":""}]
             }
           ]
         },
@@ -60,8 +64,8 @@ module.exports = {
               "accreditation-expiry": "2026-12-31",
               "balance": "23.49",
               "tonnage": "Up to 5,000 tonnes",
-              "authorised": ['You', 'Jim Armstrong'],
-              "business-plan": [{"copy":"New reprocessing infrastructure and maintaining existing infrastructure","percentage":"80","details":"Details of how I’ll spend the income"},{"copy":"Price support for buying packaging waste or selling recycled packaging waste","percentage":"","details":""},{"copy":"Building converted into accommodation","percentage":"20","details":"Details of how I’ll spend the income"},{"copy":"Price support for buying packaging waste or selling recycled packaging waste","percentage":"","details":""},{"copy":"Support for business collections","percentage":"","details":""},{"copy":"Communications, including information campaigns","percentage":"","details":""},{"copy":"Developing new markets for products made from recycled packaging waste","percentage":"","details":""},{"copy":"Developing new uses for recycled waste","percentage":"","details":""},{"copy":"Activities or investment not covered by the other categories","percentage":"","details":""}]
+              "authorised": ['Rosina Campbell', 'Harry Edge'],
+              "business-plan": [{"copy":"New reprocessing infrastructure and maintaining existing infrastructure","percentage":"80","details":"I’ll spend the income to…"},{"copy":"Price support for buying packaging waste or selling recycled packaging waste","percentage":"","details":""},{"copy":"Building converted into accommodation","percentage":"20","details":"I’ll spend the income to…"},{"copy":"Price support for buying packaging waste or selling recycled packaging waste","percentage":"","details":""},{"copy":"Support for business collections","percentage":"","details":""},{"copy":"Communications, including information campaigns","percentage":"","details":""},{"copy":"Developing new markets for products made from recycled packaging waste","percentage":"","details":""},{"copy":"Developing new uses for recycled waste","percentage":"","details":""},{"copy":"Activities or investment not covered by the other categories","percentage":"","details":""}]
             }
           ]
         }
@@ -81,8 +85,8 @@ module.exports = {
               "accreditation": "Not accredited",
               "balance": "23.49",
               "tonnage": "Up to 500 tonnes",
-              "authorised": ['You', 'Jim Armstrong'],
-              "business-plan": [{"copy":"New reprocessing infrastructure and maintaining existing infrastructure","percentage":"80","details":"Details of how I’ll spend the income"},{"copy":"Price support for buying packaging waste or selling recycled packaging waste","percentage":"","details":""},{"copy":"Building converted into accommodation","percentage":"20","details":"Details of how I’ll spend the income"},{"copy":"Price support for buying packaging waste or selling recycled packaging waste","percentage":"","details":""},{"copy":"Support for business collections","percentage":"","details":""},{"copy":"Communications, including information campaigns","percentage":"","details":""},{"copy":"Developing new markets for products made from recycled packaging waste","percentage":"","details":""},{"copy":"Developing new uses for recycled waste","percentage":"","details":""},{"copy":"Activities or investment not covered by the other categories","percentage":"","details":""}]
+              "authorised": ['Rosina Campbell', 'Harry Edge'],
+              "business-plan": [{"copy":"New reprocessing infrastructure and maintaining existing infrastructure","percentage":"80","details":"I’ll spend the income to…"},{"copy":"Price support for buying packaging waste or selling recycled packaging waste","percentage":"","details":""},{"copy":"Building converted into accommodation","percentage":"20","details":"I’ll spend the income to…"},{"copy":"Price support for buying packaging waste or selling recycled packaging waste","percentage":"","details":""},{"copy":"Support for business collections","percentage":"","details":""},{"copy":"Communications, including information campaigns","percentage":"","details":""},{"copy":"Developing new markets for products made from recycled packaging waste","percentage":"","details":""},{"copy":"Developing new uses for recycled waste","percentage":"","details":""},{"copy":"Activities or investment not covered by the other categories","percentage":"","details":""}]
             }
           ]
         }
@@ -93,17 +97,21 @@ module.exports = {
       "name": "GreenLoop Recovery",
       "users": [
         {
-          "name": "Chris Armstrong",
-          "email": "chris@gws.com",
+          "name": "Rosina Campbell",
+          "email": "rosina@greenloop.com",
           "active": true
         },
         {
-          "name": "Jim Armstrong",
-          "email": "jim@gws.com"
+          "name": "Harry Edge",
+          "email": "harry@greenloop.com"
         },
         {
-          "name": "Willow Armstrong",
-          "email": "willow@gws.com"
+          "name": "Cathryn Mansfield",
+          "email": "cathryn@greenloop.com"
+        },
+        {
+          "name": "Ghulam Patel",
+          "email": "ghulam@greenloop.com"
         }
       ],
       "reprocessing-sites": [
@@ -123,8 +131,8 @@ module.exports = {
               "accreditation-expiry": "2026-12-31",
               "balance": "23.49",
               "tonnage": "Up to 500 tonnes",
-              "authorised": ['You', 'Jim Armstrong'],
-              "application":{"status":"Requires resubmission","fee":"546","questions":[{"name":"PRN tonnage","link":"tonnage","status":"Completed","answer":"Up to 500 tonnes"},{"name":"Authority to issue PRNs","link":"authority","status":"Completed","answer":["You","Jim Armstrong"]},{"name":"Business plan","link":"business-plan","status":"Completed","answer":[{"copy":"New reprocessing infrastructure and maintaining existing infrastructure","percentage":"80","details":"Details of how I’ll spend the income"},{"copy":"Price support for buying packaging waste or selling recycled packaging waste","percentage":"","details":""},{"copy":"Building converted into accommodation","percentage":"20","details":"Details of how I’ll spend the income"},{"copy":"Price support for buying packaging waste or selling recycled packaging waste","percentage":"","details":""},{"copy":"Support for business collections","percentage":"","details":""},{"copy":"Communications, including information campaigns","percentage":"","details":""},{"copy":"Developing new markets for products made from recycled packaging waste","percentage":"","details":""},{"copy":"Developing new uses for recycled waste","percentage":"","details":""},{"copy":"Activities or investment not covered by the other categories","percentage":"","details":""}]},{"name":"Sampling and inspection plan","link":"si-plan","status":"Queried","answer":"example.png"}]}
+              "authorised": ['Rosina Campbell', 'Harry Edge'],
+              "application":{"status":"Requires resubmission","fee":"546","questions":[{"name":"PRN tonnage","link":"tonnage","status":"Completed","answer":"Up to 500 tonnes"},{"name":"Authority to issue PRNs","link":"authority","status":"Completed","answer":["You","Harry Edge"]},{"name":"Business plan","link":"business-plan","status":"Completed","answer":[{"copy":"New reprocessing infrastructure and maintaining existing infrastructure","percentage":"80","details":"I’ll spend the income to…"},{"copy":"Price support for buying packaging waste or selling recycled packaging waste","percentage":"","details":""},{"copy":"Building converted into accommodation","percentage":"20","details":"I’ll spend the income to…"},{"copy":"Price support for buying packaging waste or selling recycled packaging waste","percentage":"","details":""},{"copy":"Support for business collections","percentage":"","details":""},{"copy":"Communications, including information campaigns","percentage":"","details":""},{"copy":"Developing new markets for products made from recycled packaging waste","percentage":"","details":""},{"copy":"Developing new uses for recycled waste","percentage":"","details":""},{"copy":"Activities or investment not covered by the other categories","percentage":"","details":""}]},{"name":"Sampling and inspection plan","link":"si-plan","status":"Queried","answer":"example.png"}]}
             }
           ]
         }
