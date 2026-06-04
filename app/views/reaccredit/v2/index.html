@@ -10,6 +10,21 @@
 
 {% block content %}
   <div class="govuk-grid-row">
+    {% if data['application-discarded'] %}
+      <div class="govuk-grid-column-two-thirds-from-desktop">
+        {% set html %}
+          <h3 class="govuk-notification-banner__heading">
+            Application discarded
+          </h3>
+        {% endset %}
+
+        {{ govukNotificationBanner({
+          html: html,
+          type: "success"
+        }) }}
+      </div>
+    {% endif %}
+
     <div class="govuk-grid-column-full">
 
       <div class="app-page-header">

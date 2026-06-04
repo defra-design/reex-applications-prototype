@@ -173,6 +173,21 @@ router.post('/apply/task-list', (req, res) => {
   res.redirect('payment')
 })
 
+router.post('/apply/discard', (req, res) => {
+  // Delete the application data
+  delete req.material[0].application
+  // Enable the notification banner
+  req.session.data['application-discarded'] = true
+  // Go back to the accreditation
+  res.redirect('../')
+})
+
+router.get('/', (req, res, next) => {
+  // Delete the discard notification banner
+  delete req.session.data['application-discarded']
+  next()
+})
+
 // Update status to complete for all questions all submit
 router.post('/apply/:question', (req, res, next) => {
   let question = req.currentQuestion[0]

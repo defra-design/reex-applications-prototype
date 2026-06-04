@@ -1,0 +1,22 @@
+{% extends "layouts/main.html" %}
+
+{% set title = 'Are you sure you want to discard your application?' %}
+
+{% block questions %}
+  <h1 class="govuk-heading-l">
+    {{ title | safe }}
+  </h1>
+
+  <p>All saved data for the application will be deleted. This cannot be undone.</p>
+{% endblock %}
+
+{% block buttons %}
+  <div class="govuk-button-group">
+    {{ govukButton({
+      text: 'Discard application',
+      classes: 'govuk-button--warning'
+    }) }}
+
+    <a class="govuk-link govuk-link--no-visited-state" href="task-list">Cancel</a>
+  </div>
+{% endblock %}
