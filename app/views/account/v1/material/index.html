@@ -121,7 +121,7 @@
               classes: 'app-card__header'
             },
             hint: {
-              html: '<ul class="govuk-list"><li><a href="#0">View registration</a></li>'+('<li><a href="#0">Apply for accreditation accreditation</a></li>' if material.accreditation == 'Not accredited' else '<li><a href="'+(data['account-accreditation-next'] or '/reaccredit/v1/')+'">View accreditation</a></li>')+'</ul>'
+              html: '<ul class="govuk-list"><li><a href="#0">View registration</a></li>'+('<li><a href="#0">Apply for accreditation accreditation</a></li>' if material.accreditation == 'Not accredited' else '<li><a href="'+(data['account-accreditation-next'] or '/reaccredit/v2/')+'">View accreditation</a></li>')+'</ul>'
             },
             classes: 'app-card'
           }

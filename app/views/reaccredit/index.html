@@ -18,23 +18,6 @@
       </h1>
       <p class="govuk-body-l">Allow accredited operators to reapply for accreditation.</p>
 
-
-      {% set version = "3" %}
-      <h2 class="govuk-heading-m">
-        Version {{version}}
-        {{ govukTag({
-          classes: 'govuk-tag--yellow govuk-!-margin-left-2',
-          text: 'In review'
-        }) }}
-      </h2>
-
-      <p>Allows the operator to change and resubmit their application based on a query from the regulator.</p>
-
-      {{ govukButton({
-        text: 'View prototype',
-        href: 'v'+version+'/email?account-accreditation-next=/reaccredit/v'+version+'/&current-site-type=reprocessing&current-site=0&current-material=0'
-      }) }}
-
       {% set version = "2" %}
       <h2 class="govuk-heading-m">
         Version {{version}}
@@ -44,11 +27,15 @@
         }) }}
       </h2>
 
-      <p>A variation of the first review that does away with the task list, that pattern is meant for more complicated transactions, and brings the check your answers forward in it's place.</p>
+      <p>An update to the first review that does away with the task list, that pattern is meant for more complicated transactions, and brings the check your answers forward in it&rsquo;s place.</p>
+
+      <p>The flow has been updated for exporters and asks additional questions about the overseas sites.</p>
+
+      <p>Once submitted there is an option to view a query from the regulator, this allows resubmitting the sampling and inspection plan.</p>
 
       {{ govukButton({
         text: 'View prototype',
-        href: 'v'+version+'/?account-accreditation-next=/reaccredit/v'+version+'/&current-site-type=reprocessing&current-site=0&current-material=0'
+        href: '/account/v1/?account-accreditation-next=/reaccredit/v'+version+'/&current-org=123002&current-site-type=exporting&current-site=0&current-material=0'
       }) }}
 
 

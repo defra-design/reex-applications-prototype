@@ -1,0 +1,39 @@
+{% extends "layouts/main.html" %}
+
+{% set title = 'Select the overseas sites you want to add to your accreditation application' %}
+
+{% block questions %}
+  {# Create empty object for radios #}
+  {% set sites = [] %}
+
+  {# Loop through the sites and add into the object #}
+  {# html: site.name+' ('+site.country+')', #}
+  {% for site in org['overseas-sites'] | sort(attribute='name') %}
+    {% set sites = sites | push (
+      {
+        html: site.name,
+        value: site.name,
+        checked: true if answer and answer.includes(site.name),
+        hint: {
+          html: site.address
+        }
+      }
+    ) %}
+  {% endfor %}
+
+  {# Setup the radio macro and pull in types object #}
+  {{ govukCheckboxes({
+    idPrefix: 'overseas-sites',
+    name: 'overseas-sites',
+    classes: 'govuk-checkboxes--small app-checkboxes--divider js-select-all',
+    value: answer,
+    fieldset: {
+      legend: {
+        html: title,
+        classes: 'govuk-fieldset__legend--l',
+        isPageHeading: true
+      }
+    },
+    items: sites
+  }) }}
+{% endblock %}

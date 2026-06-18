@@ -38,7 +38,7 @@ router.get('*', (req, res, next) => {
 // Search for and render the current org/site/material
 router.all('*', (req, res, next) => {
   // Find the current org
-  let orgToFind = req.session.data['current-org'] || '123456'
+  let orgToFind = req.session.data['current-org'] || '123001'
   let orgs = req.session.data['orgs']
   let currentOrg = orgs.filter(org => org.id === orgToFind)
     // Pass it through to each page as local data

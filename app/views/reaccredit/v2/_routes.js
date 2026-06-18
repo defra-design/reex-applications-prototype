@@ -29,7 +29,7 @@ router.get('*', (req, res, next) => {
   ]
 
   if (!req.session.data['current-site-type']) {
-    req.session.data['current-site-type'] = 'reprocessing'
+    req.session.data['current-site-type'] = 'exporting'
   }
 
   next()
@@ -38,7 +38,7 @@ router.get('*', (req, res, next) => {
 // Search for and render the current org/site/material
 router.all('*', (req, res, next) => {
   // Find the current org
-  let orgToFind = req.session.data['current-org'] || '123456'
+  let orgToFind = req.session.data['current-org'] || '123002'
   let orgs = req.session.data['orgs']
   let currentOrg = orgs.filter(org => org.id === orgToFind)
     // Pass it through to each page as local data
@@ -67,60 +67,106 @@ router.all('*', (req, res, next) => {
   next()
 })
 
+// Function to calculate fee
+const feeCalc = function (req) {
+  let questions = req.material[0].application.questions
+  let tonnageQuestion = questions.filter(question => question.link === 'tonnage')
+  let tonnage = tonnageQuestion[0].answer
+  var newFee = 0
+
+  if (tonnage == 'Up to 500 tonnes') {
+    newFee = 546
+  } else if (tonnage == 'Up to 5,000 tonnes') {
+    newFee = 2184
+  } else if (tonnage == 'Up to 10,000 tonnes') {
+    newFee = 3276
+  } else if (tonnage == 'Over 10,000 tonnes') {
+    newFee = 3965
+  }
+
+  let sitesQuestion = questions.filter(question => question.link === 'overseas-sites')
+  if (sitesQuestion.length) {
+    let sites = sitesQuestion[0].answer || ''
+    for (let a = 0; a < sites.length; a++) {
+      newFee = newFee+328
+    }
+  }
+
+  req.material[0].application.fee = newFee
+}
+
 router.get('/apply*', (req, res, next) => {
   // If application doesn't exist, setup a new application
   if (!req.material[0].application) {
     req.material[0].application = []
 
     if (req.session.data['current-site-type'] == 'reprocessing') {
-      pErn = 'PRN'
+      setupApplication = {
+        status: 'In progress',
+        questions: [
+          {
+            name: 'PRN tonnage',
+            link: 'tonnage',
+            status: 'Completed',
+            answer: req.material[0].tonnage
+          },
+          {
+            name: 'Authority to issue PRNs',
+            link: 'authority',
+            status: 'Completed',
+            answer: req.material[0].authorised
+          },
+          {
+            name: 'Business plan',
+            link: 'business-plan',
+            status: 'Completed',
+            answer: req.material[0]['business-plan']
+          },
+          {
+            name: 'Sampling and inspection plan',
+            link: 'si-plan',
+            status: 'Incomplete'
+          }
+        ]
+      }
     } else {
-      pErn = 'PERN'
-    }
-
-    let tonnage = req.material[0].tonnage
-
-    if (tonnage == 'Up to 500 tonnes') {
-      newFee = '546'
-    } else if (tonnage == 'Up to 5,000 tonnes') {
-      newFee = '2184'
-    } else if (tonnage == 'Up to 10,000 tonnes') {
-      newFee = '3276'
-    } else if (tonnage == 'Over 10,000 tonnes') {
-      newFee = '3965'
-    }
-
-    let setupApplication = {
-      status: 'In progress',
-      fee: newFee,
-      questions: [
-        {
-          name: pErn+' tonnage',
-          link: 'tonnage',
-          status: 'Completed',
-          answer: tonnage
-        },
-        {
-          name: 'Authority to issue '+pErn+'s',
-          link: 'authority',
-          status: 'Completed',
-          answer: req.material[0].authorised
-        },
-        {
-          name: 'Business plan',
-          link: 'business-plan',
-          status: 'Completed',
-          answer: req.material[0]['business-plan']
-        },
-        {
-          name: 'Sampling and inspection plan',
-          link: 'si-plan',
-          status: 'Incomplete'
-        }
-      ]
+      setupApplication = {
+        status: 'In progress',
+        questions: [
+          {
+            name: 'PERN tonnage',
+            link: 'tonnage',
+            status: 'Completed',
+            answer: req.material[0].tonnage
+          },
+          {
+            name: 'Authority to issue PERNs',
+            link: 'authority',
+            status: 'Completed',
+            answer: req.material[0].authorised
+          },
+          {
+            name: 'Business plan',
+            link: 'business-plan',
+            status: 'Completed',
+            answer: req.material[0]['business-plan']
+          },
+          {
+            name: 'Sampling and inspection plan',
+            link: 'si-plan',
+            status: 'Incomplete'
+          },
+          {
+            name: 'Overseas reprocessing sites',
+            link: 'overseas-sites',
+            status: 'Incomplete'
+          }
+        ]
+      }
     }
 
     req.material[0].application = setupApplication
+    feeCalc(req)
   }
 
   next()
@@ -139,6 +185,12 @@ router.get('/apply/task-list', (req, res, next) => {
     delete req.session.data['complete-all']
     res.redirect('task-list');
   } else { next() }
+})
+
+router.post('/apply/query', (req, res) => {
+  req.session.data['application-resubmitted'] = true
+  req.material[0].application.status = 'In review'
+  res.redirect('../')
 })
 
 // Get the current question and store
@@ -176,16 +228,50 @@ router.post('/apply/task-list', (req, res) => {
 router.post('/apply/discard', (req, res) => {
   // Delete the application data
   delete req.material[0].application
+  delete req.session.data['bharat-bes']
+  delete req.session.data['dragon-bes']
   // Enable the notification banner
   req.session.data['application-discarded'] = true
   // Go back to the accreditation
   res.redirect('../')
 })
 
-router.get('/', (req, res, next) => {
-  // Delete the discard notification banner
-  delete req.session.data['application-discarded']
-  next()
+router.post('/apply/bes', (req, res) => {
+  if (req.session.data['bes-site'] == 'bharat') {
+    if (!req.session.data['bharat-bes']) {
+      req.session.data['bharat-bes'] = []
+    }
+
+    uploads = req.session.data['bharat-bes'] || []
+  } else {
+    if (!req.session.data['dragon-bes']) {
+      req.session.data['dragon-bes'] = []
+    }
+
+    uploads = req.session.data['dragon-bes'] || []
+  }
+
+  // Setup the object with the answers given by the user
+  const newUpload = Object.assign({
+    name: req.session.data['bes-file'],
+    date: req.session.data['bes-date'],
+    start: req.session.data['bes-start-year']+'-'+parseInt(req.session.data['bes-start-month']).toLocaleString(undefined, {minimumIntegerDigits: 2})+'-'+parseInt(req.session.data['bes-start-day']).toLocaleString(undefined, {minimumIntegerDigits: 2}),
+    end: req.session.data['bes-end-year']+'-'+parseInt(req.session.data['bes-end-month']).toLocaleString(undefined, {minimumIntegerDigits: 2})+'-'+parseInt(req.session.data['bes-end-day']).toLocaleString(undefined, {minimumIntegerDigits: 2})
+  })
+
+  // Pass the above object into the uploads data
+  uploads.push(newUpload)
+
+  delete req.session.data['bes-file']
+  delete req.session.data['bes-date']
+  delete req.session.data['bes-start-year']
+  delete req.session.data['bes-start-month']
+  delete req.session.data['bes-start-day']
+  delete req.session.data['bes-end-year']
+  delete req.session.data['bes-end-month']
+  delete req.session.data['bes-end-day']
+
+  res.redirect('bes')
 })
 
 // Update status to complete for all questions all submit
@@ -196,21 +282,7 @@ router.post('/apply/:question', (req, res, next) => {
   // Save the answer
   question.answer = req.session.data[`${req.params.question}`]
 
-  // If updating the tonnage recalculate fee
-  if (req.params.question == 'tonnage') {
-    let answer = question.answer
-
-    if (answer == 'Up to 500 tonnes') {
-      req.material[0].application.fee = '546'
-    } else if (answer == 'Up to 5,000 tonnes') {
-      req.material[0].application.fee = '2184'
-    } else if (answer == 'Up to 10,000 tonnes') {
-      req.material[0].application.fee = '3276'
-    } else if (answer == 'Over 10,000 tonnes') {
-      req.material[0].application.fee = '3965'
-    }
-  }
-
+  feeCalc(req)
   next()
 })
 
@@ -244,15 +316,104 @@ router.post('/apply/si-plan', (req, res) => {
     question.answer = 'si-plan.pdf'
   }
 
-  if (req.session.data['change']) {
+  if (req.application.status == 'Requires resubmission') {
+    res.redirect('query')
+  } else if (req.session.data['change']) {
     res.redirect('task-list')
+  } else {
+    res.redirect('overseas-sites')
+  }
+})
+
+router.post('/apply/overseas-sites', (req, res) => {
+  let questions = req.material[0].application.questions
+  let question = req.currentQuestion[0]
+
+  if (!req.session.data['overseas-sites']) {
+    question.answer = ["Bharat Paper Recycling"]
+  }
+
+//   for (let a = 0; a < question.answer.length; a++) {
+//     let answer = 'Evidence of '+question.answer[a]+' broadly equivalent standards'
+//     let checkAnswer = JSON.stringify(questions)
+//
+//     if (!checkAnswer.includes(answer)) {
+//       let newQuestion = Object.assign({
+//         name: answer,
+//         link: 'bes',
+//         status: 'Incomplete'
+//       })
+//
+//       questions.push(newQuestion)
+//     }
+//   }
+
+  let checkAnswer = JSON.stringify(question.answer)
+  if (checkAnswer.includes('Bharat') && !req.session.data['bharat-bes']) {
+    res.redirect('bes?bes-site=bharat')
+  } else if (checkAnswer.includes('Dragon') && !req.session.data['dragon-bes']) {
+    res.redirect('bes?bes-site=dragon')
   } else {
     res.redirect('task-list')
   }
 })
 
+router.get('/apply/bes', (req, res, next) => {
+  if (req.session.data['bes-site'] == 'bharat') {
+    res.locals.siteName = 'Bharat Paper Recycling'
+    res.locals.uploads = req.session.data['bharat-bes']
+  } else {
+    res.locals.siteName = 'Dragon Paper Recyclers'
+    res.locals.uploads = req.session.data['dragon-bes']
+  }
+
+  next()
+})
+
+router.get('/apply/bes-delete', (req, res) => {
+  var index = req.session.data['index']
+  if (req.session.data['bes-site'] == 'bharat') {
+    uploads = req.session.data['bharat-bes']
+  } else {
+    uploads = req.session.data['dragon-bes']
+  }
+
+  uploads.splice(index, 1)
+
+  res.redirect('bes')
+})
+
+router.get('/apply/bes-complete', (req, res) => {
+  let checkAnswer = JSON.stringify(req.material[0].application.questions)
+  if (checkAnswer.includes('Bharat' && !req.session.data['bharat-bes'])) {
+    res.redirect('bes?bes-site=bharat')
+  } else if (checkAnswer.includes('Dragon' && !req.session.data['dragon-bes'])) {
+    res.redirect('bes?bes-site=dragon')
+  } else {
+    res.redirect('task-list')
+  }
+})
+
+router.get('/get-query', (req, res) => {
+  let questions = req.material[0].application.questions
+  let tonnageQuestion = questions.filter(question => question.link === 'si-plan')
+  tonnageQuestion[0].status = 'Queried'
+  req.material[0].application.status = 'Requires resubmission'
+
+  res.redirect('email')
+})
+
 router.get('/apply/payment', (req, res, next) => {
+  // Clear the submission banner
   delete req.session.data['application-submitted']
+  next()
+})
+
+router.get('/', (req, res, next) => {
+  // Clear the discard notification banner
+  delete req.session.data['application-discarded']
+  // Clear the submission banner
+  delete req.session.data['application-resubmitted']
   next()
 })
 

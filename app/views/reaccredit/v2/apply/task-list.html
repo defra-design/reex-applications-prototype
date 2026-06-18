@@ -88,6 +88,76 @@
           } if question.answer
         }) %}
 
+        {% if question.answer and question.answer.includes('Bharat Paper Recycling') %}
+          {# Increase the count of questions #}
+          {% set questionCount = questionCount+1 %}
+          {# Increase the count of completed questions if completed #}
+          {% set questionsCompleted = questionsCompleted+1 if data['bharat-bes'] %}
+
+          {% set files %}
+            <ul class="govuk-list">
+              {% for file in data['bharat-bes'] %}
+                <li>{{ file.name or 'example.pdf' }}</li>
+              {% endfor %}
+            </ul>
+          {% endset -%}
+
+          {% set answers = answers | push ({
+            key: {
+              html: 'Evidence of Bharat Paper Recycling broadly equivalent standards'
+            },
+            value: {
+              html: files
+            } if data['bharat-bes'] else
+            {
+              html: '<a href="bes?bes-site=bharat">Upload evidence of Bharat Paper Recycling broadly equivalent standards</a>'
+            },
+            actions: {
+              items: [
+                {
+                  href: 'bes?bes-site=bharat',
+                  text: 'Change'
+                }
+              ]
+            } if data['bharat-bes']
+          }) %}
+        {% endif %}
+
+        {% if question.answer and question.answer.includes('Dragon Paper Recyclers') %}
+          {# Increase the count of questions #}
+          {% set questionCount = questionCount+1 %}
+          {# Increase the count of completed questions if completed #}
+          {% set questionsCompleted = questionsCompleted+1 if data['dragon-bes'] %}
+
+          {% set files %}
+            <ul class="govuk-list">
+              {% for file in data['dragon-bes'] %}
+                <li>{{ file.name or 'example.pdf' }}</li>
+              {% endfor %}
+            </ul>
+          {% endset -%}
+
+          {% set answers = answers | push ({
+            key: {
+              html: 'Evidence of Dragon Paper Recyclers broadly equivalent standards'
+            },
+            value: {
+              html: files
+            } if data['dragon-bes'] else
+            {
+              html: '<a href="bes?bes-site=dragon">Upload evidence of Dragon Paper Recyclers broadly equivalent standards</a>'
+            },
+            actions: {
+              items: [
+                {
+                  href: 'bes?bes-site=dragon',
+                  text: 'Change'
+                }
+              ]
+            } if data['dragon-bes']
+          }) %}
+        {% endif %}
+
       {% endif %}{% endfor %}
 
       {{ govukSummaryList({

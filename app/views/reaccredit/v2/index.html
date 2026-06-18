@@ -2,7 +2,7 @@
 {% block backLink %}
   {{ govukBackLink({
     html: 'Back to site details',
-    href: accountVersion+'material/?current-site-type='+(data['current-site-type'] or 'reprocessing')+'&current-site='+site.id+'&current-material='+material.id
+    href: accountVersion+'material/?current-site-type='+(data['current-site-type'] or 'reprocessing')+'&current-org='+org.id+'&current-site='+site.id+'&current-material='+material.id
   }) }}
 {% endblock %}
 
@@ -16,6 +16,21 @@
           <h3 class="govuk-notification-banner__heading">
             Application discarded
           </h3>
+        {% endset %}
+
+        {{ govukNotificationBanner({
+          html: html,
+          type: "success"
+        }) }}
+      </div>
+    {% endif %}
+    {% if data['application-resubmitted'] %}
+      <div class="govuk-grid-column-two-thirds-from-desktop">
+        {% set html %}
+          <h3 class="govuk-notification-banner__heading">
+            Application resubmitted to the {{ site.regulator }}
+          </h3>
+          <p>A confirmation email has been sent to rosina@gws.com (Rosina Campbell).</p>
         {% endset %}
 
         {{ govukNotificationBanner({
@@ -72,10 +87,10 @@
               html: '30 September 2026'
             },
             {
-              html: '<strong class="govuk-tag '+('govuk-tag--orange' if material.application.status == 'Submitted')+'">'+material.application.status+'</strong>'
+              html: '<strong class="govuk-tag '+('govuk-tag--orange' if material.application.status == 'Submitted')+('govuk-tag--magenta' if material.application.status == 'Requires resubmission')+('govuk-tag--green' if material.application.status == 'In review')+'">'+material.application.status+'</strong>'
             },
             {
-              html: '<a href="apply/task-list">Continue</a>' if material.application.status == 'In progress' else '<a href="apply/payment">Pay</a>',
+              html: ('<a href="apply/task-list">Continue</a>' if material.application.status == 'In progress') + ('<a href="apply/payment">Pay</a>' if material.application.status == 'Submitted') + ('<a href="apply/query">Review and submit</a>' if material.application.status == 'Requires resubmission') + ('<a href="#0">View application</a>' if material.application.status == 'In review'),
               format: 'numeric'
             }
           ]
@@ -94,6 +109,14 @@
             },
             value: {
               html: material['accreditation-number']
+            }
+          },
+          {
+            key: {
+              html: 'Regulator'
+            },
+            value: {
+              html: site.regulator
             }
           },
           {
@@ -122,14 +145,6 @@
           },
           {
             key: {
-              html: 'Regulator'
-            },
-            value: {
-              html: site.regulator
-            }
-          },
-          {
-            key: {
               html: 'Tonnage'
             },
             value: {
@@ -143,11 +158,40 @@
             value: {
               html: material.authorised | sort | arrayToGovukList()
             }
-          }
+          },
+          {
+            key: {
+              html: 'Overseas reprocessing sites'
+            },
+            value: {
+              html: material['overseas-sites'] | sort | arrayToGovukList()
+            }
+          } if  material['overseas-sites']
         ]
       }) }}
 
 
     </div>
   </div>
+{% endblock %}
+
+
+{% block containerEnd %}
+  {% if material.application.status == 'Submitted' %}
+    {% set prototypeOptions %}
+      <ul class="govuk-list">
+        <li>
+          <a href="get-query">View a query from the regulator</a>
+        </li>
+      </ul>
+    {% endset -%}
+    {{ govukNotificationBanner({
+      attributes: {
+        'id': 'js-dismissible'
+      },
+      titleHtml: 'Prototype options <a href="#0" id="js-dismiss">Hide</a>',
+      html: prototypeOptions,
+      classes: 'app-notification-banner--prototype-options'
+    }) }}
+  {% endif %}
 {% endblock %}
