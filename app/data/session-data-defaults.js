@@ -141,7 +141,7 @@ module.exports = {
               "tonnage": "Up to 500 tonnes",
               "authorised": ['Rosina Campbell', 'Harry Edge'],
               "business-plan": [{"copy":"New reprocessing infrastructure and maintaining existing infrastructure","percentage":"80","details":"I’ll spend the income to…"},{"copy":"Price support for buying packaging waste or selling recycled packaging waste","percentage":"","details":""},{"copy":"Building converted into accommodation","percentage":"20","details":"I’ll spend the income to…"},{"copy":"Price support for buying packaging waste or selling recycled packaging waste","percentage":"","details":""},{"copy":"Support for business collections","percentage":"","details":""},{"copy":"Communications, including information campaigns","percentage":"","details":""},{"copy":"Developing new markets for products made from recycled packaging waste","percentage":"","details":""},{"copy":"Developing new uses for recycled waste","percentage":"","details":""},{"copy":"Activities or investment not covered by the other categories","percentage":"","details":""}],
-              "overseas-sites": ["Bharat Paper Recycling"]
+              "overseas-sites": ["Bharat Paper Recycling", "Dragon Paper Recyclers"]
             }
           ]
         }
