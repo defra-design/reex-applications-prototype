@@ -57,7 +57,7 @@
         Prepare the application
       </h2>
 
-      <p>The details from your current accreditation have been carried over automatically. Change any that are no longer correct.</p>
+      <p>Details from your current accreditation have been carried over automatically. Change any that are no longer correct.</p>
 
       {% set answers = [] %}
       {% for question in application.questions %}{% if question.name != 'Business plan' %}
@@ -75,7 +75,7 @@
             html: ('<a href="#0">'+(question.answer or 'example.pdf')+'</a>') if question.link == 'si-plan' else (question.answer | arrayToGovukList() if question.answer | isArray else question.answer)
           } if question.answer else
           {
-            html: '<a href="'+question.link+'">'+('Upload ' if question.name == 'Sampling and inspection plan' else 'Enter ')+(question.name | lower)+'</a>'
+            html: '<a href="'+question.link+'">'+('Upload ' if question.name == 'Sampling and inspection plan' else 'Select ')+(question.name | lower)+'</a>'
           },
           actions: {
             items: [
@@ -252,7 +252,7 @@
 
       {% endif %}
 
-      <p>You can <a href="discard">discard the application</a> if you no longer wish to reapply for accreditation.</p>
+      <p>You can <a href="discard">discard the application</a> if you no longer want to reapply for accreditation.</p>
 
     </div>
   </div>
