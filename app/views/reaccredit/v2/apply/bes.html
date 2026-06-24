@@ -1,13 +1,13 @@
 {% extends "layouts/main.html" %}
 
-{% set title = 'Upload evidence of '+siteName+' broadly equivalent standards' %}
+{% set title = 'Upload evidence of broadly equivalent standards for '+siteName+' ' %}
 
 {% block questions %}
   <h1 class="govuk-heading-l">
     {{ title | safe }}
   </h1>
 
-  <p><a href="https://www.gov.uk/government/publications/receiving-exported-waste-meeting-eu-equivalent-standards/examples-of-equivalent-environmental-standards-for-packaging-batteries-and-weee" class="govuk-link" rel="noreferrer noopener" target="_blank">Guidance (opens in new tab)</a></p>
+  <p><a href="https://www.gov.uk/government/publications/receiving-exported-waste-meeting-eu-equivalent-standards/examples-of-equivalent-environmental-standards-for-packaging-batteries-and-weee" class="govuk-link" rel="noreferrer noopener" target="_blank">View examples of broadly equivalent standards (opens in new tab)</a></p>
 
   {% if uploads | length %}
     <h2 class="govuk-heading-m">
@@ -41,7 +41,7 @@
     }) }}
 
     <h2 class="govuk-heading-m">
-      Uploaded another file
+      Upload another file
     </h2>
   {% endif %}
 
@@ -53,7 +53,7 @@
       classes: 'govuk-label--s'
     },
     hint: {
-      text: 'The files must be a PDF, DOC, DOCX, XLS, CSV, PNG, TIF, JPG or MSG and be smaller than 20MB'
+      text: 'Only PDF, DOC, DOCX, XLS, CSV, PNG, TIF, JPG or MSG files are allowed and they must be smaller than 20MB.'
     },
     javascript: true
   }) }}
@@ -64,7 +64,7 @@
       namePrefix: 'bes-start',
       fieldset: {
         legend: {
-          html: 'Enter date the document is valid from'
+          html: 'Valid from'
         }
       }
     }) }}
@@ -74,7 +74,7 @@
       namePrefix: 'bes-end',
       fieldset: {
         legend: {
-          html: 'Enter expiry date of document'
+          html: 'Expiry date'
         }
       }
     }) }}
@@ -86,7 +86,7 @@
     classes: 'govuk-radios--small',
     fieldset: {
       legend: {
-        html: 'Does the file have an expiry date?',
+        html: 'Does the selected file have an expiry date?',
         classes: 'govuk-fieldset__legend--s'
       }
     },
