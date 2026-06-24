@@ -318,7 +318,7 @@ router.post('/apply/si-plan', (req, res) => {
 
   if (req.application.status == 'Requires resubmission') {
     res.redirect('query')
-  } else if (req.session.data['change']) {
+  } else if (req.session.data['change'] || req.session.data['current-site-type'] == 'reprocessing') {
     res.redirect('task-list')
   } else {
     res.redirect('overseas-sites')
