@@ -421,9 +421,9 @@ router.post('/withdraw', (req, res) => {
 })
 
 router.get('/', (req, res, next) => {
-  // Clear the discard notification banner
+  // Clear notification banners
   delete req.session.data['application-discarded']
-  // Clear the submission banner
+  delete req.session.data['application-withdrawn']
   delete req.session.data['application-resubmitted']
   next()
 })
