@@ -1,0 +1,28 @@
+{% extends "layouts/main.html" %}
+
+{% set title = 'Are you sure you want to withdraw your application?' %}
+
+{% block questions %}
+  <h1 class="govuk-heading-l">
+    {{ title | safe }}
+  </h1>
+
+  <p>Your application will no longer be considered by the regulator. This cannot be undone.</p>
+
+  {% if material.application.status == 'Submitted' %}
+    <p>The regulator has not begun considering your application so you will receive a refund.</p>
+  {% else %}
+    <p>The regulator has begun considering your application so you will not receive a refund.</p>
+  {% endif %}
+{% endblock %}
+
+{% block buttons %}
+  <div class="govuk-button-group">
+    {{ govukButton({
+      text: 'Withdraw application',
+      classes: 'govuk-button--warning'
+    }) }}
+
+    <a class="govuk-link govuk-link--no-visited-state" href="task-list">Cancel</a>
+  </div>
+{% endblock %}

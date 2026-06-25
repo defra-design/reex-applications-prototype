@@ -409,6 +409,17 @@ router.get('/apply/payment', (req, res, next) => {
   next()
 })
 
+router.post('/withdraw', (req, res) => {
+  // Delete the application data
+  delete req.material[0].application
+  delete req.session.data['bharat-bes']
+  delete req.session.data['dragon-bes']
+  // Enable the notification banner
+  req.session.data['application-withdrawn'] = true
+  // Go back to the accreditation
+  res.redirect('./')
+})
+
 router.get('/', (req, res, next) => {
   // Clear the discard notification banner
   delete req.session.data['application-discarded']

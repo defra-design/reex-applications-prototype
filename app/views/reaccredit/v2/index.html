@@ -16,6 +16,22 @@
           <h3 class="govuk-notification-banner__heading">
             Application discarded
           </h3>
+          <p>A confirmation email has been sent to rosina@gws.com (Rosina Campbell).</p>
+        {% endset %}
+
+        {{ govukNotificationBanner({
+          html: html,
+          type: "success"
+        }) }}
+      </div>
+    {% endif %}
+    {% if data['application-withdrawn'] %}
+      <div class="govuk-grid-column-two-thirds-from-desktop">
+        {% set html %}
+          <h3 class="govuk-notification-banner__heading">
+            Application withdrawn
+          </h3>
+          <p>A confirmation email has been sent to rosina@gws.com (Rosina Campbell).</p>
         {% endset %}
 
         {{ govukNotificationBanner({
@@ -90,7 +106,7 @@
               html: '<strong class="govuk-tag '+('govuk-tag--orange' if material.application.status == 'Submitted')+('govuk-tag--magenta' if material.application.status == 'Requires resubmission')+('govuk-tag--green' if material.application.status == 'In review')+'">'+material.application.status+'</strong>'
             },
             {
-              html: ('<a href="apply/task-list">Continue</a>' if material.application.status == 'In progress') + ('<a href="apply/payment">Pay</a>' if material.application.status == 'Submitted') + ('<a href="apply/query">Review and submit</a>' if material.application.status == 'Requires resubmission') + ('<a href="#0">View application</a>' if material.application.status == 'In review'),
+              html: ('<a href="apply/task-list">Continue</a>' if material.application.status == 'In progress') + ('<ul class="govuk-summary-list__actions-list"><li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="withdraw">Withdraw</a></li><li class="govuk-summary-list__actions-list-item"><a href="apply/payment">Pay</a></li></ul>' if material.application.status == 'Submitted') + ('<ul class="govuk-summary-list__actions-list"><li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="withdraw">Withdraw</a></li><li class="govuk-summary-list__actions-list-item"><a href="apply/query">Review and submit</a></li></ul>' if material.application.status == 'Requires resubmission') + ('<ul class="govuk-summary-list__actions-list"><li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="withdraw">Withdraw</a></li><li class="govuk-summary-list__actions-list-item"><a href="#0">View</a></li></ul>' if material.application.status == 'In review'),
               format: 'numeric'
             }
           ]
