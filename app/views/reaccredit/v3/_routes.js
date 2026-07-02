@@ -149,7 +149,16 @@ router.post('/add-site/check-answers', (req, res) => {
   sites.push(newSite)
   clearSiteData(req)
 
+  // Enable the notification banner
+  req.session.data['site-added'] = true
+
   res.redirect('../manage-sites')
+})
+
+router.get('/manage-sites', (req, res, next) => {
+  // Clear notification banner
+  delete req.session.data['site-added']
+  next()
 })
 
 
