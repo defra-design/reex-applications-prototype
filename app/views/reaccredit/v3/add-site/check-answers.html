@@ -1,0 +1,75 @@
+{% extends "layouts/main.html" %}
+
+{% set title = 'Check your answers before adding the site' %}
+
+{% block questions %}
+  <h1 class="govuk-heading-l">
+    {{ title | safe }}
+  </h1>
+
+  {{ govukSummaryList({
+    rows: [
+      {
+        key: {
+          html: 'Location'
+        },
+        value: {
+          html: data['address']+'<br>'+data['country']+'<br>'+data['lat-long']
+        },
+        actions: {
+          items: [
+            {
+              href: 'address',
+              text: 'Change',
+              visuallyHiddenText: ' Location'
+            }
+          ]
+        }
+      },
+      {
+        key: {
+          html: 'Organisation name'
+        },
+        value: {
+          html: data['organisation']
+        },
+        actions: {
+          items: [
+            {
+              href: 'organisation',
+              text: 'Change',
+              visuallyHiddenText: ' Organisation name'
+            }
+          ]
+        }
+      },
+      {
+        key: {
+          html: 'Contact person'
+        },
+        value: {
+          html: data['name']+'<br>'+data['email']+'<br>'+data['phone']
+        },
+        actions: {
+          items: [
+            {
+              href: 'contact',
+              text: 'Change',
+              visuallyHiddenText: ' Contact person'
+            }
+          ]
+        }
+      }
+    ]
+  }) }}
+{% endblock %}
+
+{% block buttons %}
+  <div class="govuk-button-group">
+    {{ govukButton({
+      text: 'Add the site'
+    }) }}
+
+    <a class="govuk-link" href="cancel">Cancel</a>
+  </div>
+{% endblock %}

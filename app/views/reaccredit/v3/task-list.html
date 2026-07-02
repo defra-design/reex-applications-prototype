@@ -1,0 +1,223 @@
+{% extends "layouts/main.html" %}
+
+{% block backLink %}
+  {{ govukBackLink({
+    html: 'Back to accredditation details',
+    href: '#0'
+  }) }}
+{% endblock %}
+
+{% set title = ('<span class="govuk-caption-xl">'+site.name+'<span class="govuk-visually-hidden">:</span></span> ' if data['current-site-type'] == 'reprocessing' and org['reprocessing-sites'] | length > 1)+'Reapply for '+(material.name | lower)+' accreditation' %}
+
+{% set pErn = 'PRN' if data['current-site-type'] == 'reprocessing' else 'PERN' %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+
+      <div class="app-page-header">
+        <h1 class="govuk-heading-xl">
+          {{ title | safe }}
+        </h1>
+
+        {{ govukSummaryList({
+          classes: 'govuk-summary-list--no-border govuk-!-width-two-thirds',
+          rows: [
+            {
+              key: {
+                html: 'Site address'
+              },
+              value: {
+                html: site.address
+              }
+            },
+            {
+              key: {
+                html: 'Regulator'
+              },
+              value: {
+                html: site.regulator
+              }
+            }
+          ]
+        }) }}
+      </div>
+
+    </div>
+  </div>
+
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-three-quarters-from-desktop">
+
+      <h2 class="govuk-heading-l">
+        Prepare the application
+      </h2>
+
+      <p>Details from your current accreditation have been carried over automatically. Change any that are no longer correct.</p>
+
+      {% set sitesHtml %}
+        {% if data['overseas-sites'] %}
+          {{ data['overseas-sites'] | arrayToGovukList() | safe }}
+        {% else %}
+          <a href="overseas-sites">Select overseas reprocessing sites</a>
+        {% endif %}
+      {% endset -%}
+
+      {# Create empty object for questions #}
+      {% set questions = [] %}
+
+      {# Add the default questions #}
+      {% set questions = questions | push (
+        {
+          key: {
+            html: pErn+' tonnage'
+          },
+          value: {
+            html: pErn+' tonnage'
+          },
+          actions: {
+            items: [
+              {
+                href: '#0',
+                text: 'Change'
+              }
+            ]
+          }
+        }
+      ) %}
+      {% set questions = questions | push (
+        {
+          key: {
+            html: 'Authority to issue PRNs'
+          },
+          value: {
+            html: '<ul class="govuk-list"><li>Rosina Campbell</li><li>Harry Edge</li></ul>'
+          },
+          actions: {
+            items: [
+              {
+                href: '#0',
+                text: 'Change'
+              }
+            ]
+          }
+        }
+      ) %}
+      {% set questions = questions | push (
+        {
+          key: {
+            html: 'Sampling and inspection plan'
+          },
+          value: {
+            html: '<a href="#0">si-plan.pdf</a>'
+          },
+          actions: {
+            items: [
+              {
+                href: '#0',
+                text: 'Change'
+              }
+            ]
+          }
+        }
+      ) %}
+      {% set questions = questions | push (
+        {
+          key: {
+            html: 'Overseas reprocessing sites'
+          },
+          value: {
+            html: sitesHtml
+          },
+          actions: {
+            items: [
+              {
+                href: 'overseas-sites',
+                text: 'Change'
+              }
+            ]
+          } if data['overseas-sites']
+        }
+      ) %}
+
+      {# Loop through and add Bes for each site #}
+      {% if data['overseas-sites'] %}
+        {% for site in data['overseas-sites'] %}
+          {% set questions = questions | push (
+            {
+              key: {
+                html: 'Evidence of broadly equivalent standards for '+site
+              },
+              value: {
+                html: '<a href="#0">Upload evidence of broadly equivalent standards for '+site+'</a>'
+              }
+            }
+          ) %}
+        {% endfor %}
+      {% endif %}
+
+      {{ govukSummaryList({
+        card: {
+          title: {
+            text: 'Application details'
+          }
+        },
+        rows: questions
+      }) }}
+
+      {{ govukSummaryList({
+        card: {
+          title: {
+            text: 'Business plan'
+          },
+          actions: {
+            items: [
+              {
+                href: '#0',
+                text: 'Change',
+                classes: 'govuk-!-font-weight-regular'
+              }
+            ]
+          }
+        },
+        rows: [
+          {
+            key: {
+              html: 'New reprocessing infrastructure and maintaining existing infrastructure'
+            },
+            value: {
+              html: '80% of PRN income<br>I’ll spend the income to…'
+            }
+          },
+          {
+            key: {
+              html: 'Building converted into accommodation'
+            },
+            value: {
+              html: '20% of PRN income<br>I’ll spend the income to…'
+            }
+          }
+        ]
+      }) }}
+
+
+
+      {{ govukInsetText({
+        html: 'There&rsquo;s a charge of '+(fee | currency)+' for this application. Payment details will be given after the application is submitted to the regulator.'
+      }) }}
+
+
+
+
+      <h2 class="govuk-heading-l">
+        Submit the application
+      </h2>
+
+      <p>You must complete each section of the application before it can be submitted.</p>
+
+      <p>You can <a href="#0">discard the application</a> if you no longer want to reapply for accreditation.</p>
+
+    </div>
+  </div>
+{% endblock %}

@@ -1,0 +1,113 @@
+{% extends "layouts/main.html" %}
+
+{% block backLink %}
+  {{ govukBackLink({
+    html: 'Back to accredditation application',
+    href: 'overseas-sites'
+  }) }}
+{% endblock %}
+
+{% set title = ('<span class="govuk-caption-xl">'+site.name+'<span class="govuk-visually-hidden">:</span></span> ' if data['current-site-type'] == 'reprocessing' and org['reprocessing-sites'] | length > 1)+'Manage overseas sites for '+(material.name | lower) %}
+
+{% set pErn = 'PRN' if data['current-site-type'] == 'reprocessing' else 'PERN' %}
+
+{% set questionCount = 0 %}
+{% set questionsCompleted = 0 %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+
+      <div class="app-page-header">
+        {{ mojPageHeaderActions({
+          heading: {
+            text: title | safe
+          },
+          items: [
+            {
+              text: 'Add site',
+              href: 'add-site/address',
+              classes: 'govuk-button--secondary'
+            }
+          ]
+        }) }}
+
+        {{ govukSummaryList({
+          classes: 'govuk-summary-list--no-border govuk-!-width-two-thirds',
+          rows: [
+            {
+              key: {
+                html: 'Site address'
+              },
+              value: {
+                html: site.address
+              }
+            },
+            {
+              key: {
+                html: 'Regulator'
+              },
+              value: {
+                html: site.regulator
+              }
+            }
+          ]
+        }) }}
+      </div>
+
+    </div>
+  </div>
+
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+
+      {# <h2 class="govuk-heading-l">
+        Registered sites
+      </h2> #}
+
+
+
+
+
+     {# Create empty object for radios #}
+     {% set sites = [] %}
+
+     {# Loop through the sites and add into the object #}
+     {# html: site.name+' ('+site.country+')', #}
+     {% for site in org['overseas-sites'] | sort(attribute='organisation') %}
+       {% set sites = sites | push (
+         {
+            key: {
+              html: site.organisation
+            },
+            value: {
+              html: site.address
+            },
+            actions: {
+              items: [
+                {
+                  href: '#0',
+                  text: 'Change',
+                  visuallyHiddenText: site.name,
+                  classes: 'govuk-link--no-visited-state'
+                },
+                {
+                 href: '#0',
+                 text: 'Remove',
+                 visuallyHiddenText: site.name,
+                 classes: 'govuk-link--no-visited-state'
+               }
+              ]
+            }
+          }
+       ) %}
+     {% endfor %}
+
+     {{ govukSummaryList({
+       rows: sites
+     }) }}
+
+    </div>
+  </div>
+{% endblock %}

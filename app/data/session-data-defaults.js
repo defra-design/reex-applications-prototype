@@ -1,5 +1,7 @@
+// Country list from https://www.gov.uk/government/publications/geographical-names-and-information
+let countries = require('./countries.json')
 module.exports = {
-
+  countries,
   "repository-url": "https://github.com/defra-design/reex-applications-prototype",
   "prototype-url": "https://reex-applications-prototype-5c478b674681.herokuapp.com",
 
@@ -112,12 +114,12 @@ module.exports = {
       ],
       "overseas-sites": [
         {
-          "name": "Bharat Paper Recycling",
+          "organisation": "Bharat Paper Recycling",
           "country": "India",
           "address": "4852/24, Ansari Road, Darya Ganj, Delhi, 110002, India"
         },
         {
-          "name": "Dragon Paper Recyclers",
+          "organisation": "Dragon Paper Recyclers",
           "country": "Hong Kong",
           "address": "Stanhope Hse North Point, Eastern District, Hong Kong"
         }
@@ -131,7 +133,7 @@ module.exports = {
           "materials": [
             {
               "id": 0,
-              "name": "Paper and board",
+              "name": "Plastic",
               "registration": "Approved",
               "registration-number": "R26EX1234560001PA",
               "accreditation": "Approved",
