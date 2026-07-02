@@ -18,29 +18,39 @@
       </h1>
       <p class="govuk-body-l">Allow accredited operators to reapply for accreditation.</p>
 
-      {% set version = "2" %}
+      {% set version = "3" %}
       <h2 class="govuk-heading-m">
         Version {{version}}
         {{ govukTag({
           classes: 'govuk-tag--yellow govuk-!-margin-left-2',
-          text: 'In review'
+          text: 'In progress'
         }) }}
       </h2>
 
-      <p>An update to the first review that does away with the task list, that pattern is meant for more complicated transactions, and brings the check your answers forward in it&rsquo;s place.</p>
-
-      <p>The flow has been updated for exporters and asks additional questions about the overseas sites.</p>
-
-      <p>Once submitted there is an option to view a query from the regulator, this allows resubmitting the sampling and inspection plan.</p>
+      <p>Designs the process to add and remove overseas sites while applying for accreditation.</p>
 
       {{ govukButton({
         text: 'View prototype',
-        href: '/account/v1/?account-accreditation-next=/reaccredit/v'+version+'/&current-org=123002&current-site-type=exporting&current-site=0&current-material=0'
+        href: 'v'+version+'/task-list?current-org=123002&current-site-type=exporting&current-site=0&current-material=0'
       }) }}
 
 
 
 
+
+      {% set v2HTML %}
+        {% set version = "2" %}
+        <p>An update to the first review that does away with the task list, that pattern is meant for more complicated transactions, and brings the check your answers forward in it&rsquo;s place.</p>
+
+        <p>The flow has been updated for exporters and asks additional questions about the overseas sites.</p>
+
+        <p>Once submitted there is an option to view a query from the regulator, this allows resubmitting the sampling and inspection plan.</p>
+
+        {{ govukButton({
+          text: 'View prototype',
+          href: '/account/v1/?account-accreditation-next=/reaccredit/v'+version+'/&current-org=123002&current-site-type=exporting&current-site=0&current-material=0'
+        }) }}
+      {% endset %}
 
       {% set v1HTML %}
         {% set version = "1" %}
@@ -48,7 +58,7 @@
 
         {{ govukButton({
           text: 'View prototype',
-          href: 'v'+version+'/?account-accreditation-next=/reaccredit/v'+version+'/&current-site-type=reprocessing&current-site=0&current-material=0'
+          href: 'v'+version+'/?account-accreditation-next=/reaccredit/v'+version+'/&current-org=123001&current-site-type=reprocessing&current-site=0&current-material=0'
         }) }}
       {% endset %}
 
@@ -56,6 +66,14 @@
         id: 'previous',
         classes: 'govuk-!-margin-top-9',
         items: [
+          {
+            heading: {
+              html: 'Version 2 <strong class="govuk-tag govuk-tag--green govuk-!-margin-left-2">Researched</strong>'
+            },
+            content: {
+              html: v2HTML
+            }
+          },
           {
             heading: {
               html: 'Version 1 <strong class="govuk-tag govuk-tag--blue govuk-!-margin-left-2">Done</strong>'

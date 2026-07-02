@@ -1,0 +1,70 @@
+{% extends "layouts/main.html" %}
+
+{% set title = 'Where is the site located?' %}
+
+{% block questions %}
+  <h1 class="govuk-heading-l">
+    {{ title | safe }}
+  </h1>
+
+  {# Create empty object #}
+  {% set countriesList = [{value: '',text: 'Select option'}] %}
+
+  {# Loop through the countries and add into the object #}
+  {% for country in data['countries'] %}
+    {% set countriesList = countriesList | push (
+     {
+        value: country,
+        text: country
+      }
+    ) %}
+  {% endfor %}
+
+
+  {{ govukTextarea({
+    id: 'address',
+    name: 'address',
+    value: data['address'],
+    label: {
+      text: 'Address'
+    },
+    autocomplete: 'street-address'
+  }) }}
+
+  {{ govukSelect({
+    id: 'country',
+    name: 'country',
+    value: data['country'],
+    classes: 'js-autocomplete',
+    label: {
+      html: 'Country'
+    },
+    items: countriesList,
+    attributes: {
+      'data-default-value': data['autocomplete']
+    }
+  }) }}
+
+  {{ govukInput({
+    id: 'lat-long',
+    name: 'lat-long',
+    value: data['lat-long'],
+    label: {
+      html: 'Latitude and longitude coordinates for the site&rsquo;s main entrance'
+    },
+    hint: {
+      html: 'For example, 51.50346364705508, -0.12759261661237808'
+    },
+    spellcheck: false
+  }) }}
+{% endblock %}
+
+{% block buttons %}
+  <div class="govuk-button-group">
+    {{ govukButton({
+      text: 'Continue'
+    }) }}
+
+    <a class="govuk-link" href="cancel">Cancel</a>
+  </div>
+{% endblock %}

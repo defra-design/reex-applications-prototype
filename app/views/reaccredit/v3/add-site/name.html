@@ -1,0 +1,59 @@
+{% extends "layouts/main.html" %}
+
+{% set title = 'Who is the main contact for '+ (data['organisation'] or 'Example Orgnisation') +'?' %}
+
+{% block questions %}
+  <h1 class="govuk-heading-l">
+    {{ title | safe }}
+  </h1>
+
+  <p>This must be a person holding a senior position in the organisation</p>
+
+  {{ govukInput({
+    id: 'contact',
+    name: 'contact',
+    value: data['contact'],
+    label: {
+      html: 'Name'
+    },
+    spellcheck: false
+  }) }}
+
+  {{ govukInput({
+    id: 'email',
+    name: 'email',
+    value: data['email'],
+    label: {
+      html: 'Email address'
+    },
+    type: 'email',
+    autocomplete: 'email',
+    spellcheck: false
+  }) }}
+
+  {{ govukInput({
+    id: 'phone',
+    name: 'phone',
+    value: data['phone'],
+    classes: 'govuk-input--width-20',
+    label: {
+      html: 'Telephone number'
+    },
+    hint: {
+      html: 'For international numbers include the country code'
+    },
+    type: 'tel',
+    autocomplete: 'tel',
+    spellcheck: false
+  }) }}
+{% endblock %}
+
+{% block buttons %}
+  <div class="govuk-button-group">
+    {{ govukButton({
+      text: 'Continue'
+    }) }}
+
+    <a class="govuk-link" href="cancel">Cancel</a>
+  </div>
+{% endblock %}

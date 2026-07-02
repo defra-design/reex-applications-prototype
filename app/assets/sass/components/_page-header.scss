@@ -8,6 +8,7 @@
 	}
 
 	h1 + p,
+	h1 + a,
 	h1 + dl,
 	h1 + .govuk-inset-text {
 		@include govuk-responsive-margin(5, "top");

@@ -5,10 +5,11 @@
     "start": "govuk-prototype-kit start"
   },
   "dependencies": {
+    "@ministryofjustice/frontend": "^9.0.0",
     "govuk-frontend": "6.1.0",
     "govuk-prototype-kit": "13.20.0",
-    "nunjucks": "^3.2.4",
     "moment": "^2.29.1",
+    "nunjucks": "^3.2.4",
     "nunjucks-date-filter": "^0.1.1"
   }
 }
