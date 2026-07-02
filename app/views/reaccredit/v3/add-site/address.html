@@ -28,7 +28,8 @@
     label: {
       text: 'Address'
     },
-    autocomplete: 'street-address'
+    autocomplete: 'street-address',
+    spellcheck: false
   }) }}
 
   {{ govukSelect({
@@ -55,7 +56,7 @@
     hint: {
       html: 'For example, 51.50346364705508, -0.12759261661237808'
     },
-    spellcheck: false
+
   }) }}
 {% endblock %}
 
