@@ -385,9 +385,9 @@ router.get('/apply/bes-delete', (req, res) => {
 
 router.get('/apply/bes-complete', (req, res) => {
   let checkAnswer = JSON.stringify(req.material[0].application.questions)
-  if (checkAnswer.includes('Bharat' && !req.session.data['bharat-bes'])) {
+  if (checkAnswer.includes('Bharat') && !req.session.data['bharat-bes']) {
     res.redirect('bes?bes-site=bharat')
-  } else if (checkAnswer.includes('Dragon' && !req.session.data['dragon-bes'])) {
+  } else if (checkAnswer.includes('Dragon') && !req.session.data['dragon-bes']) {
     res.redirect('bes?bes-site=dragon')
   } else {
     res.redirect('task-list')
