@@ -1,0 +1,84 @@
+{% extends "layouts/main.html" %}
+
+{% set title = 'Supporting information' %}
+
+{% block questions %}
+  <h1 class="govuk-heading-l">
+    {{ title | safe }}
+  </h1>
+
+  {% if uploads | length %}
+    <h2 class="govuk-heading-m">
+      Uploaded files
+    </h2>
+
+    {% set answers = [] %}
+    {% for upload in uploads %}
+      {% set answers = answers | push ({
+        key: {
+          html: '<a href="#0">'+(upload.name or 'example.pdf')+'</a>'
+        },
+        actions: {
+          items: [
+            {
+              href: 'supporting-information/delete-upload?index='+loop.index0,
+              text: 'Delete',
+              visuallyHiddenText: ' '+upload.name,
+              classes: 'app-link-destructive'
+            }
+          ]
+        }
+      }) %}
+    {% endfor %}
+
+    {{ govukSummaryList({
+      rows: answers
+    }) }}
+  {% endif %}
+
+  {% if uploads | length >= 10 %}
+    {{ govukInsetText({
+      text: 'You can upload a maximum of 10 files.'
+    }) }}
+  {% else %}
+    {% if uploads | length %}
+      <h2 class="govuk-heading-m">
+        Upload another file
+      </h2>
+    {% endif %}
+
+    {{ govukFileUpload({
+      id: 'supporting-information-file',
+      name: 'supporting-information-file',
+      label: {
+        html: 'Upload a file',
+        classes: 'govuk-label--m'
+      },
+      hint: {
+        text: 'Only PDF, DOC, DOCX, XLS, CSV, PNG, TIF, JPG or MSG files are allowed and they must be smaller than 20MB.'
+      },
+      javascript: true
+    }) }}
+  {% endif %}
+{% endblock %}
+
+{% block buttons %}
+  {% if uploads | length %}
+    {% if uploads | length < 10 %}
+      {{ govukButton({
+        html: 'Upload file',
+        classes: 'govuk-button--secondary'
+      }) }}
+      <hr class="govuk-section-break govuk-section-break--s">
+    {% endif %}
+    {{ govukButton({
+      html: 'Save and continue',
+      href: 'supporting-information/complete',
+      classes: 'govuk-!-margin-top-4'
+    }) }}
+  {% else %}
+    {{ govukButton({
+      html: 'Upload file'
+    }) }}
+  {% endif %}
+{% endblock %}

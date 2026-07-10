@@ -293,6 +293,46 @@ router.post('/si-plan', (req, res) => {
 })
 
 
+// Pass the uploaded supporting information files through to the page
+router.get('/supporting-information', (req, res, next) => {
+  res.locals.uploads = req.session.data['supporting-information']
+  next()
+})
+
+router.post('/supporting-information', (req, res) => {
+  if (!req.session.data['supporting-information']) {
+    req.session.data['supporting-information'] = []
+  }
+  let uploads = req.session.data['supporting-information']
+
+  // Don't allow more than the maximum of 10 files
+  if (uploads.length < 10) {
+    // Setup the object with the answers given by the user
+    const newUpload = Object.assign({
+      name: req.session.data['supporting-information-file']
+    })
+
+    // Pass the above object into the uploads data
+    uploads.push(newUpload)
+  }
+
+  delete req.session.data['supporting-information-file']
+
+  res.redirect('supporting-information')
+})
+
+// Delete an uploaded supporting information file
+router.get('/supporting-information/delete-upload', (req, res) => {
+  req.session.data['supporting-information'].splice(parseInt(req.session.data['index']), 1)
+  res.redirect('../supporting-information')
+})
+
+// Finish uploading supporting information and return to the task list
+router.get('/supporting-information/complete', (req, res) => {
+  res.redirect('../task-list')
+})
+
+
 
 
 

@@ -127,6 +127,36 @@
           } if data['si-plan']
         }
       ) %}
+      {% set supportingFiles %}
+        <ul class="govuk-list">
+          {% for file in data['supporting-information'] %}
+            <li>{{ file.name or 'example.pdf' }}</li>
+          {% endfor %}
+        </ul>
+      {% endset -%}
+
+      {% set questions = questions | push (
+        {
+          key: {
+            html: 'Supporting information'
+          },
+          value: {
+            html: supportingFiles
+          } if data['supporting-information'] | length else
+          {
+            html: '<a href="supporting-information">Upload supporting information</a>'
+          },
+          actions: {
+            items: [
+              {
+                href: 'supporting-information',
+                text: 'Change',
+                visuallyHiddenText: ' supporting information'
+              }
+            ]
+          } if data['supporting-information'] | length
+        }
+      ) %}
       {% set questions = questions | push (
         {
           key: {
