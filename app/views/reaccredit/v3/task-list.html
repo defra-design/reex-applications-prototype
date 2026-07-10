@@ -74,13 +74,14 @@
             html: pErn+' tonnage'
           },
           value: {
-            html: pErn+' tonnage'
+            html: data['tonnage'] or material.tonnage
           },
           actions: {
             items: [
               {
-                href: '#0',
-                text: 'Change'
+                href: 'tonnage?change=true',
+                text: 'Change',
+                visuallyHiddenText: ' '+pErn+' tonnage'
               }
             ]
           }

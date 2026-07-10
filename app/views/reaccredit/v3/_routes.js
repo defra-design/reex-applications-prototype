@@ -91,6 +91,16 @@ router.get('/task-list', (req, res, next) => {
   next()
 })
 
+// Pre-select the current tonnage on the change page
+router.get('/tonnage', (req, res, next) => {
+  res.locals.answer = req.session.data['tonnage'] || req.material[0].tonnage
+  next()
+})
+
+router.post('/tonnage', (req, res) => {
+  res.redirect('task-list')
+})
+
 router.post('/overseas-sites', (req, res) => {
   res.redirect('task-list')
 })
