@@ -1,31 +1,18 @@
 {% extends "layouts/main.html" %}
 
-{% set title = 'Overseas sites' %}
+{% set title = 'Select which overseas sites to add to your accreditation application' %}
 
 {% block questions %}
-  <h1 class="govuk-heading-l">
-    {{ title | safe }}
-  </h1>
-
-  <p>Select from the overseas reprocessing sites provided in your registration that you want to add to the accreditation application.</p>
-
-  <p>You can <a href="manage-sites">manage overseas sites for this registration</a> if you need to add more.</p>
-
-  <p>For each site you select, there is a charge of £328.</p>
-
-  <p>You can only issue PERNs in respect to waste exported to, and received by, overseas sites included in your accreditation.</p>
-
-
-  {# Create empty object for radios #}
+  {# Create empty object for checkboxes #}
   {% set sites = [] %}
 
   {# Loop through the sites and add into the object #}
-  {# html: site.name+' ('+site.country+')', #}
+  {# html: site.organisation+' ('+site.country+')', #}
   {% for site in org['overseas-sites'] | sort(attribute='organisation') %}
     {% set sites = sites | push (
       {
         html: site.organisation,
-        value: site.address,
+        value: site.organisation,
         hint: {
           html: site.address
         }
@@ -33,7 +20,7 @@
     ) %}
   {% endfor %}
 
-  {# Setup the radio macro and pull in types object #}
+  {# Setup the checkbox macro and pull in sites object #}
   {{ govukCheckboxes({
     idPrefix: 'overseas-sites',
     name: 'overseas-sites',
@@ -41,8 +28,9 @@
     classes: 'govuk-checkboxes--small app-checkboxes--divider js-select-all',
     fieldset: {
       legend: {
-        html: 'Select which overseas sites to add to your accreditation application',
-        classes: 'govuk-fieldset__legend--m'
+        html: title,
+        classes: 'govuk-fieldset__legend--l',
+        isPageHeading: true
       }
     },
     items: sites

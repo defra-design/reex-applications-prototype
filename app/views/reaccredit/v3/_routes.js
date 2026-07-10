@@ -32,6 +32,12 @@ router.get('*', (req, res, next) => {
     req.session.data['current-site-type'] = 'exporting'
   }
 
+  // A single selected checkbox is stored as a string — normalise to an array
+  let overseasSites = req.session.data['overseas-sites']
+  if (typeof overseasSites === 'string') {
+    req.session.data['overseas-sites'] = overseasSites ? [overseasSites] : undefined
+  }
+
   next()
 })
 
@@ -102,7 +108,95 @@ router.post('/tonnage', (req, res) => {
 })
 
 router.post('/overseas-sites', (req, res) => {
-  res.redirect('task-list')
+  // Send the user to upload evidence for each selected site that has none yet
+  let selected = JSON.stringify(req.session.data['overseas-sites'] || [])
+
+  if (selected.includes('Bharat') && !req.session.data['bharat-bes']) {
+    res.redirect('bes?bes-site=bharat')
+  } else if (selected.includes('Dragon') && !req.session.data['dragon-bes']) {
+    res.redirect('bes?bes-site=dragon')
+  } else {
+    res.redirect('task-list')
+  }
+})
+
+// Set the site name and existing uploads for the broadly equivalent standards page
+router.get('/bes', (req, res, next) => {
+  if (req.session.data['bes-site'] == 'bharat') {
+    res.locals.siteName = 'Bharat Paper Recycling'
+    res.locals.uploads = req.session.data['bharat-bes']
+  } else {
+    res.locals.siteName = 'Dragon Paper Recyclers'
+    res.locals.uploads = req.session.data['dragon-bes']
+  }
+
+  next()
+})
+
+router.post('/bes', (req, res) => {
+  let uploads
+
+  if (req.session.data['bes-site'] == 'bharat') {
+    if (!req.session.data['bharat-bes']) {
+      req.session.data['bharat-bes'] = []
+    }
+    uploads = req.session.data['bharat-bes']
+  } else {
+    if (!req.session.data['dragon-bes']) {
+      req.session.data['dragon-bes'] = []
+    }
+    uploads = req.session.data['dragon-bes']
+  }
+
+  // Setup the object with the answers given by the user
+  const newUpload = Object.assign({
+    name: req.session.data['bes-file'],
+    date: req.session.data['bes-date'],
+    start: req.session.data['bes-start-year']+'-'+parseInt(req.session.data['bes-start-month']).toLocaleString(undefined, {minimumIntegerDigits: 2})+'-'+parseInt(req.session.data['bes-start-day']).toLocaleString(undefined, {minimumIntegerDigits: 2}),
+    end: req.session.data['bes-end-year']+'-'+parseInt(req.session.data['bes-end-month']).toLocaleString(undefined, {minimumIntegerDigits: 2})+'-'+parseInt(req.session.data['bes-end-day']).toLocaleString(undefined, {minimumIntegerDigits: 2})
+  })
+
+  // Pass the above object into the uploads data
+  uploads.push(newUpload)
+
+  delete req.session.data['bes-file']
+  delete req.session.data['bes-date']
+  delete req.session.data['bes-start-year']
+  delete req.session.data['bes-start-month']
+  delete req.session.data['bes-start-day']
+  delete req.session.data['bes-end-year']
+  delete req.session.data['bes-end-month']
+  delete req.session.data['bes-end-day']
+
+  res.redirect('bes')
+})
+
+router.get('/bes-delete', (req, res) => {
+  var index = req.session.data['index']
+  let uploads
+
+  if (req.session.data['bes-site'] == 'bharat') {
+    uploads = req.session.data['bharat-bes']
+  } else {
+    uploads = req.session.data['dragon-bes']
+  }
+
+  uploads.splice(index, 1)
+
+  res.redirect('bes')
+})
+
+router.get('/bes-complete', (req, res) => {
+  // Move on to the next selected site needing evidence, or back to the task list
+  let selected = JSON.stringify(req.session.data['overseas-sites'] || [])
+
+  if (selected.includes('Bharat') && !req.session.data['bharat-bes']) {
+    res.redirect('bes?bes-site=bharat')
+  } else if (selected.includes('Dragon') && !req.session.data['dragon-bes']) {
+    res.redirect('bes?bes-site=dragon')
+  } else {
+    res.redirect('task-list')
+  }
 })
 
 
