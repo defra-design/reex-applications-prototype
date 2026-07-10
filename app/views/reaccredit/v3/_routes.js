@@ -172,6 +172,33 @@ router.get('/manage-sites', (req, res, next) => {
 })
 
 
+// Pass the uploaded sampling and inspection plan through to the page
+router.get('/si-plan', (req, res, next) => {
+  res.locals.answer = req.session.data['si-plan']
+  next()
+})
+
+// Delete the uploaded sampling and inspection plan
+router.get('/si-plan/delete-upload', (req, res) => {
+  delete req.session.data['si-plan']
+  res.redirect('../si-plan')
+})
+
+router.post('/si-plan', (req, res) => {
+  // If no file was chosen, use an example filename
+  if (!req.session.data['si-plan']) {
+    req.session.data['si-plan'] = 'si-plan.pdf'
+  }
+
+  // Reprocessing sites have no overseas sites, and changing skips straight back
+  if (req.session.data['change'] || req.session.data['current-site-type'] == 'reprocessing') {
+    res.redirect('task-list')
+  } else {
+    res.redirect('overseas-sites')
+  }
+})
+
+
 
 
 

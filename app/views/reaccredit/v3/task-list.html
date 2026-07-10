@@ -111,16 +111,20 @@
             html: 'Sampling and inspection plan'
           },
           value: {
-            html: '<a href="#0">si-plan.pdf</a>'
+            html: '<a href="#0">'+data['si-plan']+'</a>'
+          } if data['si-plan'] else
+          {
+            html: '<a href="si-plan">Upload sampling and inspection plan</a>'
           },
           actions: {
             items: [
               {
-                href: '#0',
-                text: 'Change'
+                href: 'si-plan?change=true',
+                text: 'Change',
+                visuallyHiddenText: ' sampling and inspection plan'
               }
             ]
-          }
+          } if data['si-plan']
         }
       ) %}
       {% set questions = questions | push (
