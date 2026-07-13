@@ -1,0 +1,213 @@
+{% extends "layouts/main.html" %}
+{% block backLink %}
+  {{ govukBackLink({
+    html: 'Back to site details',
+    href: accountVersion+'material/?current-site-type='+(data['current-site-type'] or 'reprocessing')+'&current-org='+org.id+'&current-site='+site.id+'&current-material='+material.id
+  }) }}
+{% endblock %}
+
+{% set title = ('<span class="govuk-caption-xl">'+site.name+'<span class="govuk-visually-hidden">:</span></span> ' if data['current-site-type'] == 'reprocessing' and org['reprocessing-sites'] | length > 1)+material.name+' accreditation' %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    {% if data['application-discarded'] %}
+      <div class="govuk-grid-column-two-thirds-from-desktop">
+        {% set html %}
+          <h3 class="govuk-notification-banner__heading">
+            Application discarded
+          </h3>
+          <p>A confirmation email has been sent to rosina@gws.com (Rosina Campbell).</p>
+        {% endset %}
+
+        {{ govukNotificationBanner({
+          html: html,
+          type: "success"
+        }) }}
+      </div>
+    {% endif %}
+    {% if data['application-withdrawn'] %}
+      <div class="govuk-grid-column-two-thirds-from-desktop">
+        {% set html %}
+          <h3 class="govuk-notification-banner__heading">
+            Application withdrawn
+          </h3>
+          <p>A confirmation email has been sent to rosina@gws.com (Rosina Campbell).</p>
+        {% endset %}
+
+        {{ govukNotificationBanner({
+          html: html,
+          type: "success"
+        }) }}
+      </div>
+    {% endif %}
+    {% if data['application-resubmitted'] %}
+      <div class="govuk-grid-column-two-thirds-from-desktop">
+        {% set html %}
+          <h3 class="govuk-notification-banner__heading">
+            Application resubmitted to the {{ site.regulator }}
+          </h3>
+          <p>A confirmation email has been sent to rosina@gws.com (Rosina Campbell).</p>
+        {% endset %}
+
+        {{ govukNotificationBanner({
+          html: html,
+          type: "success"
+        }) }}
+      </div>
+    {% endif %}
+
+    <div class="govuk-grid-column-full">
+
+      <div class="app-page-header">
+        <h1 class="govuk-heading-xl">
+          {{ title | safe }}
+        </h1>
+
+        {{ govukInsetText({
+          html: '<p>You can now <a href="task-list">reapply for accreditation for this material</a>.</p><p>Submit the application by 30 September 2026 to get accreditation approval from 1 January 2027.</p>'
+        }) if not material.application }}
+      </div>
+
+    </div>
+  </div>
+
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds-from-desktop">
+
+      {% if material.application %}
+      {{ govukTable({
+        caption: 'Application details',
+        captionClasses: 'govuk-table__caption--l',
+        head: [
+          {
+            html: 'Period'
+          },
+          {
+            html: 'Due date'
+          },
+          {
+            html: 'Status'
+          },
+          {
+            html: '<span class="govuk-visually-hidden">Action</span>',
+            format: 'numeric'
+          }
+        ],
+        rows: [
+          [
+            {
+              html: '2027'
+            },
+            {
+              html: '30 September 2026'
+            },
+            {
+              html: '<strong class="govuk-tag '+('govuk-tag--orange' if material.application.status == 'Submitted')+('govuk-tag--magenta' if material.application.status == 'Requires resubmission')+('govuk-tag--green' if material.application.status == 'In review')+'">'+material.application.status+'</strong>'
+            },
+            {
+              html: ('<a href="task-list">Continue</a>' if material.application.status == 'In progress') + ('<ul class="govuk-summary-list__actions-list"><li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="withdraw">Withdraw</a></li><li class="govuk-summary-list__actions-list-item"><a href="apply/payment">Pay</a></li></ul>' if material.application.status == 'Submitted') + ('<ul class="govuk-summary-list__actions-list"><li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="withdraw">Withdraw</a></li><li class="govuk-summary-list__actions-list-item"><a href="apply/query">Review and submit</a></li></ul>' if material.application.status == 'Requires resubmission') + ('<ul class="govuk-summary-list__actions-list"><li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="withdraw">Withdraw</a></li><li class="govuk-summary-list__actions-list-item"><a href="#0">View</a></li></ul>' if material.application.status == 'In review'),
+              format: 'numeric'
+            }
+          ]
+        ]
+      }) }}
+
+      <h2 class="govuk-heading-l">
+        Current accreditation details
+      </h2>
+      {% endif %}
+      {{ govukSummaryList({
+        rows: [
+          {
+            key: {
+              html: 'Accreditation number'
+            },
+            value: {
+              html: material['accreditation-number']
+            }
+          },
+          {
+            key: {
+              html: 'Regulator'
+            },
+            value: {
+              html: site.regulator
+            }
+          },
+          {
+            key: {
+              html: 'Status'
+            },
+            value: {
+              html: material['accreditation']
+            }
+          },
+          {
+            key: {
+              html: 'Expiry date'
+            },
+            value: {
+              html: material['accreditation-expiry'] | date
+            }
+          },
+          {
+            key: {
+              html: 'Site address'
+            },
+            value: {
+              html: site.address
+            }
+          },
+          {
+            key: {
+              html: 'Tonnage'
+            },
+            value: {
+              html: material.tonnage
+            }
+          },
+          {
+            key: {
+              html: 'Authorised users'
+            },
+            value: {
+              html: material.authorised | sort | arrayToGovukList()
+            }
+          },
+          {
+            key: {
+              html: 'Overseas reprocessing sites'
+            },
+            value: {
+              html: material['overseas-sites'] | sort | arrayToGovukList()
+            }
+          } if  material['overseas-sites']
+        ]
+      }) }}
+
+
+    </div>
+  </div>
+{% endblock %}
+
+
+{% block containerEnd %}
+  {% if material.application.status == 'Submitted' %}
+    {% set prototypeOptions %}
+      <ul class="govuk-list">
+        <li>
+          <a href="get-query">View a query from the regulator</a>
+        </li>
+      </ul>
+    {% endset -%}
+    {{ govukNotificationBanner({
+      attributes: {
+        'id': 'js-dismissible'
+      },
+      titleHtml: 'Prototype options <a href="#0" id="js-dismiss">Hide</a>',
+      html: prototypeOptions,
+      classes: 'app-notification-banner--prototype-options'
+    }) }}
+  {% endif %}
+{% endblock %}

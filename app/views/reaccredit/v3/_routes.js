@@ -333,6 +333,48 @@ router.get('/supporting-information/complete', (req, res) => {
 })
 
 
+// Remember where the user came from so 'No' can send them back
+router.get('/discard', (req, res, next) => {
+  if (req.headers.referer) {
+    req.session.data['discard-back'] = req.headers.referer
+  }
+  next()
+})
+
+router.post('/discard', (req, res) => {
+  // If the user chose not to discard, go back to the previous page
+  if (req.session.data['discard'] != 'Yes') {
+    let back = req.session.data['discard-back'] || 'task-list'
+    delete req.session.data['discard']
+    delete req.session.data['discard-reason']
+    delete req.session.data['discard-back']
+    return res.redirect(back)
+  }
+
+  // Delete the application data
+  delete req.session.data['tonnage']
+  delete req.session.data['si-plan']
+  delete req.session.data['supporting-information']
+  delete req.session.data['overseas-sites']
+  delete req.session.data['bharat-bes']
+  delete req.session.data['dragon-bes']
+  // Clear the discard question answers
+  delete req.session.data['discard']
+  delete req.session.data['discard-reason']
+  delete req.session.data['discard-back']
+  // Enable the notification banner
+  req.session.data['application-discarded'] = true
+  // Go back to the accreditation
+  res.redirect('./')
+})
+
+router.get('/', (req, res, next) => {
+  // Clear notification banners
+  delete req.session.data['application-discarded']
+  next()
+})
+
+
 
 
 

@@ -1,0 +1,49 @@
+{% extends "layouts/main.html" %}
+
+{% set title = 'Are you sure you want to discard your application?' %}
+
+{% block questions %}
+  {% set reasonHtml %}
+    {{ govukTextarea({
+      id: 'discard-reason',
+      name: 'discard-reason',
+      label: {
+        text: '[Add reason for discarding application]'
+      }
+    }) }}
+  {% endset %}
+
+  {{ govukRadios({
+    idPrefix: 'discard',
+    name: 'discard',
+    fieldset: {
+      legend: {
+        text: title,
+        classes: 'govuk-fieldset__legend--l',
+        isPageHeading: true
+      }
+    },
+    hint: {
+      text: 'All saved data for the application will be deleted. This cannot be undone.'
+    },
+    items: [
+      {
+        text: 'Yes',
+        value: 'Yes',
+        conditional: {
+          html: reasonHtml
+        }
+      },
+      {
+        text: 'No',
+        value: 'No'
+      }
+    ]
+  }) }}
+{% endblock %}
+
+{% block buttons %}
+  {{ govukButton({
+    text: 'Confirm and continue'
+  }) }}
+{% endblock %}
