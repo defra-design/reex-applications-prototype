@@ -104,6 +104,10 @@ router.get('/task-list', (req, res, next) => {
   // Delete the change flag
   delete req.session.data['change']
 
+  // The task list is the standard journey, so leave the regulator query behind
+  delete req.session.data['resubmit']
+  delete req.session.data['application-status']
+
   next()
 })
 
@@ -294,8 +298,8 @@ router.post('/si-plan', (req, res) => {
     req.session.data['si-plan'] = 'si-plan.pdf'
   }
 
-  // Resubmitting a queried plan goes back to the query
-  if (req.session.data['application-status'] == 'Requires resubmission') {
+  // Only a plan opened from the regulator query goes back to the query
+  if (req.session.data['resubmit']) {
     return res.redirect('query')
   }
 
@@ -398,6 +402,8 @@ router.get('/email', (req, res, next) => {
 router.post('/query', (req, res) => {
   req.session.data['application-resubmitted'] = true
   req.session.data['application-status'] = 'In review'
+  // The resubmission is done
+  delete req.session.data['resubmit']
   res.redirect('./')
 })
 

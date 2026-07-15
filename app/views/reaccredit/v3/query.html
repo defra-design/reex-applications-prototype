@@ -77,12 +77,12 @@
               html: '<a href="#0">'+data['si-plan']+'</a>'
             } if data['si-plan'] else
             {
-              html: '<a href="si-plan">Upload sampling and inspection plan</a>'
+              html: '<a href="si-plan?resubmit=true">Upload sampling and inspection plan</a>'
             },
             actions: {
               items: [
                 {
-                  href: 'si-plan?change=true',
+                  href: 'si-plan?resubmit=true',
                   text: 'Change',
                   visuallyHiddenText: ' sampling and inspection plan'
                 }
