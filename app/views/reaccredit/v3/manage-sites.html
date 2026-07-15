@@ -7,7 +7,7 @@
   }) }}
 {% endblock %}
 
-{% set title = ('<span class="govuk-caption-xl">'+site.name+'<span class="govuk-visually-hidden">:</span></span> ' if data['current-site-type'] == 'reprocessing' and org['reprocessing-sites'] | length > 1)+'Manage overseas sites for '+(material.name | lower) %}
+{% set title = ('<span class="govuk-caption-xl">'+site.name+'<span class="govuk-visually-hidden">:</span></span> ' if data['current-site-type'] == 'reprocessing' and org['reprocessing-sites'] | length > 1)+'Manage sites: '+(material.name | lower) %}
 
 {% block content %}
   <div class="govuk-grid-row">
@@ -35,7 +35,7 @@
           },
           items: [
             {
-              text: 'Add site',
+              text: 'Add overseas site',
               href: 'add-site/address',
               classes: 'govuk-button--secondary'
             }
