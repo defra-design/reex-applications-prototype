@@ -7,7 +7,7 @@
   }) }}
 {% endblock %}
 
-{% set title = ('<span class="govuk-caption-xl">'+site.name+'<span class="govuk-visually-hidden">:</span></span> ' if data['current-site-type'] == 'reprocessing' and org['reprocessing-sites'] | length > 1)+'Reapply for '+(material.name | lower)+' accreditation' %}
+{% set title = ('<span class="govuk-caption-xl">'+site.name+'<span class="govuk-visually-hidden">:</span></span> ' if data['current-site-type'] == 'reprocessing' and org['reprocessing-sites'] | length > 1)+'Reapply for accreditation: '+(material.name | lower) %}
 
 {% set pErn = 'PRN' if data['current-site-type'] == 'reprocessing' else 'PERN' %}
 
@@ -54,7 +54,7 @@
         Prepare the application
       </h2>
 
-      <p>Details from your current accreditation have been carried over automatically. Change any that are no longer correct.</p>
+      <p>Change any details that are no longer correct.</p>
 
       {% set sitesHtml %}
         {% if data['overseas-sites'] %}
@@ -108,7 +108,7 @@
       {% set questions = questions | push (
         {
           key: {
-            html: 'Sampling and inspection plan'
+            html: 'Sampling and Inspection Plan - Part 2'
           },
           value: {
             html: '<a href="#0">'+data['si-plan']+'</a>'
