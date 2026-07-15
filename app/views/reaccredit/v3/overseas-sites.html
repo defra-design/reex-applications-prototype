@@ -1,8 +1,19 @@
 {% extends "layouts/main.html" %}
 
-{% set title = 'Select which overseas sites to add to your accreditation application' %}
+{% set title = 'Select overseas reprocessing sites' %}
 
 {% block questions %}
+  <h1 class="govuk-heading-l">
+    {{ title | safe }}
+  </h1>
+
+  <p>You can only issue PERNs for waste exported to, and received by, the overseas sites included in your accreditation.</p>
+
+  <p>There is a charge of £328 for each site that you include.</p>
+
+  <p><a href="manage-sites">Manage sites</a> to add more overseas reprocessing sites.</p>
+
+
   {# Create empty object for checkboxes #}
   {% set sites = [] %}
 
@@ -28,9 +39,8 @@
     classes: 'govuk-checkboxes--small app-checkboxes--divider js-select-all',
     fieldset: {
       legend: {
-        html: title,
-        classes: 'govuk-fieldset__legend--l',
-        isPageHeading: true
+        html: 'Which sites do you want to include in your application?',
+        classes: 'govuk-fieldset__legend--m'
       }
     },
     items: sites
