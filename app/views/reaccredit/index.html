@@ -31,7 +31,7 @@
 
       {{ govukButton({
         text: 'View prototype',
-        href: 'v'+version+'/task-list?current-org=123002&current-site-type=exporting&current-site=0&current-material=0'
+        href: 'v'+version+'/?application-status=In progress&current-org=123002&current-site-type=exporting&current-site=0&current-material=0'
       }) }}
 
       <h3 class="govuk-heading-s">
@@ -41,6 +41,9 @@
       <ul class="govuk-list">
         <li>
           <a href="v{{version}}/email?current-org=123002&current-site-type=exporting&current-site=0&current-material=0">Regulator query email</a>
+        </li>
+        <li>
+          <a href="v{{version}}/?application-status=Submitted&current-org=123002&current-site-type=exporting&current-site=0&current-material=0">Withdraw application scenario</a>
         </li>
       </ul>
 

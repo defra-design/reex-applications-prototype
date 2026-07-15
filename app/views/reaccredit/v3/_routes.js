@@ -106,7 +106,7 @@ router.get('/task-list', (req, res, next) => {
 
   // The task list is the standard journey, so leave the regulator query behind
   delete req.session.data['resubmit']
-  delete req.session.data['application-status']
+  req.session.data['application-status'] = 'In progress'
 
   next()
 })
@@ -353,20 +353,20 @@ router.get('/supporting-information/complete', (req, res) => {
 
 
 // Remember where the user came from so 'No' can send them back
-router.get('/discard', (req, res, next) => {
+router.get('/withdraw', (req, res, next) => {
   if (req.headers.referer) {
-    req.session.data['discard-back'] = req.headers.referer
+    req.session.data['withdraw-back'] = req.headers.referer
   }
   next()
 })
 
-router.post('/discard', (req, res) => {
-  // If the user chose not to discard, go back to the previous page
-  if (req.session.data['discard'] != 'Yes') {
-    let back = req.session.data['discard-back'] || 'task-list'
-    delete req.session.data['discard']
-    delete req.session.data['discard-reason']
-    delete req.session.data['discard-back']
+router.post('/withdraw', (req, res) => {
+  // If the user chose not to withdraw, go back to the previous page
+  if (req.session.data['withdraw'] != 'Yes') {
+    let back = req.session.data['withdraw-back'] || './'
+    delete req.session.data['withdraw']
+    delete req.session.data['withdraw-reason']
+    delete req.session.data['withdraw-back']
     return res.redirect(back)
   }
 
@@ -377,12 +377,13 @@ router.post('/discard', (req, res) => {
   delete req.session.data['overseas-sites']
   delete req.session.data['bharat-bes']
   delete req.session.data['dragon-bes']
-  // Clear the discard question answers
-  delete req.session.data['discard']
-  delete req.session.data['discard-reason']
-  delete req.session.data['discard-back']
+  delete req.session.data['application-status']
+  // Clear the withdraw question answers
+  delete req.session.data['withdraw']
+  delete req.session.data['withdraw-reason']
+  delete req.session.data['withdraw-back']
   // Enable the notification banner
-  req.session.data['application-discarded'] = true
+  req.session.data['application-withdrawn'] = true
   // Go back to the accreditation
   res.redirect('./')
 })
@@ -409,7 +410,7 @@ router.post('/query', (req, res) => {
 
 router.get('/', (req, res, next) => {
   // Clear notification banners
-  delete req.session.data['application-discarded']
+  delete req.session.data['application-withdrawn']
   delete req.session.data['application-resubmitted']
   next()
 })
