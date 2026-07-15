@@ -70,6 +70,16 @@ router.all('*', (req, res, next) => {
     // Store it for use in later routes
     req.material = currentMaterial
 
+  // Session data defaults are shared between sessions, so the application state
+  // is kept in session data and attached to a copy of the material to render
+  if (req.session.data['application-status']) {
+    res.locals.material = Object.assign({}, currentMaterial[0], {
+      application: {
+        status: req.session.data['application-status']
+      }
+    })
+  }
+
   next()
 })
 
@@ -284,6 +294,11 @@ router.post('/si-plan', (req, res) => {
     req.session.data['si-plan'] = 'si-plan.pdf'
   }
 
+  // Resubmitting a queried plan goes back to the query
+  if (req.session.data['application-status'] == 'Requires resubmission') {
+    return res.redirect('query')
+  }
+
   // Reprocessing sites have no overseas sites, and changing skips straight back
   if (req.session.data['change'] || req.session.data['current-site-type'] == 'reprocessing') {
     res.redirect('task-list')
@@ -368,9 +383,28 @@ router.post('/discard', (req, res) => {
   res.redirect('./')
 })
 
+// The regulator has queried the sampling and inspection plan of a submitted application
+router.get('/email', (req, res, next) => {
+  req.session.data['application-status'] = 'Requires resubmission'
+
+  // The queried plan was uploaded as part of the submitted application
+  if (!req.session.data['si-plan']) {
+    req.session.data['si-plan'] = 'si-plan.pdf'
+  }
+
+  next()
+})
+
+router.post('/query', (req, res) => {
+  req.session.data['application-resubmitted'] = true
+  req.session.data['application-status'] = 'In review'
+  res.redirect('./')
+})
+
 router.get('/', (req, res, next) => {
   // Clear notification banners
   delete req.session.data['application-discarded']
+  delete req.session.data['application-resubmitted']
   next()
 })
 
