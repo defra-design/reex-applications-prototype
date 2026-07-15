@@ -422,5 +422,33 @@ router.get('/', (req, res, next) => {
 
 
 
+// Example sites for the design option pages only. Two share a name so the
+// operator feedback can be judged against the problem it describes.
+const designOptionSites = [
+  {
+    organisation: 'Bharat Paper Recycling',
+    address: '4852/24, Ansari Road, Darya Ganj, Delhi, 110002, India',
+    evidence: false
+  },
+  {
+    organisation: 'Bharat Paper Recycling',
+    address: 'Plot 14, MIDC Industrial Area, Pune, 411019, India',
+    evidence: true
+  },
+  {
+    organisation: 'Dragon Paper Recyclers',
+    address: 'Stanhope Hse North Point, Eastern District, Hong Kong',
+    evidence: true
+  }
+]
+
+router.get('/design-options*', (req, res, next) => {
+  res.locals.exampleSites = designOptionSites
+  // Same charges feeCalc uses, but for the example sites above
+  res.locals.fee = 546 + (designOptionSites.length * 328)
+  next()
+})
+
+
 // Add your routes above the module.exports line
 module.exports = router

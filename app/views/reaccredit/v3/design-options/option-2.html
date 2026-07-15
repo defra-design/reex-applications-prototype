@@ -1,0 +1,258 @@
+{% extends "layouts/main.html" %}
+
+{% block backLink %}
+  {{ govukBackLink({
+    html: 'Back to the design options',
+    href: '../design-options'
+  }) }}
+{% endblock %}
+
+{% set title = ('<span class="govuk-caption-xl">'+site.name+'<span class="govuk-visually-hidden">:</span></span> ' if data['current-site-type'] == 'reprocessing' and org['reprocessing-sites'] | length > 1)+'Reapply for '+(material.name | lower)+' accreditation' %}
+
+{% set pErn = 'PRN' if data['current-site-type'] == 'reprocessing' else 'PERN' %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+
+      <div class="app-page-header">
+        <h1 class="govuk-heading-xl">
+          {{ title | safe }}
+        </h1>
+
+        {{ govukSummaryList({
+          classes: 'govuk-summary-list--no-border govuk-!-width-two-thirds',
+          rows: [
+            {
+              key: {
+                html: 'Site address'
+              },
+              value: {
+                html: site.address
+              }
+            },
+            {
+              key: {
+                html: 'Regulator'
+              },
+              value: {
+                html: site.regulator
+              }
+            }
+          ]
+        }) }}
+      </div>
+
+    </div>
+  </div>
+
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-three-quarters-from-desktop">
+
+      <h2 class="govuk-heading-l">
+        Prepare the application
+      </h2>
+
+      <p>Details from your current accreditation have been carried over automatically. Change any that are no longer correct.</p>
+
+      {# Create empty object for questions #}
+      {% set questions = [] %}
+
+      {# Add the default questions #}
+      {% set questions = questions | push (
+        {
+          key: {
+            html: pErn+' tonnage'
+          },
+          value: {
+            html: data['tonnage'] or material.tonnage
+          },
+          actions: {
+            items: [
+              {
+                href: '#0',
+                text: 'Change',
+                visuallyHiddenText: ' '+pErn+' tonnage'
+              }
+            ]
+          }
+        }
+      ) %}
+      {% set questions = questions | push (
+        {
+          key: {
+            html: 'Authority to issue PRNs'
+          },
+          value: {
+            html: '<ul class="govuk-list"><li>Rosina Campbell</li><li>Harry Edge</li></ul>'
+          },
+          actions: {
+            items: [
+              {
+                href: '#0',
+                text: 'Change'
+              }
+            ]
+          }
+        }
+      ) %}
+      {% set questions = questions | push (
+        {
+          key: {
+            html: 'Sampling and inspection plan'
+          },
+          value: {
+            html: '<a href="#0">si-plan.pdf</a>'
+          },
+          actions: {
+            items: [
+              {
+                href: '#0',
+                text: 'Change',
+                visuallyHiddenText: ' sampling and inspection plan'
+              }
+            ]
+          }
+        }
+      ) %}
+      {% set questions = questions | push (
+        {
+          key: {
+            html: 'Supporting information'
+          },
+          value: {
+            html: '<ul class="govuk-list"><li>example.pdf</li></ul>'
+          },
+          actions: {
+            items: [
+              {
+                href: '#0',
+                text: 'Change',
+                visuallyHiddenText: ' supporting information'
+              }
+            ]
+          }
+        }
+      ) %}
+
+      {{ govukSummaryList({
+        card: {
+          title: {
+            text: 'Application details'
+          }
+        },
+        rows: questions
+      }) }}
+
+
+      {# ---------- Option 2: a card for each site, titled with the organisation name ---------- #}
+      <h2 class="govuk-heading-m">
+        Overseas reprocessing sites
+      </h2>
+
+      {% for osr in exampleSites %}
+        {{ govukSummaryList({
+          card: {
+            title: {
+              text: osr.organisation
+            }
+          },
+          rows: [
+            {
+              key: {
+                html: 'Site address'
+              },
+              value: {
+                html: osr.address
+              },
+              actions: {
+                items: [
+                  {
+                    href: '#0',
+                    text: 'Change',
+                    visuallyHiddenText: ' site address'
+                  }
+                ]
+              }
+            },
+            {
+              key: {
+                html: 'Evidence of broadly equivalent standards'
+              },
+              value: {
+                html: '<a class="govuk-link" href="#0">See evidence</a>'
+              } if osr.evidence else
+              {
+                html: 'Missing'
+              },
+              actions: {
+                items: [
+                  {
+                    href: '#0',
+                    text: 'Change' if osr.evidence else 'Upload',
+                    visuallyHiddenText: ' evidence of broadly equivalent standards'
+                  }
+                ]
+              }
+            }
+          ]
+        }) }}
+      {% endfor %}
+
+
+      {{ govukSummaryList({
+        card: {
+          title: {
+            text: 'Business plan'
+          },
+          actions: {
+            items: [
+              {
+                href: '#0',
+                text: 'Change',
+                classes: 'govuk-!-font-weight-regular'
+              }
+            ]
+          }
+        },
+        rows: [
+          {
+            key: {
+              html: 'New reprocessing infrastructure and maintaining existing infrastructure'
+            },
+            value: {
+              html: '80% of PRN income<br>I’ll spend the income to…'
+            }
+          },
+          {
+            key: {
+              html: 'Building converted into accommodation'
+            },
+            value: {
+              html: '20% of PRN income<br>I’ll spend the income to…'
+            }
+          }
+        ]
+      }) }}
+
+
+
+      {{ govukInsetText({
+        html: 'There&rsquo;s a charge of '+(fee | currency)+' for this application. Payment details will be given after the application is submitted to the regulator.'
+      }) }}
+
+
+
+
+      <h2 class="govuk-heading-l">
+        Submit the application
+      </h2>
+
+      <p>You must complete each section of the application before it can be submitted.</p>
+
+      <p>You can <a href="#0">discard the application</a> if you no longer want to reapply for accreditation.</p>
+
+    </div>
+  </div>
+{% endblock %}

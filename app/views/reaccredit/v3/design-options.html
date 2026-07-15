@@ -1,0 +1,81 @@
+{% extends "layouts/main.html" %}
+
+{% block backLink %}
+  {{ govukBackLink({
+    html: 'Back to the task list',
+    href: 'task-list'
+  }) }}
+{% endblock %}
+
+{% set title = 'Overseas reprocessing sites: design options' %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-three-quarters-from-desktop">
+
+      <h1 class="govuk-heading-xl">
+        {{ title | safe }}
+      </h1>
+
+      {{ govukInsetText({
+        html: 'Operator feedback: One operator told us they have multiple OSRs with the same name and need to distinguish them'
+      }) }}
+
+      <p>[add content here]</p>
+
+      {{ govukSummaryList({
+        rows: [
+          {
+            key: {
+              html: '<a class="govuk-link" href="design-options/option-1">Option 1: one card, two rows for each site</a>'
+            },
+            value: {
+              html: '[add content here]'
+            }
+          },
+          {
+            key: {
+              html: '<a class="govuk-link" href="design-options/option-2">Option 2: a card for each site, titled with the organisation name</a>'
+            },
+            value: {
+              html: '[add content here]'
+            }
+          },
+          {
+            key: {
+              html: '<a class="govuk-link" href="design-options/option-3">Option 3: a card for each site, titled with the address</a>'
+            },
+            value: {
+              html: '[add content here]'
+            }
+          }
+        ]
+      }) }}
+
+      <h2 class="govuk-heading-m">
+        Example sites used
+      </h2>
+
+      <p>[add content here]</p>
+
+      {% set exampleRows = [] %}
+      {% for osr in exampleSites %}
+        {% set exampleRows = exampleRows | push (
+          {
+            key: {
+              html: osr.organisation
+            },
+            value: {
+              html: osr.address
+            }
+          }
+        ) %}
+      {% endfor %}
+
+      {{ govukSummaryList({
+        rows: exampleRows
+      }) }}
+
+    </div>
+  </div>
+{% endblock %}
