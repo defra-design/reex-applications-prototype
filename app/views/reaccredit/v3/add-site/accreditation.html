@@ -1,0 +1,73 @@
+{% extends "layouts/main.html" %}
+
+{% set title = '[add content here]' %}
+
+{% block questions %}
+  <h1 class="govuk-heading-l">
+    {{ title | safe }}
+  </h1>
+
+  {% set yesNoList = [
+    {
+      value: 'Yes',
+      text: 'Yes'
+    },
+    {
+      value: 'No',
+      text: 'No'
+    },
+    {
+      value: 'Not applicable',
+      text: 'Not applicable'
+    }
+  ] %}
+
+  {{ govukRadios({
+    idPrefix: 'export-conditions',
+    name: 'export-conditions',
+    value: data['export-conditions'],
+    fieldset: {
+      legend: {
+        html: 'Export under conditions of export? (Steel &amp; Aluminium)',
+        classes: 'govuk-fieldset__legend--m'
+      }
+    },
+    items: yesNoList
+  }) }}
+
+  {{ govukRadios({
+    idPrefix: 'broadly-equivalent-documentation',
+    name: 'broadly-equivalent-documentation',
+    value: data['broadly-equivalent-documentation'],
+    fieldset: {
+      legend: {
+        html: 'Broadly equivalent documentation required at application?',
+        classes: 'govuk-fieldset__legend--m'
+      }
+    },
+    items: yesNoList
+  }) }}
+
+  {{ govukRadios({
+    idPrefix: 'include-in-application',
+    name: 'include-in-application',
+    value: data['include-in-application'],
+    fieldset: {
+      legend: {
+        html: 'Include in application for accreditation?',
+        classes: 'govuk-fieldset__legend--m'
+      }
+    },
+    items: yesNoList
+  }) }}
+{% endblock %}
+
+{% block buttons %}
+  <div class="govuk-button-group">
+    {{ govukButton({
+      text: 'Continue'
+    }) }}
+
+    <a class="govuk-link" href="cancel">Cancel</a>
+  </div>
+{% endblock %}

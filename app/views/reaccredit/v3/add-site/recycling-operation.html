@@ -1,0 +1,42 @@
+{% extends "layouts/main.html" %}
+
+{% set title = 'Recycling operation carried out at the overseas site' %}
+
+{% block questions %}
+  {# Create empty object #}
+  {% set recoveryList = [] %}
+
+  {# Loop through the recovery operations and add into the object #}
+  {% for operation in data['recovery-operations'] %}
+    {% set recoveryList = recoveryList | push (
+     {
+        value: operation,
+        text: operation
+      }
+    ) %}
+  {% endfor %}
+
+  {{ govukRadios({
+    idPrefix: 'recycling-operation',
+    name: 'recycling-operation',
+    value: data['recycling-operation'],
+    fieldset: {
+      legend: {
+        html: title | safe,
+        classes: 'govuk-fieldset__legend--l',
+        isPageHeading: true
+      }
+    },
+    items: recoveryList
+  }) }}
+{% endblock %}
+
+{% block buttons %}
+  <div class="govuk-button-group">
+    {{ govukButton({
+      text: 'Continue'
+    }) }}
+
+    <a class="govuk-link" href="cancel">Cancel</a>
+  </div>
+{% endblock %}

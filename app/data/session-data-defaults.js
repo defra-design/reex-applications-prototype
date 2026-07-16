@@ -1,7 +1,12 @@
 // Country list from https://www.gov.uk/government/publications/geographical-names-and-information
 let countries = require('./countries.json')
+// Option lists from the overseas reprocessing interim sites log
+let recoveryOperations = require('./recovery-operations.json')
+let oecdCodes = require('./oecd-codes.json')
 module.exports = {
   countries,
+  "recovery-operations": recoveryOperations,
+  "oecd-codes": oecdCodes,
   "repository-url": "https://github.com/defra-design/reex-applications-prototype",
   "prototype-url": "https://reex-applications-prototype-5c478b674681.herokuapp.com",
 

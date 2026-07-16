@@ -223,6 +223,14 @@ const clearSiteData = function (req) {
   delete req.session.data['name']
   delete req.session.data['email']
   delete req.session.data['phone']
+  delete req.session.data['recycling-operation']
+  delete req.session.data['oecd-code-1']
+  delete req.session.data['oecd-code-2']
+  delete req.session.data['oecd-code-3']
+  delete req.session.data['rejected-loads']
+  delete req.session.data['export-conditions']
+  delete req.session.data['broadly-equivalent-documentation']
+  delete req.session.data['include-in-application']
 }
 
 router.post('/add-site/cancel', (req, res) => {
@@ -246,6 +254,22 @@ router.post('/add-site/address', (req, res) => {
 })
 
 router.post('/add-site/contact', (req, res) => {
+  res.redirect('recycling-operation')
+})
+
+router.post('/add-site/recycling-operation', (req, res) => {
+  res.redirect('oecd-codes')
+})
+
+router.post('/add-site/oecd-codes', (req, res) => {
+  res.redirect('rejected-loads')
+})
+
+router.post('/add-site/rejected-loads', (req, res) => {
+  res.redirect('accreditation')
+})
+
+router.post('/add-site/accreditation', (req, res) => {
   res.redirect('check-answers')
 })
 
@@ -260,7 +284,15 @@ router.post('/add-site/check-answers', (req, res) => {
     organisation: req.session.data['organisation'] || 'Example Orgnisation',
     name: req.session.data['name'] || 'Joe Bloggs',
     email: req.session.data['email'] || 'joe@email.com',
-    phone: req.session.data['phone'] || '01632 960 001'
+    phone: req.session.data['phone'] || '01632 960 001',
+    recyclingOperation: req.session.data['recycling-operation'],
+    oecdCode1: req.session.data['oecd-code-1'],
+    oecdCode2: req.session.data['oecd-code-2'],
+    oecdCode3: req.session.data['oecd-code-3'],
+    rejectedLoads: req.session.data['rejected-loads'],
+    exportConditions: req.session.data['export-conditions'],
+    broadlyEquivalentDocumentation: req.session.data['broadly-equivalent-documentation'],
+    includeInApplication: req.session.data['include-in-application']
   })
 
   // Pass the above object into the sites and clear temp site data

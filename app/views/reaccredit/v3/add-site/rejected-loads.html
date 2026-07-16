@@ -1,0 +1,26 @@
+{% extends "layouts/main.html" %}
+
+{% set title = 'What are the arrangements in place for loads that are rejected or returned to the UK from this overseas reprocessor?' %}
+
+{% block questions %}
+  {{ govukTextarea({
+    id: 'rejected-loads',
+    name: 'rejected-loads',
+    value: data['rejected-loads'],
+    label: {
+      html: title | safe,
+      classes: 'govuk-label--l',
+      isPageHeading: true
+    }
+  }) }}
+{% endblock %}
+
+{% block buttons %}
+  <div class="govuk-button-group">
+    {{ govukButton({
+      text: 'Continue'
+    }) }}
+
+    <a class="govuk-link" href="cancel">Cancel</a>
+  </div>
+{% endblock %}

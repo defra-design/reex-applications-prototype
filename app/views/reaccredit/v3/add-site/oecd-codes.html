@@ -1,0 +1,65 @@
+{% extends "layouts/main.html" %}
+
+{% set title = '[add content here]' %}
+
+{% block questions %}
+  <h1 class="govuk-heading-l">
+    {{ title | safe }}
+  </h1>
+
+  {# Create empty object #}
+  {% set oecdList = [{value: '',text: 'Select option'}] %}
+
+  {# Loop through the OECD codes and add into the object #}
+  {% for code in data['oecd-codes'] %}
+    {% set oecdList = oecdList | push (
+     {
+        value: code,
+        text: code
+      }
+    ) %}
+  {% endfor %}
+
+  {{ govukSelect({
+    id: 'oecd-code-1',
+    name: 'oecd-code-1',
+    value: data['oecd-code-1'],
+    classes: 'js-autocomplete',
+    label: {
+      html: 'Basel convention and OECD code 1'
+    },
+    items: oecdList
+  }) }}
+
+  {{ govukSelect({
+    id: 'oecd-code-2',
+    name: 'oecd-code-2',
+    value: data['oecd-code-2'],
+    classes: 'js-autocomplete',
+    label: {
+      html: 'Basel convention and OECD code 2 (if applicable)'
+    },
+    items: oecdList
+  }) }}
+
+  {{ govukSelect({
+    id: 'oecd-code-3',
+    name: 'oecd-code-3',
+    value: data['oecd-code-3'],
+    classes: 'js-autocomplete',
+    label: {
+      html: 'Basel convention and OECD code 3 (if applicable)'
+    },
+    items: oecdList
+  }) }}
+{% endblock %}
+
+{% block buttons %}
+  <div class="govuk-button-group">
+    {{ govukButton({
+      text: 'Continue'
+    }) }}
+
+    <a class="govuk-link" href="cancel">Cancel</a>
+  </div>
+{% endblock %}
