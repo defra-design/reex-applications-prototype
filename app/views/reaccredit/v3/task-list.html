@@ -7,7 +7,7 @@
   }) }}
 {% endblock %}
 
-{% set title = ('<span class="govuk-caption-xl">'+site.name+'<span class="govuk-visually-hidden">:</span></span> ' if data['current-site-type'] == 'reprocessing' and org['reprocessing-sites'] | length > 1)+'Reapply for accreditation: '+(material.name | lower) %}
+{% set title = ('<span class="govuk-caption-xl">'+site.name+'<span class="govuk-visually-hidden">:</span></span> ' if data['current-site-type'] == 'reprocessing' and org['reprocessing-sites'] | length > 1)+'Reapply for accreditation' %}
 
 {% set pErn = 'PRN' if data['current-site-type'] == 'reprocessing' else 'PERN' %}
 
@@ -177,7 +177,7 @@
       ) %}
 
       {# Broadly equivalent standards evidence for each selected overseas site #}
-      {% if data['overseas-sites'] and 'Bharat Paper Recycling' in data['overseas-sites'] %}
+      {% if data['overseas-sites'] and 'Bharat Recycling' in data['overseas-sites'] %}
         {% set bharatFiles %}
           <ul class="govuk-list">
             {% for file in data['bharat-bes'] %}
@@ -189,13 +189,13 @@
         {% set questions = questions | push (
           {
             key: {
-              html: 'Evidence of broadly equivalent standards for Bharat Paper Recycling'
+              html: 'Evidence of broadly equivalent standards for Bharat Recycling'
             },
             value: {
               html: bharatFiles
             } if data['bharat-bes'] else
             {
-              html: '<a href="bes?bes-site=bharat">Upload evidence of broadly equivalent standards for Bharat Paper Recycling</a>'
+              html: '<a href="bes?bes-site=bharat">Upload evidence of broadly equivalent standards for Bharat Recycling</a>'
             },
             actions: {
               items: [
@@ -209,7 +209,7 @@
         ) %}
       {% endif %}
 
-      {% if data['overseas-sites'] and 'Dragon Paper Recyclers' in data['overseas-sites'] %}
+      {% if data['overseas-sites'] and 'Dragon Recyclers' in data['overseas-sites'] %}
         {% set dragonFiles %}
           <ul class="govuk-list">
             {% for file in data['dragon-bes'] %}
@@ -221,13 +221,13 @@
         {% set questions = questions | push (
           {
             key: {
-              html: 'Evidence of broadly equivalent standards for Dragon Paper Recyclers'
+              html: 'Evidence of broadly equivalent standards for Dragon Recyclers'
             },
             value: {
               html: dragonFiles
             } if data['dragon-bes'] else
             {
-              html: '<a href="bes?bes-site=dragon">Upload evidence of broadly equivalent standards for Dragon Paper Recyclers</a>'
+              html: '<a href="bes?bes-site=dragon">Upload evidence of broadly equivalent standards for Dragon Recyclers</a>'
             },
             actions: {
               items: [

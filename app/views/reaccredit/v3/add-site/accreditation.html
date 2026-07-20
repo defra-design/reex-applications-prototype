@@ -1,6 +1,6 @@
 {% extends "layouts/main.html" %}
 
-{% set title = 'Answer before you reapply for accreditation: plastic' %}
+{% set title = 'Answer before you reapply for accreditation' %}
 
 {% block questions %}
   <h1 class="govuk-heading-l">
@@ -41,7 +41,7 @@
     value: data['broadly-equivalent-documentation'],
     fieldset: {
       legend: {
-        html: 'Is broadly equivalent documentation required at reapplication?',
+        html: 'Is broadly equivalent documentation required?',
         classes: 'govuk-fieldset__legend--m'
       }
     },
@@ -54,7 +54,7 @@
     value: data['include-in-application'],
     fieldset: {
       legend: {
-        html: 'Include in your reapplication for accreditation?',
+        html: 'Include in your accreditation application?',
         classes: 'govuk-fieldset__legend--m'
       }
     },

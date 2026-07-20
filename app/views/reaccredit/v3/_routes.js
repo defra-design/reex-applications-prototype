@@ -137,10 +137,10 @@ router.post('/overseas-sites', (req, res) => {
 // Set the site name and existing uploads for the broadly equivalent standards page
 router.get('/bes', (req, res, next) => {
   if (req.session.data['bes-site'] == 'bharat') {
-    res.locals.siteName = 'Bharat Paper Recycling'
+    res.locals.siteName = 'Bharat Recycling'
     res.locals.uploads = req.session.data['bharat-bes']
   } else {
-    res.locals.siteName = 'Dragon Paper Recyclers'
+    res.locals.siteName = 'Dragon Recyclers'
     res.locals.uploads = req.session.data['dragon-bes']
   }
 
@@ -244,7 +244,7 @@ router.post('/add-site/address', (req, res) => {
 
 router.post('/add-site/organisation', (req, res) => {
   if (!req.session.data['organisation'].length) {
-    req.session.data['organisation'] = 'Example Orgnisation'
+    req.session.data['organisation'] = 'Example Organisation'
   }
   res.redirect('contact')
 })
@@ -458,17 +458,17 @@ router.get('/', (req, res, next) => {
 // operator feedback can be judged against the problem it describes.
 const designOptionSites = [
   {
-    organisation: 'Bharat Paper Recycling',
+    organisation: 'Bharat Recycling',
     address: '4852/24, Ansari Road, Darya Ganj, Delhi, 110002, India',
     evidence: false
   },
   {
-    organisation: 'Bharat Paper Recycling',
+    organisation: 'Bharat Recycling',
     address: 'Plot 14, MIDC Industrial Area, Pune, 411019, India',
     evidence: true
   },
   {
-    organisation: 'Dragon Paper Recyclers',
+    organisation: 'Dragon Recyclers',
     address: 'Stanhope Hse North Point, Eastern District, Hong Kong',
     evidence: true
   }
