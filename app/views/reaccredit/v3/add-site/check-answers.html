@@ -1,6 +1,6 @@
 {% extends "layouts/main.html" %}
 
-{% set title = 'Check your answers before adding the site' %}
+{% set title = 'Check your answers before you add this overseas site' %}
 
 {% block questions %}
   <h1 class="govuk-heading-l">
@@ -28,7 +28,7 @@
       },
       {
         key: {
-          html: 'Organisation name'
+          html: 'Site name'
         },
         value: {
           html: data['organisation']
@@ -45,7 +45,7 @@
       },
       {
         key: {
-          html: 'Contact person'
+          html: 'Contact'
         },
         value: {
           html: data['name']+'<br>'+data['email']+'<br>'+data['phone']
@@ -62,7 +62,7 @@
       },
       {
         key: {
-          html: 'Recycling operation carried out at the overseas site'
+          html: 'Recycling operation carried out'
         },
         value: {
           html: data['recycling-operation']
@@ -79,7 +79,7 @@
       },
       {
         key: {
-          html: 'Basel convention and OECD code 1'
+          html: 'Basel Convention and OECD code 1'
         },
         value: {
           html: data['oecd-code-1']
@@ -89,14 +89,14 @@
             {
               href: 'oecd-codes',
               text: 'Change',
-              visuallyHiddenText: ' Basel convention and OECD code 1'
+              visuallyHiddenText: ' Basel Convention and OECD code 1'
             }
           ]
         }
       },
       {
         key: {
-          html: 'Basel convention and OECD code 2 (if applicable)'
+          html: 'Basel Convention and OECD code 2 (if applicable)'
         },
         value: {
           html: data['oecd-code-2']
@@ -106,14 +106,14 @@
             {
               href: 'oecd-codes',
               text: 'Change',
-              visuallyHiddenText: ' Basel convention and OECD code 2 (if applicable)'
+              visuallyHiddenText: ' Basel Convention and OECD code 2 (if applicable)'
             }
           ]
         }
       },
       {
         key: {
-          html: 'Basel convention and OECD code 3 (if applicable)'
+          html: 'Basel Convention and OECD code 3 (if applicable)'
         },
         value: {
           html: data['oecd-code-3']
@@ -123,14 +123,14 @@
             {
               href: 'oecd-codes',
               text: 'Change',
-              visuallyHiddenText: ' Basel convention and OECD code 3 (if applicable)'
+              visuallyHiddenText: ' Basel Convention and OECD code 3 (if applicable)'
             }
           ]
         }
       },
       {
         key: {
-          html: 'What are the arrangements in place for loads that are rejected or returned to the UK from this overseas reprocessor?'
+          html: 'Arrangements for loads rejected or returned to the UK'
         },
         value: {
           html: data['rejected-loads']
@@ -147,7 +147,7 @@
       },
       {
         key: {
-          html: 'Export under conditions of export? (Steel &amp; Aluminium)'
+          html: 'Export under conditions of export'
         },
         value: {
           html: data['export-conditions']
@@ -164,7 +164,7 @@
       },
       {
         key: {
-          html: 'Broadly equivalent documentation required at application?'
+          html: 'Broadly equivalent documentation required'
         },
         value: {
           html: data['broadly-equivalent-documentation']
@@ -181,7 +181,7 @@
       },
       {
         key: {
-          html: 'Include in application for accreditation?'
+          html: 'Include in reapplication for accreditation'
         },
         value: {
           html: data['include-in-application']
@@ -203,7 +203,7 @@
 {% block buttons %}
   <div class="govuk-button-group">
     {{ govukButton({
-      text: 'Add the site'
+      text: 'Add this site'
     }) }}
 
     <a class="govuk-link" href="cancel">Cancel</a>

@@ -1,13 +1,13 @@
 {% extends "layouts/main.html" %}
 
-{% set title = 'Who is the main contact for '+ (data['organisation'] or 'Example Orgnisation') +'?' %}
+{% set title = 'Who is the main contact for '+ (data['organisation'] or 'Example Organisation') +'?' %}
 
 {% block questions %}
   <h1 class="govuk-heading-l">
     {{ title | safe }}
   </h1>
 
-  <p>This must be a person holding a senior position in the organisation</p>
+  <p>This must be a person holding a senior position in the organisation.</p>
 
   {{ govukInput({
     id: 'name',
