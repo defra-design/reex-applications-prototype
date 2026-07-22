@@ -8,18 +8,18 @@
       id: 'withdraw-reason',
       name: 'withdraw-reason',
       label: {
-        text: '[Add reason for withdrawing application]'
+        text: 'Add a reason for withdrawing your application'
       }
     }) }}
   {% endset %}
 
   {% set hintHtml %}
-    <p>Your application will no longer be considered by the regulator. This cannot be undone.</p>
+    <p>This action cannot be undone and your application will no longer be considered by the regulator.</p>
 
     {% if material.application.status == 'Submitted' %}
-      <p>The regulator has not begun considering your application so you will receive a refund.</p>
+      <p>Check with your regulator before you confirm this withdrawal, if you have not already.</p>
     {% else %}
-      <p>The regulator has begun considering your application so you will not receive a refund.</p>
+      <p>Check with your regulator before you confirm this withdrawal, if you have not already.</p>
     {% endif %}
   {% endset %}
 
